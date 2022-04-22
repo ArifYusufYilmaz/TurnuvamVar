@@ -4,9 +4,7 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.turnuvamvar.thesis.entities.abstracts.BaseEntity;
 import lombok.Data;
 
-import javax.persistence.Entity;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
 import java.util.List;
 
 @Entity
@@ -18,4 +16,10 @@ public class Team extends BaseEntity {
     @ManyToOne
     @JsonBackReference
     private Tournament tournament;
+
+    @OneToOne
+    @JoinColumn(name="team_captain_id", unique=true)
+    private TeamCaptain teamCaptain;
+
+    // takım kaptanı sınıfıyla bağlantı olmalı. isim ve soyisim alınıp uniqe bir kod ve şifre(ayrı tablo.) oluşturulmalı.
 }
