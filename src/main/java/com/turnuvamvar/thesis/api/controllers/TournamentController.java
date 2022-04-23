@@ -25,8 +25,8 @@ public class TournamentController {
         return this.tournamentService.getAllTournaments();
     }
     @PostMapping
-    public DataResult<TournamentDto> createOneTournament(@RequestBody TournamentDto newTournament){
-        return this.tournamentService.createOneTournament(newTournament);
+    public DataResult<TournamentDto> createOneTournament(@RequestBody TournamentDto newTournamentDto){
+        return this.tournamentService.createOneTournament(newTournamentDto);
     }
 
 

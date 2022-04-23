@@ -9,5 +9,5 @@ import java.util.List;
 public interface TournamentService {
     DataResult<List<TournamentDto>> getAllTournaments();
 
-    DataResult<TournamentDto> createOneTournament(TournamentDto newTournament);
+    DataResult<TournamentDto> createOneTournament(TournamentDto newTournamentDto);
 }

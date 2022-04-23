@@ -13,13 +13,24 @@ import java.util.List;
 public class Team extends BaseEntity {
     private String teamName;
    // private String teamCaptain; // ayrı tablo.
+    private String captainFirstName;
+    private String captainLastName;
+
     @ManyToOne
     @JsonBackReference
     private Tournament tournament;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name="team_captain_id", unique=true)
     private TeamCaptain teamCaptain;
 
+    public Team(){
+        createTeamCaptain();
+
+    }
+    private void createTeamCaptain(){
+        this.teamCaptain = new TeamCaptain();
+
+    }
     // takım kaptanı sınıfıyla bağlantı olmalı. isim ve soyisim alınıp uniqe bir kod ve şifre(ayrı tablo.) oluşturulmalı.
 }

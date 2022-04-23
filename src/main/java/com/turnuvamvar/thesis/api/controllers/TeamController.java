@@ -2,6 +2,7 @@ package com.turnuvamvar.thesis.api.controllers;
 
 import com.turnuvamvar.thesis.business.abstracts.TeamService;
 import com.turnuvamvar.thesis.core.utilities.results.DataResult;
+import com.turnuvamvar.thesis.dto.TeamDto;
 import com.turnuvamvar.thesis.entities.concretes.Team;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,11 +17,11 @@ public class TeamController {
         this.teamService = teamService;
     }
     @GetMapping
-    public DataResult<List<Team>> getAllTeams(){
+    public DataResult<List<TeamDto>> getAllTeams(){
         return this.teamService.getAllTeams();
     }
     @PostMapping("/{tournamentId}")
-    public DataResult<Team> createOneTeam(@PathVariable Long tournamentId,@RequestBody Team newTeam){
-        return this.teamService.createOneTeam(tournamentId, newTeam);
+    public DataResult<TeamDto> createOneTeam(@PathVariable Long tournamentId, @RequestBody TeamDto newTeamDto){
+        return this.teamService.createOneTeam(tournamentId, newTeamDto);
     }
 }

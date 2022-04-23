@@ -35,12 +35,10 @@ public class TournamentManager implements TournamentService {
     }
 
     @Override
-    public DataResult<TournamentDto> createOneTournament(TournamentDto newTournament) {
-        Tournament tournament = tournamentMapper.mapTournamentDtoToTournament(newTournament);
+    public DataResult<TournamentDto> createOneTournament(TournamentDto newTournamentDto) {
+        Tournament tournament = tournamentMapper.mapTournamentDtoToTournament(newTournamentDto);
         TournamentDto tournamentDto = tournamentMapper.mapTournamentToTournamentDto(this.tournamentDao.save(tournament));
         return new SuccessDataResult<TournamentDto>(tournamentDto);
-
-
 
     }
 }
