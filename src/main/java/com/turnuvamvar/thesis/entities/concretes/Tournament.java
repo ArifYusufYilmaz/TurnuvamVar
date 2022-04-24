@@ -7,9 +7,11 @@ import lombok.Data;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.Table;
 import java.util.List;
 
 @Entity
+@Table(name="tournaments")
 @Data
 
 public class Tournament extends BaseEntity {

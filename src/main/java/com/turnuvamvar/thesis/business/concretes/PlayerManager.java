@@ -47,6 +47,7 @@ public class PlayerManager implements PlayerService {
         if(playerToAdd.isPresent()){
             PlayerToAddDto playerToAddDto = this.playerToAddMapper.mapPlayerToAddToPlayerToAddDto(playerToAdd.get());
             Player player = this.playerMapper.mapPlayerToAddDtoToPlayer(playerToAddDto);
+            player.setTeam(playerToAdd.get().getTeam());
             // oyuncu eklendiği zaman eklenecek oyuncu listesindekinin silinmesi lazım!!!!!!!
             return new SuccessDataResult<Player>(this.playerDao.save(player));
         }

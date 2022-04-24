@@ -40,6 +40,7 @@ public class PlayerToAddManager implements PlayerToAddService {
         Optional<TeamCaptain> teamCaptain = this.teamCaptainDao.findById(teamCaptainId);
         if(teamCaptain.isPresent()){
             PlayerToAdd playerToAdd = playerToAddMapper.mapPlayerToAddDtoToPlayerToAdd(newPlayerToAddDto);
+            playerToAdd.setTeam(teamCaptain.get().getTeam());
             newPlayerToAddDto = playerToAddMapper.mapPlayerToAddToPlayerToAddDto(this.playerToAddDao.save(playerToAdd));
             return new SuccessDataResult<PlayerToAddDto>(newPlayerToAddDto);
         }

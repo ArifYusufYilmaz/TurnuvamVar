@@ -10,8 +10,10 @@ import lombok.Data;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.OneToOne;
+import javax.persistence.Table;
 
 @Entity
+@Table(name="team_codes")
 @Data
 public class TeamCode extends BaseEntity {
 

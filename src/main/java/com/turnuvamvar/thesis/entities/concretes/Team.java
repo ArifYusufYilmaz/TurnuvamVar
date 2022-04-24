@@ -8,6 +8,7 @@ import javax.persistence.*;
 import java.util.List;
 
 @Entity
+@Table(name="teams")
 @Data
 
 public class Team extends BaseEntity {
@@ -23,6 +24,12 @@ public class Team extends BaseEntity {
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name="team_captain_id", unique=true)
     private TeamCaptain teamCaptain;
+
+    @OneToMany(mappedBy="team")
+    private List<PlayerToAdd> playersToAdd;
+
+    @OneToMany(mappedBy = "team")
+    private List<Player> players;
 
     public Team(){
         createTeamCaptain();
