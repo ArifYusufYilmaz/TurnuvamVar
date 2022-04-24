@@ -20,7 +20,7 @@ public class TeamController {
     public DataResult<List<TeamDto>> getAllTeams(){
         return this.teamService.getAllTeams();
     }
-    @PostMapping("/{tournamentId}")
+    @PostMapping("/save/{tournamentId}")
     public DataResult<TeamDto> createOneTeam(@PathVariable Long tournamentId, @RequestBody TeamDto newTeamDto){
         return this.teamService.createOneTeam(tournamentId, newTeamDto);
     }

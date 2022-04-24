@@ -20,11 +20,11 @@ public class TournamentController {
         this.tournamentService = tournamentService;
     }
 
-    @GetMapping
+    @GetMapping("/list")
     public DataResult<List<TournamentDto>> getAllTournaments(){
         return this.tournamentService.getAllTournaments();
     }
-    @PostMapping
+    @PostMapping("/save")
     public DataResult<TournamentDto> createOneTournament(@RequestBody TournamentDto newTournamentDto){
         return this.tournamentService.createOneTournament(newTournamentDto);
     }
