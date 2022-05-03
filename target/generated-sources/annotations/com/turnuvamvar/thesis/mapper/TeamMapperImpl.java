@@ -11,7 +11,7 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2022-04-23T17:47:50+0300",
+    date = "2022-05-03T00:40:38+0300",
     comments = "version: 1.4.2.Final, compiler: javac, environment: Java 11.0.6 (Oracle Corporation)"
 )
 @Component
@@ -52,28 +52,28 @@ public class TeamMapperImpl extends TeamMapper {
     }
 
     @Override
-    public List<TeamDto> mapTeamListToTeamDtoList(Collection<Team> team) {
-        if ( team == null ) {
+    public List<TeamDto> mapTeamListToTeamDtoList(Collection<Team> teams) {
+        if ( teams == null ) {
             return null;
         }
 
-        List<TeamDto> list = new ArrayList<TeamDto>( team.size() );
-        for ( Team team1 : team ) {
-            list.add( mapTeamToTeamDto( team1 ) );
+        List<TeamDto> list = new ArrayList<TeamDto>( teams.size() );
+        for ( Team team : teams ) {
+            list.add( mapTeamToTeamDto( team ) );
         }
 
         return list;
     }
 
     @Override
-    public List<Team> mapTeamDtoListToTeamList(Collection<TeamDto> teamDto) {
-        if ( teamDto == null ) {
+    public List<Team> mapTeamDtoListToTeamList(Collection<TeamDto> teamDtos) {
+        if ( teamDtos == null ) {
             return null;
         }
 
-        List<Team> list = new ArrayList<Team>( teamDto.size() );
-        for ( TeamDto teamDto1 : teamDto ) {
-            list.add( mapTeamDtoToTeam( teamDto1 ) );
+        List<Team> list = new ArrayList<Team>( teamDtos.size() );
+        for ( TeamDto teamDto : teamDtos ) {
+            list.add( mapTeamDtoToTeam( teamDto ) );
         }
 
         return list;

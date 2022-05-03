@@ -4,6 +4,7 @@ import com.turnuvamvar.thesis.entities.abstracts.BaseEntity;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name="players")
@@ -19,4 +20,7 @@ public class Player extends BaseEntity {
 
     @ManyToOne
     private Team team;
+
+    @OneToMany(mappedBy = "player")
+    private List<ScorePlayer> scoresPlayers;
 }

@@ -17,6 +17,8 @@ import java.util.List;
 public class Tournament extends BaseEntity {
     private String tournamentName;
     private String description;
+
+
     @OneToMany(mappedBy="tournament")
     @JsonManagedReference
     private List<Team> team;

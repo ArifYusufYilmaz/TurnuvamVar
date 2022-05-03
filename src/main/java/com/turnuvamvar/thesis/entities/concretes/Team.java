@@ -31,6 +31,19 @@ public class Team extends BaseEntity {
     @OneToMany(mappedBy = "team")
     private List<Player> players;
 
+   /* @OneToMany(mappedBy = "firstTeam")
+    private GameToPlay gameToPlayFirstTeam;
+
+    @OneToMany(mappedBy = "secondTeam")
+    private GameToPlay gameToPlaySecondTeam;*/
+
+    @OneToMany(mappedBy  = "team")
+    private List<StageTeam> stageTeams;
+
+
+
+
+
     public Team(){
         createTeamCaptain();
 

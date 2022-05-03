@@ -20,7 +20,7 @@ public abstract class TeamMapper {
     @Mapping(source = "teamCaptainId", target = "teamCaptain.id")
     public abstract Team mapTeamDtoToTeam(TeamDto teamDto);
 
-    public abstract List<TeamDto> mapTeamListToTeamDtoList(Collection<Team> team);
-    public abstract List<Team> mapTeamDtoListToTeamList(Collection<TeamDto> teamDto);
+    public abstract List<TeamDto> mapTeamListToTeamDtoList(Collection<Team> teams);
+    public abstract List<Team> mapTeamDtoListToTeamList(Collection<TeamDto> teamDtos);
 
 }
