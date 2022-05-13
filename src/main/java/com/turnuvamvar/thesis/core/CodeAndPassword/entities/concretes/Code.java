@@ -1,6 +1,6 @@
-package com.turnuvamvar.thesis.core.utilities.CodeAndPassword.entities;
+package com.turnuvamvar.thesis.core.CodeAndPassword.entities.concretes;
 
-import com.turnuvamvar.thesis.core.utilities.CodeAndPassword.abstracts.AutoGenerateTeamCodeInfo;
+import com.turnuvamvar.thesis.core.CodeAndPassword.entities.abstracts.AutoGenerateTeamCodeInfo;
 
 public class Code extends AutoGenerateTeamCodeInfo {
     private String code;
@@ -11,8 +11,4 @@ public class Code extends AutoGenerateTeamCodeInfo {
     protected String generateInfo(){
         return code = "asdf1234";        // her defasında değişecek şekilde düzenlenmeli.
     }
-
-
-
-
 }

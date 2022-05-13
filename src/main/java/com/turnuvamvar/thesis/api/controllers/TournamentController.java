@@ -2,6 +2,7 @@ package com.turnuvamvar.thesis.api.controllers;
 
 import com.turnuvamvar.thesis.business.abstracts.TournamentService;
 import com.turnuvamvar.thesis.core.utilities.results.DataResult;
+import com.turnuvamvar.thesis.core.utilities.results.Result;
 import com.turnuvamvar.thesis.dto.TournamentDto;
 import com.turnuvamvar.thesis.entities.concretes.Tournament;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/tournament")
+@RequestMapping("/tournaments")
 public class TournamentController {
 
     private TournamentService tournamentService;
@@ -18,6 +19,15 @@ public class TournamentController {
     @Autowired //daha sonra setter injection yapılabilir.
     public TournamentController(TournamentService tournamentService) {
         this.tournamentService = tournamentService;
+    }
+
+    @GetMapping("/{tournamentId}")
+    public DataResult<Tournament> getOneTournementById(@PathVariable Long tournamentId ){
+        return this.tournamentService.getOneTournementById(tournamentId);
+    }
+    @PutMapping("/{tournamentId}")
+    public DataResult<TournamentDto> updateOneTournement(@PathVariable Long tournamentId, @RequestBody TournamentDto tournamentDto){
+        return this.tournamentService.updateOneTournement(tournamentId, tournamentDto);
     }
 
     @GetMapping("/list")
@@ -28,6 +38,10 @@ public class TournamentController {
     public DataResult<TournamentDto> createOneTournament(@RequestBody TournamentDto newTournamentDto){
         return this.tournamentService.createOneTournament(newTournamentDto);
     }
-
+    // delete Mapping işlemi yapılmalı.
+    @DeleteMapping("/delete/{tournamentId}")
+    public Result deleteOneTournement(@PathVariable Long tournamentId){
+        return this.tournamentService.deleteOneTournementById(tournamentId);
+    }
 
 }

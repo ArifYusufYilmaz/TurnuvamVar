@@ -12,32 +12,34 @@ import java.util.List;
 @Data
 
 public class Team extends BaseEntity {
-    private String teamName;
-   // private String teamCaptain; // ayrı tablo.
-    private String captainFirstName;
-    private String captainLastName;
+ private String teamName;
+ private String captainFirstName;
+ private String captainLastName;
 
-    @ManyToOne
-    @JsonBackReference
-    private Tournament tournament;
+ @ManyToOne
+ @JsonBackReference
+ private Tournament tournament;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name="team_captain_id", unique=true)
-    private TeamCaptain teamCaptain;
+ @OneToOne(cascade = CascadeType.ALL)
+ @JoinColumn(name = "team_captain_id", unique = true)
+ private TeamCaptain teamCaptain;
 
-    @OneToMany(mappedBy="team")
-    private List<PlayerToAdd> playersToAdd;
+ @OneToMany(mappedBy = "team", cascade= CascadeType.ALL)
+ private List<PlayerToAdd> playersToAdd;
 
-    @OneToMany(mappedBy = "team")
-    private List<Player> players;
+ @OneToMany(mappedBy = "team", cascade = CascadeType.ALL)
+ private List<Player> players;
 
-   /* @OneToMany(mappedBy = "firstTeam")
+
+
+
+    /* @OneToMany(mappedBy = "firstTeam")
     private GameToPlay gameToPlayFirstTeam;
 
     @OneToMany(mappedBy = "secondTeam")
     private GameToPlay gameToPlaySecondTeam;*/
 
-    @OneToMany(mappedBy  = "team")
+    @OneToMany(mappedBy  = "team", cascade =CascadeType.ALL)
     private List<StageTeam> stageTeams;
 
 

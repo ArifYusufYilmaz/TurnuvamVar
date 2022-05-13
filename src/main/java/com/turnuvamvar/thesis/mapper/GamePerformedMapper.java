@@ -8,11 +8,11 @@ import org.mapstruct.Mapping;
 @Mapper(componentModel = "spring")
 public abstract class GamePerformedMapper {
     @Mapping(source="gameToPlay.id",target="gameToPlayId")
-    @Mapping(source="scoreOfFirstTeam.countOfScore",target="scoreOfFirstTeam")
-    @Mapping(source="scoreOfSecondTeam.countOfScore",target="scoreOfSecondTeam")
+    @Mapping(source="scoreOfFirstTeam.score",target="scoreOfFirstTeam")
+    @Mapping(source="scoreOfSecondTeam.score",target="scoreOfSecondTeam")
     public abstract GamePerformedDto mapGamePerformedToGamePerformedDto(GamePerformed gamePerformed);
     @Mapping(source="gameToPlayId",target="gameToPlay.id")
-    @Mapping(source="scoreOfFirstTeam",target="scoreOfFirstTeam.countOfScore")
-    @Mapping(source="scoreOfSecondTeam",target="scoreOfSecondTeam.countOfScore")
+    @Mapping(source="scoreOfFirstTeam",target="scoreOfFirstTeam.score")
+    @Mapping(source="scoreOfSecondTeam",target="scoreOfSecondTeam.score")
     public abstract GamePerformed mapGamePerformedDtoToGamePerformed(GamePerformedDto gamePerformedDto);
 }

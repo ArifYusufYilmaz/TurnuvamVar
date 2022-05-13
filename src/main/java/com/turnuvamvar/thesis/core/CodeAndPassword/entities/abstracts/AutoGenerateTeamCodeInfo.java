@@ -1,4 +1,4 @@
-package com.turnuvamvar.thesis.core.utilities.CodeAndPassword.abstracts;
+package com.turnuvamvar.thesis.core.CodeAndPassword.entities.abstracts;
 
 public abstract class AutoGenerateTeamCodeInfo {
     private String info;

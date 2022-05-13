@@ -18,8 +18,6 @@ public class TeamCaptain extends BaseEntity {
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "team_code_id", unique = true)
     private TeamCode teamCode;
-    /*private String teamCode;
-    private String teamPassword;*/
 
     public TeamCaptain(){
         this.teamCode = new TeamCode();

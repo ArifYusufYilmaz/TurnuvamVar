@@ -1,9 +1,7 @@
 package com.turnuvamvar.thesis.business.concretes;
 
 import com.turnuvamvar.thesis.business.abstracts.TeamService;
-import com.turnuvamvar.thesis.core.utilities.results.DataResult;
-import com.turnuvamvar.thesis.core.utilities.results.ErrorDataResult;
-import com.turnuvamvar.thesis.core.utilities.results.SuccessDataResult;
+import com.turnuvamvar.thesis.core.utilities.results.*;
 import com.turnuvamvar.thesis.dataAccess.abstracts.TeamDao;
 import com.turnuvamvar.thesis.dataAccess.abstracts.TournamentDao;
 import com.turnuvamvar.thesis.dto.TeamDto;
@@ -14,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -41,8 +40,16 @@ public class TeamManager implements TeamService {
 
     @Override
     public DataResult<List<TeamDto>> getAllTeams() {    //düzenlenecek!
-        //this.teamDao.findAll()
-        return new SuccessDataResult<List<TeamDto>>();
+        List<Team> teamList = new ArrayList<>();
+        Iterable<Team> teamIterable = this.teamDao.findAll();
+        teamIterable.iterator().forEachRemaining( teamList :: add);
+        List<TeamDto> teamDtoList = teamMapper.mapTeamListToTeamDtoList(teamList);
+        if(teamDtoList.isEmpty()){
+            return new ErrorDataResult<List<TeamDto>>("takım listesinde hiç takım bulunamadı..");
+        }else{
+            return new SuccessDataResult<List<TeamDto>>(teamDtoList);
+        }
+
     }
 
 
@@ -65,5 +72,46 @@ public class TeamManager implements TeamService {
             return new ErrorDataResult<TeamDto>("verilen id'de turnuva bulunamadı..");
         }
 
+    }
+
+    @Override
+    public DataResult<Team> getOneTeamById(Long teamId) {
+        Optional<Team> team = this.teamDao.findById(teamId);
+        if(team.isPresent()){
+            return new SuccessDataResult<Team>(team.get());
+        }else{
+            return new ErrorDataResult<Team>("takım bulunamadı..");
+        }
+    }
+
+    @Override
+    public DataResult<TeamDto> updateOneTeam(Long teamId, TeamDto teamDto) {
+        Optional<Team> team = this.teamDao.findById(teamId);
+        if(team.isPresent()){
+            Team toSave = team.get();
+            toSave.setTeamName(teamDto.getTeamName());
+            toSave.setCaptainFirstName(teamDto.getCaptainFirstName());
+            toSave.setCaptainLastName(teamDto.getCaptainLastName());
+            toSave = this.teamDao.save(toSave);
+            TeamDto newTeamDto = teamMapper.mapTeamToTeamDto(toSave);
+            return new SuccessDataResult<TeamDto>(newTeamDto);
+        }else{
+            return new ErrorDataResult<TeamDto>("takım bulunamadı");
+        }
+
+    }
+
+    @Override
+    public Result deleteOneTeamById(Long teamId) {
+        // takımla bağlantılı olan diğer şeyler silinmeli mi ???
+
+        Optional<Team> team = this.teamDao.findById(teamId);
+        if(team.isPresent()){
+            this.teamDao.deleteById(team.get().getId());
+            return new SuccessResult("verilen id'ye ait takım silindi");
+        }
+        else{
+            return new ErrorResult("verilen id'ye ait takım bulunamadı");
+        }
     }
 }

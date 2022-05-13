@@ -1,9 +1,8 @@
 package com.turnuvamvar.thesis.entities.concretes;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.turnuvamvar.thesis.core.utilities.CodeAndPassword.abstracts.AutoGenerateTeamCodeInfo;
-import com.turnuvamvar.thesis.core.utilities.CodeAndPassword.entities.Code;
-import com.turnuvamvar.thesis.core.utilities.CodeAndPassword.entities.Password;
+import com.turnuvamvar.thesis.core.CodeAndPassword.entities.abstracts.AutoGenerateTeamCodeInfo;
+import com.turnuvamvar.thesis.core.CodeAndPassword.entities.concretes.Code;
+import com.turnuvamvar.thesis.core.CodeAndPassword.entities.concretes.Password;
 import com.turnuvamvar.thesis.entities.abstracts.BaseEntity;
 import lombok.Data;
 

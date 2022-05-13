@@ -7,10 +7,10 @@ import javax.persistence.*;
 import java.util.List;
 
 @Entity
-@Data   // şuanlık(veya tamamen) bu tablo iptal
+@Data
 public class Score extends BaseEntity {
 
-    private int countOfScore;
+    private int score;                                                          //countOfScore'du.
     @OneToOne(mappedBy = "scoreOfSecondTeam")
     private GamePerformed gamePerformedFirst;
     @OneToOne(mappedBy = "scoreOfSecondTeam")

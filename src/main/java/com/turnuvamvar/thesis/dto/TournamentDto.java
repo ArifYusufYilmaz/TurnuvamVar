@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class TournamentDto  {
+
     private Long id;
     private String tournamentName;
     private String description;

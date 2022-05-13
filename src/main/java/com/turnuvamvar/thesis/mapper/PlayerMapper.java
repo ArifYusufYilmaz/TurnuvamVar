@@ -14,4 +14,6 @@ public abstract class PlayerMapper {
     @Mapping(source = "playerAddress", target ="playerCommunication.playerAddress" )
     @Mapping(source = "playerPhoneNumber", target ="playerCommunication.playerPhoneNumber" )
     public abstract Player mapPlayerToAddDtoToPlayer(PlayerToAddDto newPlayerToAddDto);
+
+    //
 }

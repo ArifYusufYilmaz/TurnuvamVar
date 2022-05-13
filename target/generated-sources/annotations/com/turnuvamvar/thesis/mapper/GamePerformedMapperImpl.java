@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2022-05-04T01:13:21+0300",
+    date = "2022-05-11T21:36:45+0300",
     comments = "version: 1.4.2.Final, compiler: javac, environment: Java 11.0.6 (Oracle Corporation)"
 )
 @Component
@@ -24,8 +24,8 @@ public class GamePerformedMapperImpl extends GamePerformedMapper {
         GamePerformedDto gamePerformedDto = new GamePerformedDto();
 
         gamePerformedDto.setGameToPlayId( gamePerformedGameToPlayId( gamePerformed ) );
-        gamePerformedDto.setScoreOfFirstTeam( gamePerformedScoreOfFirstTeamCountOfScore( gamePerformed ) );
-        gamePerformedDto.setScoreOfSecondTeam( gamePerformedScoreOfSecondTeamCountOfScore( gamePerformed ) );
+        gamePerformedDto.setScoreOfFirstTeam( gamePerformedScoreOfFirstTeamScore( gamePerformed ) );
+        gamePerformedDto.setScoreOfSecondTeam( gamePerformedScoreOfSecondTeamScore( gamePerformed ) );
 
         return gamePerformedDto;
     }
@@ -60,7 +60,7 @@ public class GamePerformedMapperImpl extends GamePerformedMapper {
         return id;
     }
 
-    private int gamePerformedScoreOfFirstTeamCountOfScore(GamePerformed gamePerformed) {
+    private int gamePerformedScoreOfFirstTeamScore(GamePerformed gamePerformed) {
         if ( gamePerformed == null ) {
             return 0;
         }
@@ -68,11 +68,11 @@ public class GamePerformedMapperImpl extends GamePerformedMapper {
         if ( scoreOfFirstTeam == null ) {
             return 0;
         }
-        int countOfScore = scoreOfFirstTeam.getCountOfScore();
-        return countOfScore;
+        int score = scoreOfFirstTeam.getScore();
+        return score;
     }
 
-    private int gamePerformedScoreOfSecondTeamCountOfScore(GamePerformed gamePerformed) {
+    private int gamePerformedScoreOfSecondTeamScore(GamePerformed gamePerformed) {
         if ( gamePerformed == null ) {
             return 0;
         }
@@ -80,8 +80,8 @@ public class GamePerformedMapperImpl extends GamePerformedMapper {
         if ( scoreOfSecondTeam == null ) {
             return 0;
         }
-        int countOfScore = scoreOfSecondTeam.getCountOfScore();
-        return countOfScore;
+        int score = scoreOfSecondTeam.getScore();
+        return score;
     }
 
     protected GameToPlay gamePerformedDtoToGameToPlay(GamePerformedDto gamePerformedDto) {
@@ -103,7 +103,7 @@ public class GamePerformedMapperImpl extends GamePerformedMapper {
 
         Score score = new Score();
 
-        score.setCountOfScore( gamePerformedDto.getScoreOfFirstTeam() );
+        score.setScore( gamePerformedDto.getScoreOfFirstTeam() );
 
         return score;
     }
@@ -115,7 +115,7 @@ public class GamePerformedMapperImpl extends GamePerformedMapper {
 
         Score score = new Score();
 
-        score.setCountOfScore( gamePerformedDto.getScoreOfSecondTeam() );
+        score.setScore( gamePerformedDto.getScoreOfSecondTeam() );
 
         return score;
     }
