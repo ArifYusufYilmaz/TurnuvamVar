@@ -5,9 +5,9 @@ export const Card = ({ parameter }) => {
 
 	const handleButtonClick = () => {
 		if (parameter?.description) {
-			navigate(`/tournament/:${parameter.id}`);
+			navigate(`/tournament/${parameter.id}`);
 		} else {
-			navigate(`/team/:${parameter.id}`);
+			navigate(`/team/${parameter.id}`);
 		}
 	};
 

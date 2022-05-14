@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import axios from '../api/axios';
-import { Tournaments } from '../components/Tournaments';
+import { Tournaments } from './Tournaments';
 
 export const Home = () => {
 	const [tournaments, setTournaments] = useState([]);
