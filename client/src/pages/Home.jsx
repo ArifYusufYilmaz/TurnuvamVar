@@ -19,7 +19,7 @@ export const Home = () => {
 	}, []);
 
 	return (
-		<div className='p-10'>
+		<div className='p-10 flex flex-wrap'>
 			<Tournaments tournaments={tournaments} />
 		</div>
 	);
