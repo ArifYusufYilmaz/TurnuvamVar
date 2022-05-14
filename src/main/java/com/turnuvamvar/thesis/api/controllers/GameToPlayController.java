@@ -26,12 +26,12 @@ public class GameToPlayController {
         return this.gameToPlayService.createOneGameToPlay(newGameToPlayDto);
     }
 
-    @GetMapping
+    @GetMapping("/get/list")
     public DataResult<List<GameToPlay>> getAllGamesToPlay(){
         return this.gameToPlayService.getAllGamesToPlay();
     }
 
-    @GetMapping("/{gameToPlayId}")
+    @GetMapping("/get/{gameToPlayId}")
     public DataResult<GameToPlay> getOneGameToPlayById(@PathVariable Long gameToPlayId){
         return this.gameToPlayService.getOneGameToPlayById(gameToPlayId);
     }

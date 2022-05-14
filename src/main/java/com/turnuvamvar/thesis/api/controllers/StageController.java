@@ -19,12 +19,12 @@ public class StageController {
     public StageController(StageService stageService) {
         this.stageService = stageService;
     }
-    @GetMapping
+    @GetMapping("/get/list")
     public DataResult<List<Stage>> getAllStages(){
         return this.stageService.getAllStages();
     }
 
-    @GetMapping("/{stageId}")
+    @GetMapping("/get/{stageId}")
     public DataResult<Stage> getOneStageById(@PathVariable Long stageId){
         return this.stageService.getOneStageById(stageId);
     }

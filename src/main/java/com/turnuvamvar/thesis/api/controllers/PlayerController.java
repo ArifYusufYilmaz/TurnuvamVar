@@ -27,7 +27,7 @@ public class PlayerController {
     }
 
 
-    @GetMapping("/{playerId}")
+    @GetMapping("/get/{playerId}")
     public DataResult<Player> getOnePlayerById(@PathVariable Long playerId){
         return this.playerService.getOnePlayerById(playerId);
     }
@@ -36,7 +36,7 @@ public class PlayerController {
     public DataResult<PlayerDto> updateOnePlayer(@PathVariable Long playerId, @RequestBody PlayerDto playerDto){
         return this.playerService.updateOnePlayer(playerId, playerDto);
     }
-    @GetMapping
+    @GetMapping("/get/list")
     public DataResult<List<Player>> getAllPlayers(){
         return this.playerService.getAllPlayers();
     }

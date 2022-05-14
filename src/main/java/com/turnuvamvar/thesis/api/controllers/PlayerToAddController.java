@@ -22,11 +22,11 @@ public class PlayerToAddController {
     public DataResult<PlayerToAddDto> createOnePlayerToAdd(@PathVariable Long teamId, @RequestBody PlayerToAddDto newPlayerToAddDto){
         return this.playerToAddService.createOnePlayerToAdd(teamId,newPlayerToAddDto);
     }
-    @GetMapping("/{playerToAddId}")
+    @GetMapping("/get/{playerToAddId}")
     public DataResult<PlayerToAdd> getOnePlayerToAddById(@PathVariable Long playerToAddId){
         return this.playerToAddService.getOnePlayerToAddById(playerToAddId);
     }
-    @GetMapping
+    @GetMapping("/get/list")
     public DataResult<List<PlayerToAdd>> getAllPlayersToAdd(){
         return this.playerToAddService.getAllPlayersToAdd();
     }

@@ -25,13 +25,13 @@ public class ScorePlayerController {
         this.scorePlayerService = scorePlayerService;
     }
 
-    @PostMapping
+    @PostMapping("/save")
     public DataResult<ScorePlayerDto> createOneScorePlayer(@RequestBody ScorePlayerDto newScorePlayerDto){
         return this.scorePlayerService.createOneScorePlayer(newScorePlayerDto);
     }
 
 
-    @GetMapping("/{scorePlayerId}")
+    @GetMapping("/get/{scorePlayerId}")
     public DataResult<ScorePlayer> getOneScorePlayerById(@PathVariable Long scorePlayerId){
         return this.scorePlayerService.getOneScorePlayerById(scorePlayerId);
     }
@@ -41,7 +41,7 @@ public class ScorePlayerController {
                                                                @RequestBody ScorePlayerDto scorePlayerDto){
         return this.scorePlayerService.updateOneScorePlayer(scorePlayerId, scorePlayerDto);
     }
-    @GetMapping
+    @GetMapping("/get/list")
     public DataResult<List<ScorePlayer>> getAllScorePlayers(){
         return this.scorePlayerService.getAllScorePlayers();
     }
