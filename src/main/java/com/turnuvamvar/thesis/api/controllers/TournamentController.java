@@ -14,7 +14,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/tournaments")
-//@CrossOrigin(origins = "http://192.168.1.9:3000")
+@CrossOrigin(origins = {"*"}, allowCredentials = "false")
 public class TournamentController {
 
     private TournamentService tournamentService;

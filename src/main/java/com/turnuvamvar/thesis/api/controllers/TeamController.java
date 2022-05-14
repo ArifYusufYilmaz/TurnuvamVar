@@ -12,7 +12,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/teams")
-//crossorigin kaldırıldı
+@CrossOrigin(origins = {"*"}, allowCredentials = "false")
 public class TeamController {
     private TeamService teamService;
 
