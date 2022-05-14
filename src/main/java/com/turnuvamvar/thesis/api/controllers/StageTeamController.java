@@ -12,8 +12,9 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@CrossOrigin
 @RestController
-@RequestMapping("/stagesteams")
+@RequestMapping("/api/stageteam")
 public class StageTeamController {
     @Autowired
     private StageTeamService stageTeamService;
@@ -23,20 +24,20 @@ public class StageTeamController {
     }
 
     @PostMapping("/save")
-    public DataResult<StageTeamDto> createOneStageTeam(StageTeamDto newStageTeamDto){
+    public DataResult<StageTeamDto> createOneStageTeam(@RequestBody StageTeamDto newStageTeamDto){
         return this.stageTeamService.createOneStageTeam(newStageTeamDto);
     }
-    @GetMapping
+    @GetMapping("/get/list")
     public DataResult<List<StageTeam>> getAllStagesTeams(){
         return this.stageTeamService.getAllStagesTeams();
     }
 
-    @GetMapping("/{stageTeamId}")
+    @GetMapping("/get/{stageTeamId}")
     public DataResult<StageTeam> getOneStageTeamById(@PathVariable Long stageTeamId){
         return this.stageTeamService.getOneStageTeamById(stageTeamId);
     }
 
-    @PutMapping("/update/{gameToPlayId}")
+    @PutMapping("/update/{stageTeamId}")
     public DataResult<StageTeamDto> updateOneStageTeam(@PathVariable Long stageTeamId, @RequestBody StageTeamDto stageTeamDto){
         return this.stageTeamService.updateOneStageTeam(stageTeamId, stageTeamDto);
     }

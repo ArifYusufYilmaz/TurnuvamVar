@@ -9,19 +9,21 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+
 @RestController
-@RequestMapping("/teams")
+@RequestMapping("/api/teams")
+//crossorigin kaldırıldı
 public class TeamController {
     private TeamService teamService;
 
     public TeamController(TeamService teamService) {
         this.teamService = teamService;
     }
-    @GetMapping
+    @GetMapping("/get/list")
     public DataResult<List<TeamDto>> getAllTeams(){
         return this.teamService.getAllTeams();
     }
-    @GetMapping("/{teamId}")
+    @GetMapping("/get/{teamId}")
     public DataResult<Team> getOneTeamById(@PathVariable Long teamId){
         return this.teamService.getOneTeamById(teamId);
     }

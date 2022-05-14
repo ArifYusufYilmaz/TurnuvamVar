@@ -8,10 +8,13 @@ import com.turnuvamvar.thesis.entities.concretes.Tournament;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.net.ServerSocket;
 import java.util.List;
 
+
 @RestController
-@RequestMapping("/tournaments")
+@RequestMapping("/api/tournaments")
+//@CrossOrigin(origins = "http://192.168.1.9:3000")
 public class TournamentController {
 
     private TournamentService tournamentService;
@@ -21,19 +24,20 @@ public class TournamentController {
         this.tournamentService = tournamentService;
     }
 
-    @GetMapping("/{tournamentId}")
+    @GetMapping("/get/{tournamentId}")
     public DataResult<Tournament> getOneTournementById(@PathVariable Long tournamentId ){
         return this.tournamentService.getOneTournementById(tournamentId);
     }
-    @PutMapping("/{tournamentId}")
+    @PutMapping("/update/{tournamentId}")
     public DataResult<TournamentDto> updateOneTournement(@PathVariable Long tournamentId, @RequestBody TournamentDto tournamentDto){
         return this.tournamentService.updateOneTournement(tournamentId, tournamentDto);
     }
 
-    @GetMapping("/list")
+    @GetMapping("/get/list")
     public DataResult<List<TournamentDto>> getAllTournaments(){
         return this.tournamentService.getAllTournaments();
     }
+
     @PostMapping("/save")
     public DataResult<TournamentDto> createOneTournament(@RequestBody TournamentDto newTournamentDto){
         return this.tournamentService.createOneTournament(newTournamentDto);

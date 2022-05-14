@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/gamesperformed")
+@RequestMapping("/api/gamesperformed")
 public class GamePerformedController {
     @Autowired
     private GamePerformedService gamePerformedService;

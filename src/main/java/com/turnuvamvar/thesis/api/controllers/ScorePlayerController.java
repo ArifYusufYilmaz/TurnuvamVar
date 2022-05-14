@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/scoresplayers")
+@RequestMapping("/api/scoresplayers")
 public class ScorePlayerController {
 
     @Autowired

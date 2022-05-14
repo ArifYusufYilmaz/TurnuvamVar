@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/gamestoplay")
+@RequestMapping("/api/gamestoplay")
 public class GameToPlayController {
     @Autowired
     private GameToPlayService gameToPlayService;
