@@ -2,6 +2,7 @@ package com.turnuvamvar.thesis.entities.concretes;
 
 import com.turnuvamvar.thesis.entities.abstracts.BaseEntity;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
@@ -11,7 +12,7 @@ import javax.persistence.Table;
 @Entity
 @Table(name="players_to_add")
 @Data
-
+@EqualsAndHashCode()
 public class PlayerToAdd extends BaseEntity {
     private String playerFirstName;
     private String playerLastName;

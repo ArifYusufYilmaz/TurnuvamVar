@@ -46,13 +46,20 @@ public class StageTeamManager implements StageTeamService {
 
     @Override
     public DataResult<StageTeamDto> createOneStageTeam(StageTeamDto newStageTeamDto) {
-        // aynısından kaydettirme! kontrol et.
+
         Optional<Team> team = this.teamDao.findById(newStageTeamDto.getTeamId());
         Optional<Stage> stage =  this.stageDao.findById(newStageTeamDto.getStageId());
-        if(team.isPresent() && stage.isPresent()){
-            StageTeam stageTeam = this.stageTeamMapper.mapStageTeamDtoToStage(newStageTeamDto);
-            StageTeamDto stageTeamDto = this.stageTeamMapper.mapStageTeamToStageTeamDto(this.stageTeamDao.save(stageTeam));
-            return new SuccessDataResult<StageTeamDto>(stageTeamDto);
+        if(team.isPresent() && stage.isPresent()){ // check if they exist in db
+            // to avoid duplicate records
+            if(stageTeamToCheckIfDuplicate(team.get().getId(), stage.get().getId())){
+                return new ErrorDataResult<StageTeamDto>("Verilen takım ve stage zaten eşlenmiş!!");
+            }
+            else{
+                StageTeam stageTeam = this.stageTeamMapper.mapStageTeamDtoToStage(newStageTeamDto);
+                StageTeamDto stageTeamDto = this.stageTeamMapper.mapStageTeamToStageTeamDto(this.stageTeamDao.save(stageTeam));
+                return new SuccessDataResult<StageTeamDto>(stageTeamDto);
+            }
+
         }else{
             return new ErrorDataResult<StageTeamDto>("Verilen takım ya da stage mevcut değil!!");
         }
@@ -89,9 +96,15 @@ public class StageTeamManager implements StageTeamService {
             StageTeam toSave = stageTeam.get();
             toSave.getStage().setId(stageTeamDto.getStageId());
             toSave.getTeam().setId(stageTeamDto.getTeamId());
-            toSave = this.stageTeamDao.save(toSave);
-            StageTeamDto newStageTeamDto = stageTeamMapper.mapStageTeamToStageTeamDto(toSave);
-            return new SuccessDataResult<StageTeamDto>(newStageTeamDto);
+            // to avoid duplicate records
+            //StageTeam stageTeamToCheckİfDuplicate = this.stageTeamDao.findByTeamIdAndStageId(toSave.getTeam().getId(),toSave.getStage().getId()).orElse(null);
+            if(stageTeamToCheckIfDuplicate(toSave.getTeam().getId(),toSave.getStage().getId())){
+                return new ErrorDataResult<StageTeamDto>("Verilen takım ve stage zaten eşlenmiş!!");
+            }else{
+                toSave = this.stageTeamDao.save(toSave);
+                StageTeamDto newStageTeamDto = stageTeamMapper.mapStageTeamToStageTeamDto(toSave);
+                return new SuccessDataResult<StageTeamDto>(newStageTeamDto);
+            }
         }
         else{
             return new ErrorDataResult<StageTeamDto>("güncellenmek istenen aşama_takım bulunamadı..");
@@ -108,5 +121,11 @@ public class StageTeamManager implements StageTeamService {
         else{
             return new ErrorResult("aşama_takım bulunamadığı için silinemedi!");
         }
+    }
+
+    // if it is an duplicate record returns true
+    private boolean stageTeamToCheckIfDuplicate(Long teamId, Long stageId){
+        StageTeam stageTeam = this.stageTeamDao.findByTeamIdAndStageId(teamId, stageId).orElse(null);
+        return stageTeam != null ? true : false;
     }
 }

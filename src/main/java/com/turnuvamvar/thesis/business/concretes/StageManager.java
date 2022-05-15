@@ -5,6 +5,7 @@ import com.turnuvamvar.thesis.core.utilities.results.*;
 import com.turnuvamvar.thesis.dataAccess.abstracts.StageDao;
 import com.turnuvamvar.thesis.dto.StageDto;
 import com.turnuvamvar.thesis.entities.concretes.Stage;
+import com.turnuvamvar.thesis.entities.concretes.StageTeam;
 import com.turnuvamvar.thesis.mapper.StageMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
@@ -30,12 +31,13 @@ public class StageManager implements StageService {
 
     @Override
     public DataResult<StageDto> createOneStage(StageDto newStageDto) {
-        // gelen takımların takım listesinde olup olmadığını kontrol et!
-        // aynı zamanda aşama tablosuna daha önce yazıldı mı? (aynı aşama adında)
-         Stage stage =  this.stageMapper.mapStageDtoToStage(newStageDto);
-         StageDto stageDto = this.stageMapper.mapStageToStageDto(this.stageDao.save(stage));
-        return new SuccessDataResult<StageDto>(stageDto);
-
+        if(checkIfItHasSameStageByName(newStageDto.getStageName())){
+            return new ErrorDataResult<StageDto>("Bu aşama ismi zaten mevcut!!");
+        }else{
+            Stage stage =  this.stageMapper.mapStageDtoToStage(newStageDto);
+            StageDto stageDto = this.stageMapper.mapStageToStageDto(this.stageDao.save(stage));
+            return new SuccessDataResult<StageDto>(stageDto);
+        }
     }
 
     @Override
@@ -56,9 +58,13 @@ public class StageManager implements StageService {
         if(stage.isPresent()){
             Stage toSave = stage.get();
             toSave.setStageName(stageDto.getStageName());
-            toSave = this.stageDao.save(toSave);
-            StageDto newStageDto = stageMapper.mapStageToStageDto(toSave);
-            return new SuccessDataResult<StageDto>(newStageDto);
+            if(checkIfItHasSameStageByName(toSave.getStageName())){
+                return new ErrorDataResult<StageDto>("Aynı stage ismine sahip veri zaten mevcut..");
+            }else {
+                toSave = this.stageDao.save(toSave);
+                StageDto newStageDto = stageMapper.mapStageToStageDto(toSave);
+                return new SuccessDataResult<StageDto>(newStageDto);
+            }
         }
         else{
             return new ErrorDataResult<StageDto>("stage bulunamadı..");
@@ -89,6 +95,12 @@ public class StageManager implements StageService {
         else{
             return new SuccessDataResult<List<Stage>>(stageList);
         }
+    }
+    // if it is an duplicate record as its name returns true
+    private boolean checkIfItHasSameStageByName(String stageName){
+        // büyük, küçük harf olayından dolayı sorun çıkabilir, Dtodan alırken kontrol etmelisin!
+        Stage stage = this.stageDao.findByStageName(stageName).orElse(null);
+        return stage != null ? true : false;
     }
 }
 
