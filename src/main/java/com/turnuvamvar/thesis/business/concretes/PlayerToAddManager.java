@@ -6,6 +6,7 @@ import com.turnuvamvar.thesis.dataAccess.abstracts.PlayerToAddDao;
 import com.turnuvamvar.thesis.dataAccess.abstracts.TeamCaptainDao;
 import com.turnuvamvar.thesis.dataAccess.abstracts.TeamDao;
 import com.turnuvamvar.thesis.dto.PlayerToAddDto;
+import com.turnuvamvar.thesis.dto.TeamDto;
 import com.turnuvamvar.thesis.entities.concretes.PlayerToAdd;
 import com.turnuvamvar.thesis.entities.concretes.Team;
 import com.turnuvamvar.thesis.entities.concretes.TeamCaptain;
@@ -87,15 +88,17 @@ public class PlayerToAddManager implements PlayerToAddService {
     }
 
     @Override
-    public DataResult<List<PlayerToAdd>> getAllPlayersToAdd() {
+    public DataResult<List<PlayerToAddDto>> getAllPlayersToAdd() {
+        // hangi takım oldugunu al.
         List<PlayerToAdd> playerToAddList = new ArrayList<>();
         Iterable<PlayerToAdd> playerToAddIterable = this.playerToAddDao.findAll();
         playerToAddIterable.iterator().forEachRemaining(playerToAddList :: add);
-        if(playerToAddList.isEmpty()){
+        List<PlayerToAddDto> playerToAddDtoList = playerToAddMapper.mapPlayerToAddListToPlayerToAddDtoList(playerToAddList);
+        if(playerToAddDtoList.isEmpty()){
             return new ErrorDataResult<>("eklenecek oyuncu listesinde hiç veri bulunamadı!");
         }
         else {
-            return new SuccessDataResult<List<PlayerToAdd>>(playerToAddList);
+            return new SuccessDataResult<List<PlayerToAddDto>>(playerToAddDtoList);
         }
     }
 
