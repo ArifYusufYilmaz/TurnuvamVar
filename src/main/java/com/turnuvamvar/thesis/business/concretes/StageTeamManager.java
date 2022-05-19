@@ -59,7 +59,6 @@ public class StageTeamManager implements StageTeamService {
                 StageTeamDto stageTeamDto = this.stageTeamMapper.mapStageTeamToStageTeamDto(this.stageTeamDao.save(stageTeam));
                 return new SuccessDataResult<StageTeamDto>(stageTeamDto);
             }
-
         }else{
             return new ErrorDataResult<StageTeamDto>("Verilen takım ya da stage mevcut değil!!");
         }

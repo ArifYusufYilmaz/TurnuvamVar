@@ -3,6 +3,7 @@ package com.turnuvamvar.thesis.api.controllers;
 import com.turnuvamvar.thesis.business.abstracts.TeamService;
 import com.turnuvamvar.thesis.core.utilities.results.DataResult;
 import com.turnuvamvar.thesis.core.utilities.results.Result;
+import com.turnuvamvar.thesis.dto.Request.TeamRequestDto;
 import com.turnuvamvar.thesis.dto.TeamDto;
 import com.turnuvamvar.thesis.entities.concretes.Team;
 import org.springframework.web.bind.annotation.*;
@@ -10,9 +11,9 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 
+//@CrossOrigin(origins = {"*"}, allowCredentials = "false")
 @RestController
 @RequestMapping("/api/teams")
-@CrossOrigin(origins = {"*"}, allowCredentials = "false")
 public class TeamController {
     private TeamService teamService;
 
@@ -20,8 +21,12 @@ public class TeamController {
         this.teamService = teamService;
     }
     @GetMapping("/get/list")
-    public DataResult<List<TeamDto>> getAllTeams(){
+    public DataResult<List<TeamRequestDto>> getAllTeams(){
         return this.teamService.getAllTeams();
+    }
+    @GetMapping("/get/list/{tournamentId}")
+    public DataResult<List<TeamRequestDto>> getAllTeamsByTournamentId(@PathVariable Long tournamentId){
+        return this.teamService.getAllTeamsByTournamentId(tournamentId);
     }
     @GetMapping("/get/{teamId}")
     public DataResult<Team> getOneTeamById(@PathVariable Long teamId){
@@ -40,3 +45,4 @@ public class TeamController {
         return this.teamService.deleteOneTeamById(teamId);
     }
 }
+

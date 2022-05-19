@@ -12,12 +12,11 @@ import java.util.List;
 
 @Mapper(componentModel = "spring")
 public abstract class TeamMapper {
-    @Autowired
-    protected TeamService teamService;
 
-    @Mapping(source = "teamCaptain.id", target = "teamCaptainId")
+
+  //  @Mapping(source = "teamCaptain.id", target = "teamCaptainId")
     public abstract TeamDto mapTeamToTeamDto(Team team);
-    @Mapping(source = "teamCaptainId", target = "teamCaptain.id")
+  //  @Mapping(source = "teamCaptainId", target = "teamCaptain.id")
     public abstract Team mapTeamDtoToTeam(TeamDto teamDto);
 
     public abstract List<TeamDto> mapTeamListToTeamDtoList(Collection<Team> teams);

@@ -4,9 +4,11 @@ import com.turnuvamvar.thesis.business.abstracts.TeamService;
 import com.turnuvamvar.thesis.core.utilities.results.*;
 import com.turnuvamvar.thesis.dataAccess.abstracts.TeamDao;
 import com.turnuvamvar.thesis.dataAccess.abstracts.TournamentDao;
+import com.turnuvamvar.thesis.dto.Request.TeamRequestDto;
 import com.turnuvamvar.thesis.dto.TeamDto;
 import com.turnuvamvar.thesis.entities.concretes.Team;
 import com.turnuvamvar.thesis.entities.concretes.Tournament;
+import com.turnuvamvar.thesis.mapper.Request.TeamRequestMapper;
 import com.turnuvamvar.thesis.mapper.TeamMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
@@ -24,6 +26,7 @@ public class TeamManager implements TeamService {
     private TournamentDao tournamentDao;
 
     private TeamMapper teamMapper;
+    private TeamRequestMapper teamRequestMapper;
 
     @Autowired
     public TeamManager(TeamDao teamDao) {
@@ -37,19 +40,37 @@ public class TeamManager implements TeamService {
     public void setTeamMapper(@Lazy TeamMapper teamMapper) {
         this.teamMapper = teamMapper;
     }
+    @Autowired
+    public void setTeamRequestMapper(TeamRequestMapper teamRequestMapper) {
+        this.teamRequestMapper = teamRequestMapper;
+    }
 
     @Override
-    public DataResult<List<TeamDto>> getAllTeams() {    //düzenlenecek!
+    public DataResult<List<TeamRequestDto>> getAllTeams() {    //düzenlenecek!
         List<Team> teamList = new ArrayList<>();
         Iterable<Team> teamIterable = this.teamDao.findAll();
         teamIterable.iterator().forEachRemaining( teamList :: add);
-        List<TeamDto> teamDtoList = teamMapper.mapTeamListToTeamDtoList(teamList);
-        if(teamDtoList.isEmpty()){
-            return new ErrorDataResult<List<TeamDto>>("takım listesinde hiç takım bulunamadı..");
-        }else{
-            return new SuccessDataResult<List<TeamDto>>(teamDtoList);
-        }
+        List<TeamRequestDto> teamRequestDtoList =  teamRequestMapper.mapTeamListToTeamRequestDtoList(teamList);
 
+        if(teamRequestDtoList.isEmpty()){
+            return new ErrorDataResult<List<TeamRequestDto>>("takım listesinde hiç takım bulunamadı..");
+        }else{
+            return new SuccessDataResult<List<TeamRequestDto>>(teamRequestDtoList);
+        }
+    }
+
+    @Override
+    public DataResult<List<TeamRequestDto>> getAllTeamsByTournamentId(Long tournamentId) {
+        List<Team> teamList = new ArrayList<>();
+        List<Team> teamsInTournament =  this.teamDao.findAllByTournamentId(tournamentId);
+        Iterable<Team> teamIterable = teamsInTournament;
+        teamIterable.iterator().forEachRemaining(teamList :: add);
+        List<TeamRequestDto> teamRequestDtoList = teamRequestMapper.mapTeamListToTeamRequestDtoList(teamList);
+        if(teamRequestDtoList.isEmpty()){
+            return new ErrorDataResult<List<TeamRequestDto>>("takım listesinde hiç takım bulunamadı..");
+        }else{
+            return new SuccessDataResult<List<TeamRequestDto>>(teamRequestDtoList);
+        }
     }
 
 

@@ -83,7 +83,7 @@ public class TournamentManager implements TournamentService {
     @Override
     public Result deleteOneTournementById(Long tournamentId) {
         Optional<Tournament> tournament = this.tournamentDao.findById(tournamentId);
-        System.out.println("silmek için girdim");
+
         if(tournament.isPresent()){
             this.tournamentDao.deleteById(tournament.get().getId());
             return new SuccessResult("id'si verilen turnuva silindi");

@@ -19,12 +19,13 @@ import java.io.IOException;
 @Component
 public class CorsConfig implements Filter {
     private final Logger log = LoggerFactory.getLogger(CorsConfig.class);
-
     public CorsConfig() {
         log.info("SimpleCORSFilter init");
     }
     @Override
-    public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
+    public void doFilter(ServletRequest servletRequest,
+                         ServletResponse servletResponse,
+                         FilterChain filterChain) throws IOException, ServletException {
 
         HttpServletRequest request = (HttpServletRequest) servletRequest;
         HttpServletResponse response = (HttpServletResponse) servletResponse;
@@ -40,11 +41,9 @@ public class CorsConfig implements Filter {
     @Override
     public void init(FilterConfig filterConfig) {
     }
-
     @Override
     public void destroy() {
     }
-
 }
     /*@Value("http://localhost:3000")
     private String allowedOrigin;

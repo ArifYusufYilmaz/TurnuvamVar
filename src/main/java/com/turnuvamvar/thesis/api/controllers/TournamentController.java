@@ -42,7 +42,7 @@ public class TournamentController {
     public DataResult<TournamentDto> createOneTournament(@RequestBody TournamentDto newTournamentDto){
         return this.tournamentService.createOneTournament(newTournamentDto);
     }
-    // delete Mapping işlemi yapılmalı.
+
     @DeleteMapping("/delete/{tournamentId}")
     public Result deleteOneTournement(@PathVariable Long tournamentId){
         return this.tournamentService.deleteOneTournementById(tournamentId);
