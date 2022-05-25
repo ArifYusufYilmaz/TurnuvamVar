@@ -1,4 +1,5 @@
 import { Card } from '../components/Card';
+import { CardShow } from '../components/CardShow';
 
 export function Tournaments({ tournaments }) {
 	
@@ -10,7 +11,7 @@ export function Tournaments({ tournaments }) {
 					name: tournament?.tournamentName,
 					description: tournament?.description,
 				};
-				return <Card parameter={info} />;
+				return <CardShow parameter={info} />;
 			})}
 		</div>
 	);
