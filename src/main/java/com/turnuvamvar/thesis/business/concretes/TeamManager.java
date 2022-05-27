@@ -46,9 +46,15 @@ public class TeamManager implements TeamService {
     }
 
     @Override
-    public DataResult<List<TeamRequestDto>> getAllTeams() {    //düzenlenecek!
+    public DataResult<List<TeamRequestDto>> getAllTeams(Long tournamentId) {    //düzenlenecek!
         List<Team> teamList = new ArrayList<>();
-        Iterable<Team> teamIterable = this.teamDao.findAll();
+        Iterable<Team> teamIterable;
+        if(tournamentId == null){
+             teamIterable = this.teamDao.findAll();
+        }else{
+             teamIterable   =   this.teamDao.findAllByTournamentId(tournamentId);
+        }
+
         teamIterable.iterator().forEachRemaining( teamList :: add);
         List<TeamRequestDto> teamRequestDtoList =  teamRequestMapper.mapTeamListToTeamRequestDtoList(teamList);
 

@@ -3,8 +3,10 @@ package com.turnuvamvar.thesis.business.concretes;
 import com.turnuvamvar.thesis.business.abstracts.TournamentService;
 import com.turnuvamvar.thesis.core.utilities.results.*;
 import com.turnuvamvar.thesis.dataAccess.abstracts.TournamentDao;
+import com.turnuvamvar.thesis.dto.Request.TournamentRequestDto;
 import com.turnuvamvar.thesis.dto.TournamentDto;
 import com.turnuvamvar.thesis.entities.concretes.Tournament;
+import com.turnuvamvar.thesis.mapper.Request.TournamentRequestMapper;
 import com.turnuvamvar.thesis.mapper.TournamentMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
@@ -20,7 +22,7 @@ public class TournamentManager implements TournamentService {
     private TournamentDao tournamentDao;
 
     private  TournamentMapper tournamentMapper;
-
+    private TournamentRequestMapper tournamentRequestMapper;
     @Autowired
     public TournamentManager(TournamentDao tournamentDao) {
         this.tournamentDao = tournamentDao;
@@ -29,19 +31,22 @@ public class TournamentManager implements TournamentService {
     public void setTournamentMapper(@Lazy TournamentMapper tournamentMapper) {
         this.tournamentMapper = tournamentMapper;
     }
-
+    @Autowired
+    public void setTournamentRequestMapper(TournamentRequestMapper tournamentRequestMapper) {
+        this.tournamentRequestMapper = tournamentRequestMapper;
+    }
 
     @Override
-    public DataResult<List<TournamentDto>> getAllTournaments() {
+    public DataResult<List<TournamentRequestDto>> getAllTournaments() {
         List<Tournament> tournamentList = new ArrayList<>();
         Iterable<Tournament> tournamentIterable = this.tournamentDao.findAll();
         tournamentIterable.iterator().forEachRemaining(tournamentList :: add);
-        List<TournamentDto> tournamentDtoList = this.tournamentMapper.mapTournamentListToTournamentDtoList(tournamentList);
-        if(tournamentDtoList.isEmpty()){
-            return new ErrorDataResult<>("tournament dto bos..  bu mesaj degistirilebilir");
+        List<TournamentRequestDto> tournamentRequestDtoList = this.tournamentRequestMapper.mapTournamentListToTournamentRequestDtoList(tournamentList);
+        if(tournamentRequestDtoList.isEmpty()){
+            return new ErrorDataResult<TournamentRequestDto>("tournament Request dto bos..  bu mesaj degistirilebilir");
         }
 
-        return new SuccessDataResult<List<TournamentDto>>(tournamentDtoList);
+        return new SuccessDataResult<List<TournamentRequestDto>>(tournamentRequestDtoList);
     }
 
     @Override
@@ -54,12 +59,13 @@ public class TournamentManager implements TournamentService {
     }
 
     @Override
-    public DataResult<Tournament> getOneTournementById(Long tournamentId) {
+    public DataResult<TournamentRequestDto> getOneTournementById(Long tournamentId) {
         Optional<Tournament> tournament = this.tournamentDao.findById(tournamentId);
         if(tournament.isPresent()){
-            return new SuccessDataResult<Tournament>(tournament.get());
+            TournamentRequestDto tournamentRequestDto = tournamentRequestMapper.mapTournamentToTournamentRequestDto(tournament.get());
+            return new SuccessDataResult<TournamentRequestDto>(tournamentRequestDto);
         }else{
-            return new ErrorDataResult<>("verilen id'ye ait turnuva bulunamadı..");
+            return new ErrorDataResult<TournamentRequestDto>("verilen id'ye ait turnuva bulunamadı..");
         }
 
     }

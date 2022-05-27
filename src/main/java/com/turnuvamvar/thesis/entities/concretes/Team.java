@@ -30,29 +30,12 @@ public class Team extends BaseEntity {
  @OneToMany(mappedBy = "team", cascade = CascadeType.ALL)
  private List<Player> players;
 
-
-
-
-    /* @OneToMany(mappedBy = "firstTeam")
-    private GameToPlay gameToPlayFirstTeam;
-
-    @OneToMany(mappedBy = "secondTeam")
-    private GameToPlay gameToPlaySecondTeam;*/
-
-    @OneToMany(mappedBy  = "team", cascade =CascadeType.ALL)
-    private List<StageTeam> stageTeams;
-
-
-
-
-
-    public Team(){
-        createTeamCaptain();
-
-    }
-    private void createTeamCaptain(){
-        this.teamCaptain = new TeamCaptain();
-
-    }
-    // takım kaptanı sınıfıyla bağlantı olmalı. isim ve soyisim alınıp uniqe bir kod ve şifre(ayrı tablo.) oluşturulmalı.
+ @OneToMany(mappedBy  = "team", cascade =CascadeType.ALL)
+ private List<StageTeam> stageTeams;
+ public Team(){
+     createTeamCaptain();
+  }
+  private void createTeamCaptain(){
+     this.teamCaptain = new TeamCaptain();
+  }
 }

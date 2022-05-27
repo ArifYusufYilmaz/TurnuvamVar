@@ -8,8 +8,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 
 @Entity
-@Data                                         // Join table with Stage and Team
-public class StageTeam extends BaseEntity {   // ManyToMany olması gereken stage-team ilişkisini daha etkin kullanabilmek için bu şekilde kullanıyorum
+@Data
+public class StageTeam extends BaseEntity {
 
     @ManyToOne
     private Stage stage;
@@ -22,3 +22,5 @@ public class StageTeam extends BaseEntity {   // ManyToMany olması gereken stag
     private GameToPlay gameToPlaySecond;
 
 }
+
+// Join table with Stage and Team

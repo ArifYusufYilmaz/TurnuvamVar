@@ -3,6 +3,7 @@ package com.turnuvamvar.thesis.api.controllers;
 import com.turnuvamvar.thesis.business.abstracts.TournamentService;
 import com.turnuvamvar.thesis.core.utilities.results.DataResult;
 import com.turnuvamvar.thesis.core.utilities.results.Result;
+import com.turnuvamvar.thesis.dto.Request.TournamentRequestDto;
 import com.turnuvamvar.thesis.dto.TournamentDto;
 import com.turnuvamvar.thesis.entities.concretes.Tournament;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,7 +26,7 @@ public class TournamentController {
     }
 
     @GetMapping("/get/{tournamentId}")
-    public DataResult<Tournament> getOneTournementById(@PathVariable Long tournamentId ){
+    public DataResult<TournamentRequestDto> getOneTournementById(@PathVariable Long tournamentId ){
         return this.tournamentService.getOneTournementById(tournamentId);
     }
     @PutMapping("/update/{tournamentId}")
@@ -34,7 +35,7 @@ public class TournamentController {
     }
 
     @GetMapping("/get/list")
-    public DataResult<List<TournamentDto>> getAllTournaments(){
+    public DataResult<List<TournamentRequestDto>> getAllTournaments(){
         return this.tournamentService.getAllTournaments();
     }
 

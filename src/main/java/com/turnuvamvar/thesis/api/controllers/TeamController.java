@@ -21,8 +21,8 @@ public class TeamController {
         this.teamService = teamService;
     }
     @GetMapping("/get/list")
-    public DataResult<List<TeamRequestDto>> getAllTeams(){
-        return this.teamService.getAllTeams();
+    public DataResult<List<TeamRequestDto>> getAllTeams(@RequestParam(required=false) Long tournamentId){
+        return this.teamService.getAllTeams(tournamentId);
     }
     @GetMapping("/get/list/{tournamentId}")
     public DataResult<List<TeamRequestDto>> getAllTeamsByTournamentId(@PathVariable Long tournamentId){

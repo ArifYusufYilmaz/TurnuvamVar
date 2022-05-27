@@ -9,7 +9,7 @@ import com.turnuvamvar.thesis.entities.concretes.Team;
 import java.util.List;
 
 public interface TeamService {
-    DataResult<List<TeamRequestDto>> getAllTeams();
+    DataResult<List<TeamRequestDto>> getAllTeams(Long tournamentId);
     DataResult<List<TeamRequestDto>> getAllTeamsByTournamentId(Long tournamentId);
 
     DataResult<TeamDto> createOneTeam(Long tournamentId, TeamDto newTeamDto);
