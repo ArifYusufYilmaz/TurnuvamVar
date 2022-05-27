@@ -3,9 +3,11 @@ package com.turnuvamvar.thesis.business.concretes;
 import com.turnuvamvar.thesis.business.abstracts.StageService;
 import com.turnuvamvar.thesis.core.utilities.results.*;
 import com.turnuvamvar.thesis.dataAccess.abstracts.StageDao;
+import com.turnuvamvar.thesis.dto.Request.StageRequestDto;
 import com.turnuvamvar.thesis.dto.StageDto;
 import com.turnuvamvar.thesis.entities.concretes.Stage;
 import com.turnuvamvar.thesis.entities.concretes.StageTeam;
+import com.turnuvamvar.thesis.mapper.Request.StageRequestMapper;
 import com.turnuvamvar.thesis.mapper.StageMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
@@ -20,6 +22,7 @@ public class StageManager implements StageService {
     @Autowired
     private StageDao stageDao;
     private StageMapper stageMapper;
+    private StageRequestMapper stageRequestMapper;
     @Autowired
     public StageManager(StageDao stageDao) {
         this.stageDao = stageDao;
@@ -27,6 +30,10 @@ public class StageManager implements StageService {
     @Autowired  //Lazy ?
     public void setStageMapper(StageMapper stageMapper) {
         this.stageMapper = stageMapper;
+    }
+    @Autowired
+    public void setStageRequestMapper(StageRequestMapper stageRequestMapper) {
+        this.stageRequestMapper = stageRequestMapper;
     }
 
     @Override
@@ -41,13 +48,14 @@ public class StageManager implements StageService {
     }
 
     @Override
-    public DataResult<Stage> getOneStageById(Long stageId) {
+    public DataResult<StageRequestDto> getOneStageById(Long stageId) {
         Optional<Stage> stage = this.stageDao.findById(stageId);
         if(stage.isPresent()){
-             return new SuccessDataResult<Stage>(stage.get());
+           StageRequestDto stageRequestDto =  stageRequestMapper.mapStageToStageRequestDto(stage.get());
+             return new SuccessDataResult<StageRequestDto>(stageRequestDto);
         }
         else{
-            return new ErrorDataResult<Stage>("Stage bulunamadı");
+            return new ErrorDataResult<StageRequestDto>("Stage bulunamadı");
         }
 
     }
@@ -85,15 +93,16 @@ public class StageManager implements StageService {
     }
 
     @Override
-    public DataResult<List<Stage>> getAllStages() {
+    public DataResult<List<StageRequestDto>> getAllStages() {
         List<Stage> stageList = new ArrayList<>();
         Iterable<Stage> stageIterable = this.stageDao.findAll();
         stageIterable.iterator().forEachRemaining(stageList :: add);
         if(stageList.isEmpty()){
-            return new ErrorDataResult<>("stage listesinde hiç stage bulunamadı!");
+            return new ErrorDataResult<StageRequestDto>("stage listesinde hiç stage bulunamadı!");
         }
         else{
-            return new SuccessDataResult<List<Stage>>(stageList);
+            List<StageRequestDto> stageRequestDtoList = stageRequestMapper.mapStageListToStageRequestDtoList(stageList);
+            return new SuccessDataResult<List<StageRequestDto>>(stageRequestDtoList);
         }
     }
     // if it is an duplicate record as its name returns true

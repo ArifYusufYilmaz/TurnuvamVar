@@ -3,6 +3,7 @@ package com.turnuvamvar.thesis.api.controllers;
 import com.turnuvamvar.thesis.business.abstracts.StageService;
 import com.turnuvamvar.thesis.core.utilities.results.DataResult;
 import com.turnuvamvar.thesis.core.utilities.results.Result;
+import com.turnuvamvar.thesis.dto.Request.StageRequestDto;
 import com.turnuvamvar.thesis.dto.StageDto;
 import com.turnuvamvar.thesis.entities.concretes.Stage;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,12 +21,12 @@ public class StageController {
         this.stageService = stageService;
     }
     @GetMapping("/get/list")
-    public DataResult<List<Stage>> getAllStages(){
+    public DataResult<List<StageRequestDto>> getAllStages(){
         return this.stageService.getAllStages();
     }
 
     @GetMapping("/get/{stageId}")
-    public DataResult<Stage> getOneStageById(@PathVariable Long stageId){
+    public DataResult<StageRequestDto> getOneStageById(@PathVariable Long stageId){
         return this.stageService.getOneStageById(stageId);
     }
 
