@@ -29,7 +29,7 @@ public class TeamController {
         return this.teamService.getAllTeamsByTournamentId(tournamentId);
     }
     @GetMapping("/get/{teamId}")
-    public DataResult<Team> getOneTeamById(@PathVariable Long teamId){
+    public DataResult<TeamRequestDto> getOneTeamById(@PathVariable Long teamId){
         return this.teamService.getOneTeamById(teamId);
     }
     @PutMapping("/update/{teamId}")

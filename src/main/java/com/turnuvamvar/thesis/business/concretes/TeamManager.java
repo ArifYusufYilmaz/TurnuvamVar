@@ -102,12 +102,13 @@ public class TeamManager implements TeamService {
     }
 
     @Override
-    public DataResult<Team> getOneTeamById(Long teamId) {
+    public DataResult<TeamRequestDto> getOneTeamById(Long teamId) {
         Optional<Team> team = this.teamDao.findById(teamId);
         if(team.isPresent()){
-            return new SuccessDataResult<Team>(team.get());
+           TeamRequestDto teamRequestDto = teamRequestMapper.mapTeamToTeamRequestDto(team.get());
+            return new SuccessDataResult<TeamRequestDto>(teamRequestDto);
         }else{
-            return new ErrorDataResult<Team>("takım bulunamadı..");
+            return new ErrorDataResult<TeamRequestDto>("takım bulunamadı..");
         }
     }
 

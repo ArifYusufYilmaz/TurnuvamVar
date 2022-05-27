@@ -14,7 +14,7 @@ public interface TeamService {
 
     DataResult<TeamDto> createOneTeam(Long tournamentId, TeamDto newTeamDto);
 
-    DataResult<Team> getOneTeamById(Long teamId);
+    DataResult<TeamRequestDto> getOneTeamById(Long teamId);
 
     DataResult<TeamDto> updateOneTeam(Long teamId, TeamDto teamDto);
 
