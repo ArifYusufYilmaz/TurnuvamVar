@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import axios from '../api/axios'
 import { useParams } from 'react-router-dom';
 import { Card } from './Card';
+import { CardShow } from './CardShow';
 
 export const Tournament = () => {
 	const [teams, setTeams] = useState([]);
@@ -29,7 +30,7 @@ export const Tournament = () => {
 					id: team?.id,
 					name: team?.teamName,
 				};
-				return <Card parameter={info} />;
+				return <CardShow />;
 			})}
 		</div>
 	);
