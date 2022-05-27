@@ -71,10 +71,10 @@ public class TeamManager implements TeamService {
         List<Team> teamsInTournament =  this.teamDao.findAllByTournamentId(tournamentId);
         Iterable<Team> teamIterable = teamsInTournament;
         teamIterable.iterator().forEachRemaining(teamList :: add);
-        List<TeamRequestDto> teamRequestDtoList = teamRequestMapper.mapTeamListToTeamRequestDtoList(teamList);
-        if(teamRequestDtoList.isEmpty()){
+        if(teamList.isEmpty()){
             return new ErrorDataResult<List<TeamRequestDto>>("takım listesinde hiç takım bulunamadı..");
         }else{
+            List<TeamRequestDto> teamRequestDtoList = teamRequestMapper.mapTeamListToTeamRequestDtoList(teamList);
             return new SuccessDataResult<List<TeamRequestDto>>(teamRequestDtoList);
         }
     }

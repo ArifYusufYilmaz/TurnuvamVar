@@ -12,5 +12,5 @@ public abstract class StageTeamMapper {
     public abstract StageTeamDto mapStageTeamToStageTeamDto(StageTeam stageTeam);
     @Mapping(source="stageId",target="stage.id")
     @Mapping(source="teamId",target="team.id")
-    public abstract StageTeam mapStageTeamDtoToStage(StageTeamDto stageTeamDto);
+    public abstract StageTeam mapStageTeamDtoToStageTeam(StageTeamDto stageTeamDto);
 }

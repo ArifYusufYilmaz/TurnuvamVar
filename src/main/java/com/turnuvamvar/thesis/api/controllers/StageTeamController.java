@@ -4,6 +4,7 @@ import com.turnuvamvar.thesis.business.abstracts.StageTeamService;
 import com.turnuvamvar.thesis.core.utilities.results.DataResult;
 import com.turnuvamvar.thesis.core.utilities.results.Result;
 import com.turnuvamvar.thesis.dto.GameToPlayDto;
+import com.turnuvamvar.thesis.dto.Request.StageTeamRequestDto;
 import com.turnuvamvar.thesis.dto.StageTeamDto;
 import com.turnuvamvar.thesis.entities.concretes.GameToPlay;
 import com.turnuvamvar.thesis.entities.concretes.StageTeam;
@@ -28,12 +29,12 @@ public class StageTeamController {
         return this.stageTeamService.createOneStageTeam(newStageTeamDto);
     }
     @GetMapping("/get/list")
-    public DataResult<List<StageTeam>> getAllStagesTeams(){
+    public DataResult<List<StageTeamRequestDto>> getAllStagesTeams(){
         return this.stageTeamService.getAllStagesTeams();
     }
 
     @GetMapping("/get/{stageTeamId}")
-    public DataResult<StageTeam> getOneStageTeamById(@PathVariable Long stageTeamId){
+    public DataResult<StageTeamRequestDto> getOneStageTeamById(@PathVariable Long stageTeamId){
         return this.stageTeamService.getOneStageTeamById(stageTeamId);
     }
 

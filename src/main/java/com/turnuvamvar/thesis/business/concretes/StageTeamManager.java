@@ -6,11 +6,13 @@ import com.turnuvamvar.thesis.dataAccess.abstracts.StageDao;
 import com.turnuvamvar.thesis.dataAccess.abstracts.StageTeamDao;
 import com.turnuvamvar.thesis.dataAccess.abstracts.TeamDao;
 import com.turnuvamvar.thesis.dto.GameToPlayDto;
+import com.turnuvamvar.thesis.dto.Request.StageTeamRequestDto;
 import com.turnuvamvar.thesis.dto.StageTeamDto;
 import com.turnuvamvar.thesis.entities.concretes.GameToPlay;
 import com.turnuvamvar.thesis.entities.concretes.Stage;
 import com.turnuvamvar.thesis.entities.concretes.StageTeam;
 import com.turnuvamvar.thesis.entities.concretes.Team;
+import com.turnuvamvar.thesis.mapper.Request.StageTeamRequestMapper;
 import com.turnuvamvar.thesis.mapper.StageTeamMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -25,8 +27,10 @@ public class StageTeamManager implements StageTeamService {
     @Autowired
     private StageTeamDao stageTeamDao;
     private StageTeamMapper stageTeamMapper;
+    private StageTeamRequestMapper stageTeamRequestMapper;
     private TeamDao teamDao;
     private StageDao stageDao;
+
     @Autowired
     public StageTeamManager(StageTeamDao stageTeamDao) {
         this.stageTeamDao = stageTeamDao;
@@ -43,6 +47,10 @@ public class StageTeamManager implements StageTeamService {
     public void setStageDao(StageDao stageDao) {
         this.stageDao = stageDao;
     }
+    @Autowired
+    public void setStageTeamRequestMapper(StageTeamRequestMapper stageTeamRequestMapper) {
+        this.stageTeamRequestMapper = stageTeamRequestMapper;
+    }
 
     @Override
     public DataResult<StageTeamDto> createOneStageTeam(StageTeamDto newStageTeamDto) {
@@ -55,7 +63,7 @@ public class StageTeamManager implements StageTeamService {
                 return new ErrorDataResult<StageTeamDto>("Verilen takım ve stage zaten eşlenmiş!!");
             }
             else{
-                StageTeam stageTeam = this.stageTeamMapper.mapStageTeamDtoToStage(newStageTeamDto);
+                StageTeam stageTeam = this.stageTeamMapper.mapStageTeamDtoToStageTeam(newStageTeamDto);
                 StageTeamDto stageTeamDto = this.stageTeamMapper.mapStageTeamToStageTeamDto(this.stageTeamDao.save(stageTeam));
                 return new SuccessDataResult<StageTeamDto>(stageTeamDto);
             }
@@ -65,26 +73,28 @@ public class StageTeamManager implements StageTeamService {
     }
 
     @Override
-    public DataResult<List<StageTeam>> getAllStagesTeams() {
+    public DataResult<List<StageTeamRequestDto>> getAllStagesTeams() {
         List<StageTeam> stageTeamList = new ArrayList<>();
         Iterable<StageTeam> stageTeamIterable = this.stageTeamDao.findAll();
         stageTeamIterable.iterator().forEachRemaining(stageTeamList :: add);
         if(stageTeamList.isEmpty()){
-            return new ErrorDataResult<List<StageTeam>>("aşama_takım   listesinde hiç aşama_takım bulunamadı!");
+            return new ErrorDataResult<List<StageTeamRequestDto>>("aşama_takım   listesinde hiç aşama_takım bulunamadı!");
         }
         else{
-            return new SuccessDataResult<List<StageTeam>>(stageTeamList);
+            List<StageTeamRequestDto> stageTeamRequestDtoList = stageTeamRequestMapper.mapStageTeamListToStageTeamRequestDtoList(stageTeamList);
+            return new SuccessDataResult<List<StageTeamRequestDto>>(stageTeamRequestDtoList);
         }
     }
 
     @Override
-    public DataResult<StageTeam> getOneStageTeamById(Long stageTeamId) {
+    public DataResult<StageTeamRequestDto> getOneStageTeamById(Long stageTeamId) {
         Optional<StageTeam> stageTeam = this.stageTeamDao.findById(stageTeamId);
         if(stageTeam.isPresent()){
-            return new SuccessDataResult<StageTeam>(stageTeam.get());
+           StageTeamRequestDto stageTeamRequestDto =  stageTeamRequestMapper.mapStageTeamToStageTeamRequestDto(stageTeam.get());
+            return new SuccessDataResult<StageTeamRequestDto>(stageTeamRequestDto);
         }
         else{
-            return new ErrorDataResult<StageTeam>("aşama_takım bulunamadı");
+            return new ErrorDataResult<StageTeamRequestDto>("aşama_takım bulunamadı");
         }
     }
 

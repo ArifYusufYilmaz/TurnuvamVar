@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2022-05-03T19:25:53+0300",
+    date = "2022-05-28T01:40:40+0300",
     comments = "version: 1.4.2.Final, compiler: javac, environment: Java 11.0.6 (Oracle Corporation)"
 )
 @Component
@@ -30,7 +30,7 @@ public class StageTeamMapperImpl extends StageTeamMapper {
     }
 
     @Override
-    public StageTeam mapStageTeamDtoToStage(StageTeamDto stageTeamDto) {
+    public StageTeam mapStageTeamDtoToStageTeam(StageTeamDto stageTeamDto) {
         if ( stageTeamDto == null ) {
             return null;
         }
