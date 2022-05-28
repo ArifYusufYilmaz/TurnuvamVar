@@ -37,52 +37,61 @@ public class TournamentManager implements TournamentService {
     }
 
     @Override
-    public DataResult<List<TournamentRequestDto>> getAllTournaments() {
+    public DataResult<List<TournamentResponseDto>> getAllTournaments() {
         List<Tournament> tournamentList = new ArrayList<>();
         Iterable<Tournament> tournamentIterable = this.tournamentDao.findAll();
         tournamentIterable.iterator().forEachRemaining(tournamentList :: add);
-        List<TournamentRequestDto> tournamentRequestDtoList = this.tournamentRequestMapper.mapTournamentListToTournamentRequestDtoList(tournamentList);
-        if(tournamentRequestDtoList.isEmpty()){
-            return new ErrorDataResult<TournamentRequestDto>("tournament Request dto bos..  bu mesaj degistirilebilir");
+
+        if(tournamentList.isEmpty()){
+            return new ErrorDataResult<TournamentResponseDto>("tournament Request dto bos..  bu mesaj degistirilebilir");
+        }
+        else{
+            List<TournamentResponseDto> tournamentResponseDtoList = this.tournamentResponseMapper.mapTournamentListToTournamentResponseDtoList(tournamentList);
+            return new SuccessDataResult<List<TournamentResponseDto>>(tournamentResponseDtoList);
+        }
+    }
+
+    @Override
+    public DataResult<TournamentResponseDto> createOneTournament(TournamentRequestDto newTournamentRequestDto) {
+        //kontroller!
+        if(newTournamentRequestDto == null){
+            return new ErrorDataResult<TournamentResponseDto>("istek hatalı");
+        }
+        else{
+            Tournament tournament = tournamentRequestMapper.mapTournamentRequestDtoToTournament(newTournamentRequestDto);
+            tournament = this.tournamentDao.save(tournament);
+            TournamentResponseDto tournamentResponseDto = tournamentResponseMapper.mapTournamentToTournamentResponseDto(tournament);
+            return new SuccessDataResult<TournamentResponseDto>(tournamentResponseDto);
         }
 
-        return new SuccessDataResult<List<TournamentRequestDto>>(tournamentRequestDtoList);
-    }
-
-    @Override
-    public DataResult<TournamentResponseDto> createOneTournament(TournamentResponseDto newTournamentResponseDto) {
-        //kontroller!
-            Tournament tournament = tournamentResponseMapper.mapTournamentResponseDtoToTournament(newTournamentResponseDto);
-            TournamentResponseDto tournamentResponseDto = tournamentResponseMapper.mapTournamentToTournamentResponseDto(this.tournamentDao.save(tournament));
-            return new SuccessDataResult<TournamentResponseDto>(tournamentResponseDto);
 
     }
 
     @Override
-    public DataResult<TournamentRequestDto> getOneTournementById(Long tournamentId) {
+    public DataResult<TournamentResponseDto> getOneTournementById(Long tournamentId) {
         Optional<Tournament> tournament = this.tournamentDao.findById(tournamentId);
         if(tournament.isPresent()){
-            TournamentRequestDto tournamentRequestDto = tournamentRequestMapper.mapTournamentToTournamentRequestDto(tournament.get());
-            return new SuccessDataResult<TournamentRequestDto>(tournamentRequestDto);
+            TournamentResponseDto tournamentResponseDto = tournamentResponseMapper.mapTournamentToTournamentResponseDto(tournament.get());
+            return new SuccessDataResult<TournamentResponseDto>(tournamentResponseDto);
         }else{
-            return new ErrorDataResult<TournamentRequestDto>("verilen id'ye ait turnuva bulunamadı..");
+            return new ErrorDataResult<TournamentResponseDto>("verilen id'ye ait turnuva bulunamadı..");
         }
 
     }
 
     @Override
-    public DataResult<TournamentResponseDto> updateOneTournement(Long tournamentId, TournamentResponseDto tournamentResponseDto) {
+    public DataResult<TournamentResponseDto> updateOneTournement(Long tournamentId, TournamentRequestDto tournamentRequestDto) {
         Optional<Tournament> tournament = this.tournamentDao.findById(tournamentId);
         if(tournament.isPresent()){
             Tournament toSave = tournament.get();
-            toSave.setDescription(tournamentResponseDto.getDescription());
-            toSave.setTournamentName(tournamentResponseDto.getTournamentName());
+            toSave.setDescription(tournamentRequestDto.getDescription());
+            toSave.setTournamentName(tournamentRequestDto.getTournamentName());
             toSave = this.tournamentDao.save(toSave);
             TournamentResponseDto newTournamentResponseDto = tournamentResponseMapper.mapTournamentToTournamentResponseDto(toSave);
             return new SuccessDataResult<TournamentResponseDto>(newTournamentResponseDto);
         }
         else{
-            return new ErrorDataResult<>("verilen id'ye ait turnuva bulunamadı..");
+            return new ErrorDataResult<TournamentResponseDto>("verilen id'ye ait turnuva bulunamadı..");
         }
     }
 

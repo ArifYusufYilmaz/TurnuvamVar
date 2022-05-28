@@ -8,14 +8,14 @@ import com.turnuvamvar.thesis.dto.Response.TeamResponseDto;
 import java.util.List;
 
 public interface TeamService {
-    DataResult<List<TeamRequestDto>> getAllTeams(Long tournamentId);
-    DataResult<List<TeamRequestDto>> getAllTeamsByTournamentId(Long tournamentId);
+    DataResult<List<TeamResponseDto>> getAllTeams(Long tournamentId);
+    DataResult<List<TeamResponseDto>> getAllTeamsByTournamentId(Long tournamentId);
 
-    DataResult<TeamResponseDto> createOneTeam(Long tournamentId, TeamResponseDto newTeamResponseDto);
+    DataResult<TeamResponseDto> createOneTeam(Long tournamentId, TeamRequestDto newTeamRequestDto);
 
-    DataResult<TeamRequestDto> getOneTeamById(Long teamId);
+    DataResult<TeamResponseDto> getOneTeamById(Long teamId);
 
-    DataResult<TeamResponseDto> updateOneTeam(Long teamId, TeamResponseDto teamResponseDto);
+    DataResult<TeamResponseDto> updateOneTeam(Long teamId, TeamRequestDto teamRequestDto);
 
     Result deleteOneTeamById(Long teamId);
 }

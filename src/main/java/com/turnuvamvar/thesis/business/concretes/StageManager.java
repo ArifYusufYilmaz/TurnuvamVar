@@ -36,6 +36,7 @@ public class StageManager implements StageService {
 
     @Override
     public DataResult<StageResponseDto> createOneStage(StageResponseDto newStageResponseDto) {
+        // null olma durumunu kontrol et.
         if(checkIfItHasSameStageByName(newStageResponseDto.getStageName())){
             return new ErrorDataResult<StageResponseDto>("Bu aşama ismi zaten mevcut!!");
         }else{

@@ -8,13 +8,13 @@ import com.turnuvamvar.thesis.dto.Response.TournamentResponseDto;
 import java.util.List;
 
 public interface TournamentService {
-    DataResult<List<TournamentRequestDto>> getAllTournaments();
+    DataResult<List<TournamentResponseDto>> getAllTournaments();
 
-    DataResult<TournamentResponseDto> createOneTournament(TournamentResponseDto newTournamentResponseDto);
+    DataResult<TournamentResponseDto> createOneTournament(TournamentRequestDto newTournamentRequestDto);
 
-    DataResult<TournamentRequestDto> getOneTournementById(Long tournamentId);
+    DataResult<TournamentResponseDto> getOneTournementById(Long tournamentId);
 
-    DataResult<TournamentResponseDto> updateOneTournement(Long tournamentId, TournamentResponseDto tournamentResponseDto);
+    DataResult<TournamentResponseDto> updateOneTournement(Long tournamentId, TournamentRequestDto tournamentRequestDto);
 
     Result deleteOneTournementById(Long tournamentId);
 }

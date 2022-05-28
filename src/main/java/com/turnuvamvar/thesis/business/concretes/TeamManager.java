@@ -46,7 +46,7 @@ public class TeamManager implements TeamService {
     }
 
     @Override
-    public DataResult<List<TeamRequestDto>> getAllTeams(Long tournamentId) {    //düzenlenecek!
+    public DataResult<List<TeamResponseDto>> getAllTeams(Long tournamentId) {    //düzenlenecek!
         List<Team> teamList = new ArrayList<>();
         Iterable<Team> teamIterable;
         if(tournamentId == null){
@@ -56,43 +56,43 @@ public class TeamManager implements TeamService {
         }
 
         teamIterable.iterator().forEachRemaining( teamList :: add);
-        List<TeamRequestDto> teamRequestDtoList =  teamRequestMapper.mapTeamListToTeamRequestDtoList(teamList);
 
-        if(teamRequestDtoList.isEmpty()){
-            return new ErrorDataResult<List<TeamRequestDto>>("takım listesinde hiç takım bulunamadı..");
+        if(teamList.isEmpty()){
+            return new ErrorDataResult<List<TeamResponseDto>>("takım listesinde hiç takım bulunamadı..");
         }else{
-            return new SuccessDataResult<List<TeamRequestDto>>(teamRequestDtoList);
+            List<TeamResponseDto> teamResponseDtoList =  this.teamResponseMapper.mapTeamListToTeamResponseDtoList(teamList);
+            return new SuccessDataResult<List<TeamResponseDto>>(teamResponseDtoList);
         }
     }
 
     @Override
-    public DataResult<List<TeamRequestDto>> getAllTeamsByTournamentId(Long tournamentId) {
+    public DataResult<List<TeamResponseDto>> getAllTeamsByTournamentId(Long tournamentId) {
         List<Team> teamList = new ArrayList<>();
         List<Team> teamsInTournament =  this.teamDao.findAllByTournamentId(tournamentId);
         Iterable<Team> teamIterable = teamsInTournament;
         teamIterable.iterator().forEachRemaining(teamList :: add);
         if(teamList.isEmpty()){
-            return new ErrorDataResult<List<TeamRequestDto>>("takım listesinde hiç takım bulunamadı..");
+            return new ErrorDataResult<List<TeamResponseDto>>("takım listesinde hiç takım bulunamadı..");
         }else{
-            List<TeamRequestDto> teamRequestDtoList = teamRequestMapper.mapTeamListToTeamRequestDtoList(teamList);
-            return new SuccessDataResult<List<TeamRequestDto>>(teamRequestDtoList);
+            List<TeamResponseDto> teamResponseDtoList = this.teamResponseMapper.mapTeamListToTeamResponseDtoList(teamList);
+            return new SuccessDataResult<List<TeamResponseDto>>(teamResponseDtoList);
         }
     }
 
 
     @Override
-    public DataResult<TeamResponseDto> createOneTeam(Long tournamentId, TeamResponseDto newTeamResponseDto) {
+    public DataResult<TeamResponseDto> createOneTeam(Long tournamentId, TeamRequestDto newTeamRequestDto) {
         Optional<Tournament> tournament = this.tournamentDao.findById(tournamentId);
 
         if(tournament.isPresent()){
-            Team newTeam = teamResponseMapper.mapTeamResponseDtoToTeam(newTeamResponseDto);
+            Team newTeam = this.teamRequestMapper.mapTeamRequestDtoToTeam(newTeamRequestDto);
             newTeam.setTournament(tournament.get());
 
             newTeam.getTeamCaptain().setCaptainFirstName(newTeam.getCaptainFirstName());
             newTeam.getTeamCaptain().setCaptainLastName(newTeam.getCaptainLastName());
-
-            newTeamResponseDto = teamResponseMapper.mapTeamToTeamResponseDto(this.teamDao.save(newTeam));
-            return new SuccessDataResult<TeamResponseDto>(newTeamResponseDto);
+            newTeam= this.teamDao.save(newTeam);
+            TeamResponseDto teamResponseDto = teamResponseMapper.mapTeamToTeamResponseDto(newTeam);
+            return new SuccessDataResult<TeamResponseDto>(teamResponseDto);
         }
         else{
             //error mesajı düzenlenebilir.
@@ -102,24 +102,24 @@ public class TeamManager implements TeamService {
     }
 
     @Override
-    public DataResult<TeamRequestDto> getOneTeamById(Long teamId) {
+    public DataResult<TeamResponseDto> getOneTeamById(Long teamId) {
         Optional<Team> team = this.teamDao.findById(teamId);
         if(team.isPresent()){
-           TeamRequestDto teamRequestDto = teamRequestMapper.mapTeamToTeamRequestDto(team.get());
-            return new SuccessDataResult<TeamRequestDto>(teamRequestDto);
+            TeamResponseDto teamResponseDto = teamResponseMapper.mapTeamToTeamResponseDto(team.get());
+            return new SuccessDataResult<TeamResponseDto>(teamResponseDto);
         }else{
-            return new ErrorDataResult<TeamRequestDto>("takım bulunamadı..");
+            return new ErrorDataResult<TeamResponseDto>("takım bulunamadı..");
         }
     }
 
     @Override
-    public DataResult<TeamResponseDto> updateOneTeam(Long teamId, TeamResponseDto teamResponseDto) {
+    public DataResult<TeamResponseDto> updateOneTeam(Long teamId, TeamRequestDto teamRequestDto) {
         Optional<Team> team = this.teamDao.findById(teamId);
         if(team.isPresent()){
             Team toSave = team.get();
-            toSave.setTeamName(teamResponseDto.getTeamName());
-            toSave.setCaptainFirstName(teamResponseDto.getCaptainFirstName());
-            toSave.setCaptainLastName(teamResponseDto.getCaptainLastName());
+            toSave.setTeamName(teamRequestDto.getTeamName());
+            toSave.setCaptainFirstName(teamRequestDto.getCaptainFirstName());
+            toSave.setCaptainLastName(teamRequestDto.getCaptainLastName());
             toSave = this.teamDao.save(toSave);
             TeamResponseDto newTeamResponseDto = teamResponseMapper.mapTeamToTeamResponseDto(toSave);
             return new SuccessDataResult<TeamResponseDto>(newTeamResponseDto);

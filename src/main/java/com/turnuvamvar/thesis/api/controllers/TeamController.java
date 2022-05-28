@@ -20,24 +20,24 @@ public class TeamController {
         this.teamService = teamService;
     }
     @GetMapping("/get/list")
-    public DataResult<List<TeamRequestDto>> getAllTeams(@RequestParam(required=false) Long tournamentId){
+    public DataResult<List<TeamResponseDto>> getAllTeams(@RequestParam(required=false) Long tournamentId){
         return this.teamService.getAllTeams(tournamentId);
     }
     @GetMapping("/get/list/{tournamentId}")
-    public DataResult<List<TeamRequestDto>> getAllTeamsByTournamentId(@PathVariable Long tournamentId){
+    public DataResult<List<TeamResponseDto>> getAllTeamsByTournamentId(@PathVariable Long tournamentId){
         return this.teamService.getAllTeamsByTournamentId(tournamentId);
     }
     @GetMapping("/get/{teamId}")
-    public DataResult<TeamRequestDto> getOneTeamById(@PathVariable Long teamId){
+    public DataResult<TeamResponseDto> getOneTeamById(@PathVariable Long teamId){
         return this.teamService.getOneTeamById(teamId);
     }
     @PutMapping("/update/{teamId}")
-    public DataResult<TeamResponseDto> updateOneTeam(@PathVariable Long teamId, @RequestBody TeamResponseDto teamResponseDto){
-        return this.teamService.updateOneTeam(teamId, teamResponseDto);
+    public DataResult<TeamResponseDto> updateOneTeam(@PathVariable Long teamId, @RequestBody TeamRequestDto teamRequestDto){
+        return this.teamService.updateOneTeam(teamId, teamRequestDto);
     }
     @PostMapping("/save/{tournamentId}")
-    public DataResult<TeamResponseDto> createOneTeam(@PathVariable Long tournamentId, @RequestBody TeamResponseDto newTeamResponseDto){
-        return this.teamService.createOneTeam(tournamentId, newTeamResponseDto);
+    public DataResult<TeamResponseDto> createOneTeam(@PathVariable Long tournamentId, @RequestBody TeamRequestDto newTeamRequestDto){
+        return this.teamService.createOneTeam(tournamentId, newTeamRequestDto);
     }
     @DeleteMapping("/delete/{teamId}")
     public Result deleteOneTeam(@PathVariable Long teamId){

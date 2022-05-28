@@ -24,22 +24,22 @@ public class TournamentController {
     }
 
     @GetMapping("/get/{tournamentId}")
-    public DataResult<TournamentRequestDto> getOneTournementById(@PathVariable Long tournamentId ){
+    public DataResult<TournamentResponseDto> getOneTournementById(@PathVariable Long tournamentId ){
         return this.tournamentService.getOneTournementById(tournamentId);
     }
     @PutMapping("/update/{tournamentId}")
-    public DataResult<TournamentResponseDto> updateOneTournement(@PathVariable Long tournamentId, @RequestBody TournamentResponseDto tournamentResponseDto){
-        return this.tournamentService.updateOneTournement(tournamentId, tournamentResponseDto);
+    public DataResult<TournamentResponseDto> updateOneTournement(@PathVariable Long tournamentId, @RequestBody TournamentRequestDto tournamentRequestDto){
+        return this.tournamentService.updateOneTournement(tournamentId, tournamentRequestDto);
     }
 
     @GetMapping("/get/list")
-    public DataResult<List<TournamentRequestDto>> getAllTournaments(){
+    public DataResult<List<TournamentResponseDto>> getAllTournaments(){
         return this.tournamentService.getAllTournaments();
     }
 
     @PostMapping("/save")
-    public DataResult<TournamentResponseDto> createOneTournament(@RequestBody TournamentResponseDto newTournamentResponseDto){
-        return this.tournamentService.createOneTournament(newTournamentResponseDto);
+    public DataResult<TournamentResponseDto> createOneTournament(@RequestBody TournamentRequestDto newTournamentRequestDto){
+        return this.tournamentService.createOneTournament(newTournamentRequestDto);
     }
 
     @DeleteMapping("/delete/{tournamentId}")
