@@ -5,11 +5,11 @@ import com.turnuvamvar.thesis.core.utilities.results.*;
 import com.turnuvamvar.thesis.dataAccess.abstracts.TeamDao;
 import com.turnuvamvar.thesis.dataAccess.abstracts.TournamentDao;
 import com.turnuvamvar.thesis.dto.Request.TeamRequestDto;
-import com.turnuvamvar.thesis.dto.TeamDto;
+import com.turnuvamvar.thesis.dto.Response.TeamResponseDto;
 import com.turnuvamvar.thesis.entities.concretes.Team;
 import com.turnuvamvar.thesis.entities.concretes.Tournament;
 import com.turnuvamvar.thesis.mapper.Request.TeamRequestMapper;
-import com.turnuvamvar.thesis.mapper.TeamMapper;
+import com.turnuvamvar.thesis.mapper.Response.TeamResponseMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
@@ -25,7 +25,7 @@ public class TeamManager implements TeamService {
 
     private TournamentDao tournamentDao;
 
-    private TeamMapper teamMapper;
+    private TeamResponseMapper teamResponseMapper;
     private TeamRequestMapper teamRequestMapper;
 
     @Autowired
@@ -37,8 +37,8 @@ public class TeamManager implements TeamService {
         this.tournamentDao = tournamentDao;
     }
     @Autowired
-    public void setTeamMapper(@Lazy TeamMapper teamMapper) {
-        this.teamMapper = teamMapper;
+    public void setTeamResponseMapper(@Lazy TeamResponseMapper teamResponseMapper) {
+        this.teamResponseMapper = teamResponseMapper;
     }
     @Autowired
     public void setTeamRequestMapper(TeamRequestMapper teamRequestMapper) {
@@ -81,22 +81,22 @@ public class TeamManager implements TeamService {
 
 
     @Override
-    public DataResult<TeamDto> createOneTeam(Long tournamentId, TeamDto newTeamDto) {
+    public DataResult<TeamResponseDto> createOneTeam(Long tournamentId, TeamResponseDto newTeamResponseDto) {
         Optional<Tournament> tournament = this.tournamentDao.findById(tournamentId);
 
         if(tournament.isPresent()){
-            Team newTeam = teamMapper.mapTeamDtoToTeam(newTeamDto);
+            Team newTeam = teamResponseMapper.mapTeamResponseDtoToTeam(newTeamResponseDto);
             newTeam.setTournament(tournament.get());
 
             newTeam.getTeamCaptain().setCaptainFirstName(newTeam.getCaptainFirstName());
             newTeam.getTeamCaptain().setCaptainLastName(newTeam.getCaptainLastName());
 
-            newTeamDto = teamMapper.mapTeamToTeamDto(this.teamDao.save(newTeam));
-            return new SuccessDataResult<TeamDto>(newTeamDto);
+            newTeamResponseDto = teamResponseMapper.mapTeamToTeamResponseDto(this.teamDao.save(newTeam));
+            return new SuccessDataResult<TeamResponseDto>(newTeamResponseDto);
         }
         else{
             //error mesajı düzenlenebilir.
-            return new ErrorDataResult<TeamDto>("verilen id'de turnuva bulunamadı..");
+            return new ErrorDataResult<TeamResponseDto>("verilen id'de turnuva bulunamadı..");
         }
 
     }
@@ -113,18 +113,18 @@ public class TeamManager implements TeamService {
     }
 
     @Override
-    public DataResult<TeamDto> updateOneTeam(Long teamId, TeamDto teamDto) {
+    public DataResult<TeamResponseDto> updateOneTeam(Long teamId, TeamResponseDto teamResponseDto) {
         Optional<Team> team = this.teamDao.findById(teamId);
         if(team.isPresent()){
             Team toSave = team.get();
-            toSave.setTeamName(teamDto.getTeamName());
-            toSave.setCaptainFirstName(teamDto.getCaptainFirstName());
-            toSave.setCaptainLastName(teamDto.getCaptainLastName());
+            toSave.setTeamName(teamResponseDto.getTeamName());
+            toSave.setCaptainFirstName(teamResponseDto.getCaptainFirstName());
+            toSave.setCaptainLastName(teamResponseDto.getCaptainLastName());
             toSave = this.teamDao.save(toSave);
-            TeamDto newTeamDto = teamMapper.mapTeamToTeamDto(toSave);
-            return new SuccessDataResult<TeamDto>(newTeamDto);
+            TeamResponseDto newTeamResponseDto = teamResponseMapper.mapTeamToTeamResponseDto(toSave);
+            return new SuccessDataResult<TeamResponseDto>(newTeamResponseDto);
         }else{
-            return new ErrorDataResult<TeamDto>("takım bulunamadı");
+            return new ErrorDataResult<TeamResponseDto>("takım bulunamadı");
         }
 
     }

@@ -4,8 +4,7 @@ import com.turnuvamvar.thesis.business.abstracts.StageService;
 import com.turnuvamvar.thesis.core.utilities.results.DataResult;
 import com.turnuvamvar.thesis.core.utilities.results.Result;
 import com.turnuvamvar.thesis.dto.Request.StageRequestDto;
-import com.turnuvamvar.thesis.dto.StageDto;
-import com.turnuvamvar.thesis.entities.concretes.Stage;
+import com.turnuvamvar.thesis.dto.Response.StageResponseDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -31,13 +30,13 @@ public class StageController {
     }
 
     @PutMapping("/update/{stageId}")
-    public DataResult<StageDto> updateOneStage(@PathVariable Long stageId, @RequestBody StageDto stageDto){
-        return this.stageService.updateOneStage(stageId, stageDto);
+    public DataResult<StageResponseDto> updateOneStage(@PathVariable Long stageId, @RequestBody StageResponseDto stageResponseDto){
+        return this.stageService.updateOneStage(stageId, stageResponseDto);
     }
 
     @PostMapping("/save")
-    public DataResult<StageDto> createOneStage(@RequestBody StageDto newStageDto){
-        return this.stageService.createOneStage(newStageDto);
+    public DataResult<StageResponseDto> createOneStage(@RequestBody StageResponseDto newStageResponseDto){
+        return this.stageService.createOneStage(newStageResponseDto);
     }
     @DeleteMapping("/delete/{stageId}")
     public Result deleteOneStage(@PathVariable Long stageId){

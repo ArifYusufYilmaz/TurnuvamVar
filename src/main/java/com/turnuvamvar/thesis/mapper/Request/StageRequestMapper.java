@@ -1,7 +1,6 @@
 package com.turnuvamvar.thesis.mapper.Request;
 
 import com.turnuvamvar.thesis.dto.Request.StageRequestDto;
-import com.turnuvamvar.thesis.dto.StageDto;
 import com.turnuvamvar.thesis.entities.concretes.Stage;
 import org.mapstruct.Mapper;
 

@@ -3,11 +3,8 @@ package com.turnuvamvar.thesis.api.controllers;
 import com.turnuvamvar.thesis.business.abstracts.StageTeamService;
 import com.turnuvamvar.thesis.core.utilities.results.DataResult;
 import com.turnuvamvar.thesis.core.utilities.results.Result;
-import com.turnuvamvar.thesis.dto.GameToPlayDto;
 import com.turnuvamvar.thesis.dto.Request.StageTeamRequestDto;
-import com.turnuvamvar.thesis.dto.StageTeamDto;
-import com.turnuvamvar.thesis.entities.concretes.GameToPlay;
-import com.turnuvamvar.thesis.entities.concretes.StageTeam;
+import com.turnuvamvar.thesis.dto.Response.StageTeamResponseDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -25,8 +22,8 @@ public class StageTeamController {
     }
 
     @PostMapping("/save")
-    public DataResult<StageTeamDto> createOneStageTeam(@RequestBody StageTeamDto newStageTeamDto){
-        return this.stageTeamService.createOneStageTeam(newStageTeamDto);
+    public DataResult<StageTeamResponseDto> createOneStageTeam(@RequestBody StageTeamResponseDto newStageTeamResponseDto){
+        return this.stageTeamService.createOneStageTeam(newStageTeamResponseDto);
     }
     @GetMapping("/get/list")
     public DataResult<List<StageTeamRequestDto>> getAllStagesTeams(){
@@ -39,8 +36,8 @@ public class StageTeamController {
     }
 
     @PutMapping("/update/{stageTeamId}")
-    public DataResult<StageTeamDto> updateOneStageTeam(@PathVariable Long stageTeamId, @RequestBody StageTeamDto stageTeamDto){
-        return this.stageTeamService.updateOneStageTeam(stageTeamId, stageTeamDto);
+    public DataResult<StageTeamResponseDto> updateOneStageTeam(@PathVariable Long stageTeamId, @RequestBody StageTeamResponseDto stageTeamResponseDto){
+        return this.stageTeamService.updateOneStageTeam(stageTeamId, stageTeamResponseDto);
     }
 
 

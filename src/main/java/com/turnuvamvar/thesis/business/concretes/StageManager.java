@@ -4,13 +4,11 @@ import com.turnuvamvar.thesis.business.abstracts.StageService;
 import com.turnuvamvar.thesis.core.utilities.results.*;
 import com.turnuvamvar.thesis.dataAccess.abstracts.StageDao;
 import com.turnuvamvar.thesis.dto.Request.StageRequestDto;
-import com.turnuvamvar.thesis.dto.StageDto;
+import com.turnuvamvar.thesis.dto.Response.StageResponseDto;
 import com.turnuvamvar.thesis.entities.concretes.Stage;
-import com.turnuvamvar.thesis.entities.concretes.StageTeam;
 import com.turnuvamvar.thesis.mapper.Request.StageRequestMapper;
-import com.turnuvamvar.thesis.mapper.StageMapper;
+import com.turnuvamvar.thesis.mapper.Response.StageResponseMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -21,15 +19,15 @@ import java.util.Optional;
 public class StageManager implements StageService {
     @Autowired
     private StageDao stageDao;
-    private StageMapper stageMapper;
+    private StageResponseMapper stageResponseMapper;
     private StageRequestMapper stageRequestMapper;
     @Autowired
     public StageManager(StageDao stageDao) {
         this.stageDao = stageDao;
     }
     @Autowired  //Lazy ?
-    public void setStageMapper(StageMapper stageMapper) {
-        this.stageMapper = stageMapper;
+    public void setStageResponseMapper(StageResponseMapper stageResponseMapper) {
+        this.stageResponseMapper = stageResponseMapper;
     }
     @Autowired
     public void setStageRequestMapper(StageRequestMapper stageRequestMapper) {
@@ -37,13 +35,13 @@ public class StageManager implements StageService {
     }
 
     @Override
-    public DataResult<StageDto> createOneStage(StageDto newStageDto) {
-        if(checkIfItHasSameStageByName(newStageDto.getStageName())){
-            return new ErrorDataResult<StageDto>("Bu aşama ismi zaten mevcut!!");
+    public DataResult<StageResponseDto> createOneStage(StageResponseDto newStageResponseDto) {
+        if(checkIfItHasSameStageByName(newStageResponseDto.getStageName())){
+            return new ErrorDataResult<StageResponseDto>("Bu aşama ismi zaten mevcut!!");
         }else{
-            Stage stage =  this.stageMapper.mapStageDtoToStage(newStageDto);
-            StageDto stageDto = this.stageMapper.mapStageToStageDto(this.stageDao.save(stage));
-            return new SuccessDataResult<StageDto>(stageDto);
+            Stage stage =  this.stageResponseMapper.mapStageResponseDtoToStage(newStageResponseDto);
+            StageResponseDto stageResponseDto = this.stageResponseMapper.mapStageToStageResponseDto(this.stageDao.save(stage));
+            return new SuccessDataResult<StageResponseDto>(stageResponseDto);
         }
     }
 
@@ -61,21 +59,21 @@ public class StageManager implements StageService {
     }
 
     @Override
-    public DataResult<StageDto> updateOneStage(Long stageId, StageDto stageDto) {
+    public DataResult<StageResponseDto> updateOneStage(Long stageId, StageResponseDto stageResponseDto) {
         Optional<Stage> stage = this.stageDao.findById(stageId);
         if(stage.isPresent()){
             Stage toSave = stage.get();
-            toSave.setStageName(stageDto.getStageName());
+            toSave.setStageName(stageResponseDto.getStageName());
             if(checkIfItHasSameStageByName(toSave.getStageName())){
-                return new ErrorDataResult<StageDto>("Aynı stage ismine sahip veri zaten mevcut..");
+                return new ErrorDataResult<StageResponseDto>("Aynı stage ismine sahip veri zaten mevcut..");
             }else {
                 toSave = this.stageDao.save(toSave);
-                StageDto newStageDto = stageMapper.mapStageToStageDto(toSave);
-                return new SuccessDataResult<StageDto>(newStageDto);
+                StageResponseDto newStageResponseDto = stageResponseMapper.mapStageToStageResponseDto(toSave);
+                return new SuccessDataResult<StageResponseDto>(newStageResponseDto);
             }
         }
         else{
-            return new ErrorDataResult<StageDto>("stage bulunamadı..");
+            return new ErrorDataResult<StageResponseDto>("stage bulunamadı..");
         }
 
     }

@@ -1,6 +1,5 @@
 package com.turnuvamvar.thesis.mapper.Request;
 
-import com.turnuvamvar.thesis.dto.PlayerToAddDto;
 import com.turnuvamvar.thesis.dto.Request.PlayerToAddRequestDto;
 import com.turnuvamvar.thesis.entities.concretes.PlayerToAdd;
 import org.mapstruct.Mapper;

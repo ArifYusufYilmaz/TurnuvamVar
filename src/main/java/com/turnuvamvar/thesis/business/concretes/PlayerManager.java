@@ -1,18 +1,15 @@
 package com.turnuvamvar.thesis.business.concretes;
 
 import com.turnuvamvar.thesis.business.abstracts.PlayerService;
-import com.turnuvamvar.thesis.business.abstracts.PlayerToAddService;
 import com.turnuvamvar.thesis.core.utilities.results.*;
 import com.turnuvamvar.thesis.dataAccess.abstracts.PlayerDao;
 import com.turnuvamvar.thesis.dataAccess.abstracts.PlayerToAddDao;
-import com.turnuvamvar.thesis.dto.PlayerDto;
-import com.turnuvamvar.thesis.dto.PlayerToAddDto;
-import com.turnuvamvar.thesis.dto.StageDto;
+import com.turnuvamvar.thesis.dto.Response.PlayerResponseDto;
+import com.turnuvamvar.thesis.dto.Response.PlayerToAddResponseDto;
 import com.turnuvamvar.thesis.entities.concretes.Player;
 import com.turnuvamvar.thesis.entities.concretes.PlayerToAdd;
-import com.turnuvamvar.thesis.entities.concretes.Stage;
-import com.turnuvamvar.thesis.mapper.PlayerMapper;
-import com.turnuvamvar.thesis.mapper.PlayerToAddMapper;
+import com.turnuvamvar.thesis.mapper.Response.PlayerResponseMapper;
+import com.turnuvamvar.thesis.mapper.Response.PlayerToAddResponseMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -25,19 +22,19 @@ public class PlayerManager implements PlayerService {
     @Autowired
     private PlayerDao playerDao;
     private PlayerToAddDao playerToAddDao;
-    private PlayerMapper playerMapper;
-    private PlayerToAddMapper playerToAddMapper;
+    private PlayerResponseMapper playerResponseMapper;
+    private PlayerToAddResponseMapper playerToAddResponseMapper;
     @Autowired
     public PlayerManager(PlayerDao playerDao) {
         this.playerDao = playerDao;
     }
     @Autowired
-    public void setPlayerMapper(PlayerMapper playerMapper) {
-        this.playerMapper = playerMapper;
+    public void setPlayerResponseMapper(PlayerResponseMapper playerResponseMapper) {
+        this.playerResponseMapper = playerResponseMapper;
     }
     @Autowired
-    public void setPlayerToAddMapper(PlayerToAddMapper playerToAddMapper) {
-        this.playerToAddMapper = playerToAddMapper;
+    public void setPlayerToAddResponseMapper(PlayerToAddResponseMapper playerToAddResponseMapper) {
+        this.playerToAddResponseMapper = playerToAddResponseMapper;
     }
     @Autowired
     public void setPlayerToAddDao(PlayerToAddDao playerToAddDao) {
@@ -49,8 +46,8 @@ public class PlayerManager implements PlayerService {
 
         Optional<PlayerToAdd> playerToAdd = this.playerToAddDao.findById(playerToAddDtoId);
         if(playerToAdd.isPresent()){
-            PlayerToAddDto playerToAddDto = this.playerToAddMapper.mapPlayerToAddToPlayerToAddDto(playerToAdd.get());
-            Player player = this.playerMapper.mapPlayerToAddDtoToPlayer(playerToAddDto);
+            PlayerToAddResponseDto playerToAddResponseDto = this.playerToAddResponseMapper.mapPlayerToAddToPlayerToAddResponseDto(playerToAdd.get());
+            Player player = this.playerResponseMapper.mapPlayerToAddResponseDtoToPlayer(playerToAddResponseDto);
             player.setTeam(playerToAdd.get().getTeam());
             // oyuncu eklendiği zaman eklenecek oyuncu listesindekinin silinmesi lazım!!!!!!!
             // aynı şekilde reddedilse de ordan silinmesi lazım.
@@ -75,22 +72,22 @@ public class PlayerManager implements PlayerService {
     }
 
     @Override
-    public DataResult<PlayerDto> updateOnePlayer(Long playerId, PlayerDto playerDto) { // fix
+    public DataResult<PlayerResponseDto> updateOnePlayer(Long playerId, PlayerResponseDto playerResponseDto) { // fix
         Optional<Player> player = this.playerDao.findById(playerId);
         if(player.isPresent()){
             Player toSave = player.get();
-            toSave.setPlayerFirstName(playerDto.getPlayerFirstName());
-            toSave.setPlayerLastName(playerDto.getPlayerLastName());
+            toSave.setPlayerFirstName(playerResponseDto.getPlayerFirstName());
+            toSave.setPlayerLastName(playerResponseDto.getPlayerLastName());
             // playerdto da id alıyorum adres veya telefon değil bunu fixle.
             //toSave.getPlayerCommunication().setPlayerPhoneNumber();
-            toSave.setPosition(playerDto.getPosition());
+            toSave.setPosition(playerResponseDto.getPosition());
 
             toSave = this.playerDao.save(toSave);
-          //  PlayerDto newPlayerDto = playerMapper.(toSave);newPlayerDto
-              return new SuccessDataResult<PlayerDto>();
+          //  PlayerResponseDto newPlayerDto = playerResponseMapper.(toSave);newPlayerDto
+              return new SuccessDataResult<PlayerResponseDto>();
         }
         else{
-            return new ErrorDataResult<PlayerDto>("oyuncu bulunamadı..");
+            return new ErrorDataResult<PlayerResponseDto>("oyuncu bulunamadı..");
         }
     }
 

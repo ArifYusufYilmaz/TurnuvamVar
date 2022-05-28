@@ -3,12 +3,8 @@ package com.turnuvamvar.thesis.api.controllers;
 import com.turnuvamvar.thesis.business.abstracts.ScorePlayerService;
 import com.turnuvamvar.thesis.core.utilities.results.DataResult;
 import com.turnuvamvar.thesis.core.utilities.results.Result;
-import com.turnuvamvar.thesis.dto.GamePerformedDto;
-import com.turnuvamvar.thesis.dto.ScorePlayerDto;
-import com.turnuvamvar.thesis.dto.StageDto;
-import com.turnuvamvar.thesis.entities.concretes.GamePerformed;
+import com.turnuvamvar.thesis.dto.Response.ScorePlayerResponseDto;
 import com.turnuvamvar.thesis.entities.concretes.ScorePlayer;
-import com.turnuvamvar.thesis.entities.concretes.Stage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -26,8 +22,8 @@ public class ScorePlayerController {
     }
 
     @PostMapping("/save")
-    public DataResult<ScorePlayerDto> createOneScorePlayer(@RequestBody ScorePlayerDto newScorePlayerDto){
-        return this.scorePlayerService.createOneScorePlayer(newScorePlayerDto);
+    public DataResult<ScorePlayerResponseDto> createOneScorePlayer(@RequestBody ScorePlayerResponseDto newScorePlayerResponseDto){
+        return this.scorePlayerService.createOneScorePlayer(newScorePlayerResponseDto);
     }
 
 
@@ -37,9 +33,9 @@ public class ScorePlayerController {
     }
 
     @PutMapping("/update/{scorePlayerId}")
-    public DataResult<ScorePlayerDto> updateOneScorePlayer(@PathVariable Long scorePlayerId,
-                                                               @RequestBody ScorePlayerDto scorePlayerDto){
-        return this.scorePlayerService.updateOneScorePlayer(scorePlayerId, scorePlayerDto);
+    public DataResult<ScorePlayerResponseDto> updateOneScorePlayer(@PathVariable Long scorePlayerId,
+                                                                   @RequestBody ScorePlayerResponseDto scorePlayerResponseDto){
+        return this.scorePlayerService.updateOneScorePlayer(scorePlayerId, scorePlayerResponseDto);
     }
     @GetMapping("/get/list")
     public DataResult<List<ScorePlayer>> getAllScorePlayers(){

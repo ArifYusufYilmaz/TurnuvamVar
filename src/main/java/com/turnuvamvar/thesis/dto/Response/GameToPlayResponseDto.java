@@ -1,0 +1,26 @@
+package com.turnuvamvar.thesis.dto.Response;
+
+import com.turnuvamvar.thesis.entities.concretes.Stage;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+import javax.persistence.CascadeType;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
+
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+public class GameToPlayResponseDto {
+
+
+    private Long firstTeamId; // stageteamfirstid;
+    private Long secondTeamId;  //stageteamsecondid
+    private String Tarih; // tarih,saat  düzgün alınmalı, şimdilik bu şekilde!!
+    private String firsTeamName;    //
+    private String secondTeamName;
+
+   // private Long stageId;
+    //private Long scoreId;
+}

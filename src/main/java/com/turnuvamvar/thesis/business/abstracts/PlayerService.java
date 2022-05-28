@@ -2,7 +2,7 @@ package com.turnuvamvar.thesis.business.abstracts;
 
 import com.turnuvamvar.thesis.core.utilities.results.DataResult;
 import com.turnuvamvar.thesis.core.utilities.results.Result;
-import com.turnuvamvar.thesis.dto.PlayerDto;
+import com.turnuvamvar.thesis.dto.Response.PlayerResponseDto;
 import com.turnuvamvar.thesis.entities.concretes.Player;
 
 import java.util.List;
@@ -12,7 +12,7 @@ public interface PlayerService {
 
     DataResult<Player> getOnePlayerById(Long playerId);
 
-    DataResult<PlayerDto> updateOnePlayer(Long playerId, PlayerDto playerDto);
+    DataResult<PlayerResponseDto> updateOnePlayer(Long playerId, PlayerResponseDto playerResponseDto);
 
     DataResult<List<Player>> getAllPlayers();
 

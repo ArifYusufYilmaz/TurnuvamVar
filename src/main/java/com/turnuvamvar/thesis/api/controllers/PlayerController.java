@@ -3,10 +3,8 @@ package com.turnuvamvar.thesis.api.controllers;
 import com.turnuvamvar.thesis.business.abstracts.PlayerService;
 import com.turnuvamvar.thesis.core.utilities.results.DataResult;
 import com.turnuvamvar.thesis.core.utilities.results.Result;
-import com.turnuvamvar.thesis.dto.PlayerDto;
-import com.turnuvamvar.thesis.dto.StageDto;
+import com.turnuvamvar.thesis.dto.Response.PlayerResponseDto;
 import com.turnuvamvar.thesis.entities.concretes.Player;
-import com.turnuvamvar.thesis.entities.concretes.Stage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -33,8 +31,8 @@ public class PlayerController {
     }
 
     @PutMapping("/update/{playerId}")
-    public DataResult<PlayerDto> updateOnePlayer(@PathVariable Long playerId, @RequestBody PlayerDto playerDto){
-        return this.playerService.updateOnePlayer(playerId, playerDto);
+    public DataResult<PlayerResponseDto> updateOnePlayer(@PathVariable Long playerId, @RequestBody PlayerResponseDto playerResponseDto){
+        return this.playerService.updateOnePlayer(playerId, playerResponseDto);
     }
     @GetMapping("/get/list")
     public DataResult<List<Player>> getAllPlayers(){

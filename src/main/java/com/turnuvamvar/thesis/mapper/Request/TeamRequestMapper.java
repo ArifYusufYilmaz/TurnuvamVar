@@ -1,7 +1,6 @@
 package com.turnuvamvar.thesis.mapper.Request;
 
 import com.turnuvamvar.thesis.dto.Request.TeamRequestDto;
-import com.turnuvamvar.thesis.dto.TeamDto;
 import com.turnuvamvar.thesis.entities.concretes.Team;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;

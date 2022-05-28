@@ -2,18 +2,17 @@ package com.turnuvamvar.thesis.business.abstracts;
 
 import com.turnuvamvar.thesis.core.utilities.results.DataResult;
 import com.turnuvamvar.thesis.core.utilities.results.Result;
-import com.turnuvamvar.thesis.dto.PlayerToAddDto;
+import com.turnuvamvar.thesis.dto.Response.PlayerToAddResponseDto;
 import com.turnuvamvar.thesis.dto.Request.PlayerToAddRequestDto;
-import com.turnuvamvar.thesis.entities.concretes.PlayerToAdd;
 
 import java.util.List;
 
 public interface PlayerToAddService {
-    DataResult<PlayerToAddDto> createOnePlayerToAdd(Long teamId,PlayerToAddDto newPlayerToAddDto);
+    DataResult<PlayerToAddResponseDto> createOnePlayerToAdd(Long teamId, PlayerToAddResponseDto newPlayerToAddResponseDto);
 
     
 
-    DataResult<PlayerToAddDto> updateOnePlayerToAdd(Long playerToAddId, PlayerToAddDto playerToAddDto);
+    DataResult<PlayerToAddResponseDto> updateOnePlayerToAdd(Long playerToAddId, PlayerToAddResponseDto playerToAddResponseDto);
 
     DataResult<PlayerToAddRequestDto> getOnePlayerToAddById(Long playerToAddId);
 

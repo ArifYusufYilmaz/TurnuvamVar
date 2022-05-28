@@ -5,13 +5,10 @@ import com.turnuvamvar.thesis.core.utilities.results.*;
 import com.turnuvamvar.thesis.dataAccess.abstracts.GameToPlayDao;
 import com.turnuvamvar.thesis.dataAccess.abstracts.StageTeamDao;
 import com.turnuvamvar.thesis.dataAccess.abstracts.TeamDao;
-import com.turnuvamvar.thesis.dto.GameToPlayDto;
-import com.turnuvamvar.thesis.dto.StageDto;
+import com.turnuvamvar.thesis.dto.Response.GameToPlayResponseDto;
 import com.turnuvamvar.thesis.entities.concretes.GameToPlay;
-import com.turnuvamvar.thesis.entities.concretes.Stage;
 import com.turnuvamvar.thesis.entities.concretes.StageTeam;
-import com.turnuvamvar.thesis.entities.concretes.Team;
-import com.turnuvamvar.thesis.mapper.GameToPlayMapper;
+import com.turnuvamvar.thesis.mapper.Response.GameToPlayResponseMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -23,7 +20,7 @@ import java.util.Optional;
 public class GameToPlayManager implements GameToPlayService {
     @Autowired
     private GameToPlayDao gameToPlayDao;
-    private GameToPlayMapper gameToPlayMapper;
+    private GameToPlayResponseMapper gameToPlayResponseMapper;
     private TeamDao teamDao;    // gereksizse sil.
     private StageTeamDao stageTeamDao;
     @Autowired
@@ -31,8 +28,8 @@ public class GameToPlayManager implements GameToPlayService {
         this.gameToPlayDao = gameToPlayDao;
     }
     @Autowired
-    public void setGameToPlayMapper(GameToPlayMapper gameToPlayMapper) {
-        this.gameToPlayMapper = gameToPlayMapper;
+    public void setGameToPlayResponseMapper(GameToPlayResponseMapper gameToPlayResponseMapper) {
+        this.gameToPlayResponseMapper = gameToPlayResponseMapper;
     }
     @Autowired
     public void setTeamDao(TeamDao teamDao) {
@@ -44,22 +41,22 @@ public class GameToPlayManager implements GameToPlayService {
     }
 
     @Override
-    public DataResult<GameToPlayDto> createOneGameToPlay(GameToPlayDto newGameToPlayDto) {
+    public DataResult<GameToPlayResponseDto> createOneGameToPlay(GameToPlayResponseDto newGameToPlayResponseDto) {
         //kontrolleri yapmalısın!!
-        Optional<StageTeam> firstStageTeam = this.stageTeamDao.findById(newGameToPlayDto.getFirstTeamId());
-        Optional<StageTeam> secondStageTeam = this.stageTeamDao.findById(newGameToPlayDto.getSecondTeamId());
+        Optional<StageTeam> firstStageTeam = this.stageTeamDao.findById(newGameToPlayResponseDto.getFirstTeamId());
+        Optional<StageTeam> secondStageTeam = this.stageTeamDao.findById(newGameToPlayResponseDto.getSecondTeamId());
         if(firstStageTeam.isPresent() && secondStageTeam.isPresent()){
             if(gameToPlayToCheckIfDuplicate(firstStageTeam.get().getId(), secondStageTeam.get().getId())){
-                return new ErrorDataResult<GameToPlayDto>("aynı takımlar oynatılmak isteniyorsa takımlar yer değiştirmeli!");
+                return new ErrorDataResult<GameToPlayResponseDto>("aynı takımlar oynatılmak isteniyorsa takımlar yer değiştirmeli!");
             }else{
-                GameToPlay newGameToPlay = this.gameToPlayMapper.mapGameToPlayDtoToGameToPlay(newGameToPlayDto);
+                GameToPlay newGameToPlay = this.gameToPlayResponseMapper.mapGameToPlayResponseDtoToGameToPlay(newGameToPlayResponseDto);
                 this.gameToPlayDao.save(newGameToPlay);
-                newGameToPlayDto = this.gameToPlayMapper.mapGameToPlayToGameToPlayDto(newGameToPlay);
-                return new SuccessDataResult<GameToPlayDto>(newGameToPlayDto);
+                newGameToPlayResponseDto = this.gameToPlayResponseMapper.mapGameToPlayToGameToPlayResponseDto(newGameToPlay);
+                return new SuccessDataResult<GameToPlayResponseDto>(newGameToPlayResponseDto);
             }
         }
         else{
-            return new ErrorDataResult<GameToPlayDto>("Takımlar bulunamadı");
+            return new ErrorDataResult<GameToPlayResponseDto>("Takımlar bulunamadı");
         }
 
     }
@@ -89,19 +86,19 @@ public class GameToPlayManager implements GameToPlayService {
     }
 
     @Override
-    public DataResult<GameToPlayDto> updateOneGameToPlay(Long gameToPlayId, GameToPlayDto gameToPlayDto) {
+    public DataResult<GameToPlayResponseDto> updateOneGameToPlay(Long gameToPlayId, GameToPlayResponseDto gameToPlayResponseDto) {
         Optional<GameToPlay> gameToPlay = this.gameToPlayDao.findById(gameToPlayId);
         if(gameToPlay.isPresent()){
             GameToPlay toSave = gameToPlay.get();
-            toSave.getStageTeamFirst().setId(gameToPlayDto.getFirstTeamId());
-            toSave.getStageTeamSecond().setId(gameToPlayDto.getSecondTeamId());
-            toSave.setTarih(gameToPlayDto.getTarih());
+            toSave.getStageTeamFirst().setId(gameToPlayResponseDto.getFirstTeamId());
+            toSave.getStageTeamSecond().setId(gameToPlayResponseDto.getSecondTeamId());
+            toSave.setTarih(gameToPlayResponseDto.getTarih());
             toSave = this.gameToPlayDao.save(toSave);
-            GameToPlayDto newGameToPlayDto = gameToPlayMapper.mapGameToPlayToGameToPlayDto(toSave);
-            return new SuccessDataResult<GameToPlayDto>(newGameToPlayDto);
+            GameToPlayResponseDto newGameToPlayResponseDto = gameToPlayResponseMapper.mapGameToPlayToGameToPlayResponseDto(toSave);
+            return new SuccessDataResult<GameToPlayResponseDto>(newGameToPlayResponseDto);
         }
         else{
-            return new ErrorDataResult<GameToPlayDto>("güncellenmek istenen oynanacak oyun bulunamadı..");
+            return new ErrorDataResult<GameToPlayResponseDto>("güncellenmek istenen oynanacak oyun bulunamadı..");
         }
     }
 

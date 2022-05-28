@@ -4,8 +4,7 @@ import com.turnuvamvar.thesis.business.abstracts.TeamService;
 import com.turnuvamvar.thesis.core.utilities.results.DataResult;
 import com.turnuvamvar.thesis.core.utilities.results.Result;
 import com.turnuvamvar.thesis.dto.Request.TeamRequestDto;
-import com.turnuvamvar.thesis.dto.TeamDto;
-import com.turnuvamvar.thesis.entities.concretes.Team;
+import com.turnuvamvar.thesis.dto.Response.TeamResponseDto;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -33,12 +32,12 @@ public class TeamController {
         return this.teamService.getOneTeamById(teamId);
     }
     @PutMapping("/update/{teamId}")
-    public DataResult<TeamDto> updateOneTeam(@PathVariable Long teamId, @RequestBody TeamDto teamDto){
-        return this.teamService.updateOneTeam(teamId, teamDto);
+    public DataResult<TeamResponseDto> updateOneTeam(@PathVariable Long teamId, @RequestBody TeamResponseDto teamResponseDto){
+        return this.teamService.updateOneTeam(teamId, teamResponseDto);
     }
     @PostMapping("/save/{tournamentId}")
-    public DataResult<TeamDto> createOneTeam(@PathVariable Long tournamentId, @RequestBody TeamDto newTeamDto){
-        return this.teamService.createOneTeam(tournamentId, newTeamDto);
+    public DataResult<TeamResponseDto> createOneTeam(@PathVariable Long tournamentId, @RequestBody TeamResponseDto newTeamResponseDto){
+        return this.teamService.createOneTeam(tournamentId, newTeamResponseDto);
     }
     @DeleteMapping("/delete/{teamId}")
     public Result deleteOneTeam(@PathVariable Long teamId){

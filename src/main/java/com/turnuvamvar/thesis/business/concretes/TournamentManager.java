@@ -4,10 +4,10 @@ import com.turnuvamvar.thesis.business.abstracts.TournamentService;
 import com.turnuvamvar.thesis.core.utilities.results.*;
 import com.turnuvamvar.thesis.dataAccess.abstracts.TournamentDao;
 import com.turnuvamvar.thesis.dto.Request.TournamentRequestDto;
-import com.turnuvamvar.thesis.dto.TournamentDto;
+import com.turnuvamvar.thesis.dto.Response.TournamentResponseDto;
 import com.turnuvamvar.thesis.entities.concretes.Tournament;
 import com.turnuvamvar.thesis.mapper.Request.TournamentRequestMapper;
-import com.turnuvamvar.thesis.mapper.TournamentMapper;
+import com.turnuvamvar.thesis.mapper.Response.TournamentResponseMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
@@ -21,15 +21,15 @@ public class TournamentManager implements TournamentService {
     @Autowired
     private TournamentDao tournamentDao;
 
-    private  TournamentMapper tournamentMapper;
+    private TournamentResponseMapper tournamentResponseMapper;
     private TournamentRequestMapper tournamentRequestMapper;
     @Autowired
     public TournamentManager(TournamentDao tournamentDao) {
         this.tournamentDao = tournamentDao;
     }
     @Autowired
-    public void setTournamentMapper(@Lazy TournamentMapper tournamentMapper) {
-        this.tournamentMapper = tournamentMapper;
+    public void setTournamentResponseMapper(@Lazy TournamentResponseMapper tournamentResponseMapper) {
+        this.tournamentResponseMapper = tournamentResponseMapper;
     }
     @Autowired
     public void setTournamentRequestMapper(TournamentRequestMapper tournamentRequestMapper) {
@@ -50,11 +50,11 @@ public class TournamentManager implements TournamentService {
     }
 
     @Override
-    public DataResult<TournamentDto> createOneTournament(TournamentDto newTournamentDto) {
+    public DataResult<TournamentResponseDto> createOneTournament(TournamentResponseDto newTournamentResponseDto) {
         //kontroller!
-            Tournament tournament = tournamentMapper.mapTournamentDtoToTournament(newTournamentDto);
-            TournamentDto tournamentDto = tournamentMapper.mapTournamentToTournamentDto(this.tournamentDao.save(tournament));
-            return new SuccessDataResult<TournamentDto>(tournamentDto);
+            Tournament tournament = tournamentResponseMapper.mapTournamentResponseDtoToTournament(newTournamentResponseDto);
+            TournamentResponseDto tournamentResponseDto = tournamentResponseMapper.mapTournamentToTournamentResponseDto(this.tournamentDao.save(tournament));
+            return new SuccessDataResult<TournamentResponseDto>(tournamentResponseDto);
 
     }
 
@@ -71,15 +71,15 @@ public class TournamentManager implements TournamentService {
     }
 
     @Override
-    public DataResult<TournamentDto> updateOneTournement(Long tournamentId, TournamentDto tournamentDto) {
+    public DataResult<TournamentResponseDto> updateOneTournement(Long tournamentId, TournamentResponseDto tournamentResponseDto) {
         Optional<Tournament> tournament = this.tournamentDao.findById(tournamentId);
         if(tournament.isPresent()){
             Tournament toSave = tournament.get();
-            toSave.setDescription(tournamentDto.getDescription());
-            toSave.setTournamentName(tournamentDto.getTournamentName());
+            toSave.setDescription(tournamentResponseDto.getDescription());
+            toSave.setTournamentName(tournamentResponseDto.getTournamentName());
             toSave = this.tournamentDao.save(toSave);
-            TournamentDto newTournamentDto = tournamentMapper.mapTournamentToTournamentDto(toSave);
-            return new SuccessDataResult<TournamentDto>(newTournamentDto);
+            TournamentResponseDto newTournamentResponseDto = tournamentResponseMapper.mapTournamentToTournamentResponseDto(toSave);
+            return new SuccessDataResult<TournamentResponseDto>(newTournamentResponseDto);
         }
         else{
             return new ErrorDataResult<>("verilen id'ye ait turnuva bulunamadı..");

@@ -3,21 +3,17 @@ package com.turnuvamvar.thesis.business.concretes;
 import com.turnuvamvar.thesis.business.abstracts.PlayerToAddService;
 import com.turnuvamvar.thesis.core.utilities.results.*;
 import com.turnuvamvar.thesis.dataAccess.abstracts.PlayerToAddDao;
-import com.turnuvamvar.thesis.dataAccess.abstracts.TeamCaptainDao;
 import com.turnuvamvar.thesis.dataAccess.abstracts.TeamDao;
-import com.turnuvamvar.thesis.dto.PlayerToAddDto;
+import com.turnuvamvar.thesis.dto.Response.PlayerToAddResponseDto;
 import com.turnuvamvar.thesis.dto.Request.PlayerToAddRequestDto;
-import com.turnuvamvar.thesis.dto.TeamDto;
 import com.turnuvamvar.thesis.entities.concretes.PlayerToAdd;
 import com.turnuvamvar.thesis.entities.concretes.Team;
-import com.turnuvamvar.thesis.entities.concretes.TeamCaptain;
-import com.turnuvamvar.thesis.mapper.PlayerToAddMapper;
+import com.turnuvamvar.thesis.mapper.Response.PlayerToAddResponseMapper;
 import com.turnuvamvar.thesis.mapper.Request.PlayerToAddRequestMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 
-import javax.swing.text.html.Option;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -26,7 +22,7 @@ import java.util.Optional;
 public class PlayerToAddManager implements PlayerToAddService {
     @Autowired
     private PlayerToAddDao playerToAddDao;
-    private PlayerToAddMapper playerToAddMapper;
+    private PlayerToAddResponseMapper playerToAddResponseMapper;
     private PlayerToAddRequestMapper playerToAddRequestMapper;
     private TeamDao teamDao;      //bu service seviyesinde olmalı. diğer metodlar yazılınca düzelt!!!
 
@@ -35,8 +31,8 @@ public class PlayerToAddManager implements PlayerToAddService {
         this.playerToAddDao = playerToAddDao;
     }
     @Autowired
-    public void setPlayerToAddMapper(@Lazy PlayerToAddMapper playerToAddMapper) {
-        this.playerToAddMapper = playerToAddMapper;
+    public void setPlayerToAddResponseMapper(@Lazy PlayerToAddResponseMapper playerToAddResponseMapper) {
+        this.playerToAddResponseMapper = playerToAddResponseMapper;
     }
     @Autowired
     public void setPlayerToAddRequestMapper(PlayerToAddRequestMapper playerToAddRequestMapper) {
@@ -49,36 +45,36 @@ public class PlayerToAddManager implements PlayerToAddService {
     }
 
     @Override
-    public DataResult<PlayerToAddDto> createOnePlayerToAdd(Long teamId,PlayerToAddDto newPlayerToAddDto) {
+    public DataResult<PlayerToAddResponseDto> createOnePlayerToAdd(Long teamId, PlayerToAddResponseDto newPlayerToAddResponseDto) {
 
         Optional<Team> team = this.teamDao.findById(teamId);
         if(team.isPresent()){
-            PlayerToAdd playerToAdd = playerToAddMapper.mapPlayerToAddDtoToPlayerToAdd(newPlayerToAddDto);
+            PlayerToAdd playerToAdd = playerToAddResponseMapper.mapPlayerToAddResponseDtoToPlayerToAdd(newPlayerToAddResponseDto);
             playerToAdd.setTeam(team.get());
-            newPlayerToAddDto = playerToAddMapper.mapPlayerToAddToPlayerToAddDto(this.playerToAddDao.save(playerToAdd));
-            return new SuccessDataResult<PlayerToAddDto>(newPlayerToAddDto);
+            newPlayerToAddResponseDto = playerToAddResponseMapper.mapPlayerToAddToPlayerToAddResponseDto(this.playerToAddDao.save(playerToAdd));
+            return new SuccessDataResult<PlayerToAddResponseDto>(newPlayerToAddResponseDto);
         }
         else{
-            return new ErrorDataResult<PlayerToAddDto>("  takım  bulunamadı");
+            return new ErrorDataResult<PlayerToAddResponseDto>("  takım  bulunamadı");
         }
     }
 
     @Override
-    public DataResult<PlayerToAddDto> updateOnePlayerToAdd(Long playerToAddId, PlayerToAddDto playerToAddDto) {
+    public DataResult<PlayerToAddResponseDto> updateOnePlayerToAdd(Long playerToAddId, PlayerToAddResponseDto playerToAddResponseDto) {
         Optional<PlayerToAdd> playerToAdd = this.playerToAddDao.findById(playerToAddId);
         if(playerToAdd.isPresent()){
             PlayerToAdd toSave = playerToAdd.get();
-            toSave.setPlayerFirstName(playerToAddDto.getPlayerFirstName());
-            toSave.setPlayerLastName(playerToAddDto.getPlayerLastName());
-            toSave.setPosition(playerToAddDto.getPosition());
-            toSave.setPlayerAddress(playerToAddDto.getPlayerAddress());
-            toSave.setPlayerPhoneNumber(playerToAddDto.getPlayerPhoneNumber());
+            toSave.setPlayerFirstName(playerToAddResponseDto.getPlayerFirstName());
+            toSave.setPlayerLastName(playerToAddResponseDto.getPlayerLastName());
+            toSave.setPosition(playerToAddResponseDto.getPosition());
+            toSave.setPlayerAddress(playerToAddResponseDto.getPlayerAddress());
+            toSave.setPlayerPhoneNumber(playerToAddResponseDto.getPlayerPhoneNumber());
             toSave = this.playerToAddDao.save(toSave);
-            playerToAddDto = playerToAddMapper.mapPlayerToAddToPlayerToAddDto(toSave);
-            return new SuccessDataResult<PlayerToAddDto>(playerToAddDto);
+            playerToAddResponseDto = playerToAddResponseMapper.mapPlayerToAddToPlayerToAddResponseDto(toSave);
+            return new SuccessDataResult<PlayerToAddResponseDto>(playerToAddResponseDto);
         }
         else{
-            return new ErrorDataResult<PlayerToAddDto>("güncellenmek istenen \"eklenecek oyuncu\" bulunamadı.!!");
+            return new ErrorDataResult<PlayerToAddResponseDto>("güncellenmek istenen \"eklenecek oyuncu\" bulunamadı.!!");
         }
 
     }
@@ -103,7 +99,7 @@ public class PlayerToAddManager implements PlayerToAddService {
         List<PlayerToAdd> playerToAddList = new ArrayList<>();
         Iterable<PlayerToAdd> playerToAddIterable = this.playerToAddDao.findAll();
         playerToAddIterable.iterator().forEachRemaining(playerToAddList :: add);
-        //List<PlayerToAddDto> playerToAddDtoList = playerToAddMapper.mapPlayerToAddListToPlayerToAddDtoList(playerToAddList);
+        //List<PlayerToAddResponseDto> playerToAddDtoList = playerToAddResponseMapper.mapPlayerToAddListToPlayerToAddDtoList(playerToAddList);
         List<PlayerToAddRequestDto> playerToAddRequestDtoList = playerToAddRequestMapper.mapPlayerToAddListToPlayerToAddDtoList(playerToAddList);
         if(playerToAddRequestDtoList.isEmpty()){
             return new ErrorDataResult<PlayerToAddRequestDto>("eklenecek oyuncu listesinde hiç veri bulunamadı!");

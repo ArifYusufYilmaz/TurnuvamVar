@@ -3,9 +3,8 @@ package com.turnuvamvar.thesis.api.controllers;
 import com.turnuvamvar.thesis.business.abstracts.PlayerToAddService;
 import com.turnuvamvar.thesis.core.utilities.results.DataResult;
 import com.turnuvamvar.thesis.core.utilities.results.Result;
-import com.turnuvamvar.thesis.dto.PlayerToAddDto;
+import com.turnuvamvar.thesis.dto.Response.PlayerToAddResponseDto;
 import com.turnuvamvar.thesis.dto.Request.PlayerToAddRequestDto;
-import com.turnuvamvar.thesis.entities.concretes.PlayerToAdd;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -20,8 +19,8 @@ public class PlayerToAddController {
         this.playerToAddService = playerToAddService;
     }
     @PostMapping("/save/{teamId}")
-    public DataResult<PlayerToAddDto> createOnePlayerToAdd(@PathVariable Long teamId, @RequestBody PlayerToAddDto newPlayerToAddDto){
-        return this.playerToAddService.createOnePlayerToAdd(teamId,newPlayerToAddDto);
+    public DataResult<PlayerToAddResponseDto> createOnePlayerToAdd(@PathVariable Long teamId, @RequestBody PlayerToAddResponseDto newPlayerToAddResponseDto){
+        return this.playerToAddService.createOnePlayerToAdd(teamId, newPlayerToAddResponseDto);
     }
     @GetMapping("/get/{playerToAddId}")
     public DataResult<PlayerToAddRequestDto> getOnePlayerToAddById(@PathVariable Long playerToAddId){
@@ -32,9 +31,9 @@ public class PlayerToAddController {
         return this.playerToAddService.getAllPlayersToAdd();
     }
     @PutMapping("/update/{playerToAddId}")
-    public DataResult<PlayerToAddDto> updateOnePlayerToAdd(@PathVariable Long playerToAddId,
-                                                           @RequestBody PlayerToAddDto playerToAddDto){
-        return this.playerToAddService.updateOnePlayerToAdd(playerToAddId, playerToAddDto);
+    public DataResult<PlayerToAddResponseDto> updateOnePlayerToAdd(@PathVariable Long playerToAddId,
+                                                                   @RequestBody PlayerToAddResponseDto playerToAddResponseDto){
+        return this.playerToAddService.updateOnePlayerToAdd(playerToAddId, playerToAddResponseDto);
     }
     @DeleteMapping("/delete/{playerToAddId}")
     public Result deleteOnePlayerToAddById(@PathVariable Long playerToAddId)

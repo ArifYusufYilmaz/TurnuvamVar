@@ -1,7 +1,6 @@
 package com.turnuvamvar.thesis.mapper.Request;
 
 import com.turnuvamvar.thesis.dto.Request.TournamentRequestDto;
-import com.turnuvamvar.thesis.dto.TournamentDto;
 import com.turnuvamvar.thesis.entities.concretes.Tournament;
 import org.mapstruct.Mapper;
 

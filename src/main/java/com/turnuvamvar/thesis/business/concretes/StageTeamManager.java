@@ -5,19 +5,16 @@ import com.turnuvamvar.thesis.core.utilities.results.*;
 import com.turnuvamvar.thesis.dataAccess.abstracts.StageDao;
 import com.turnuvamvar.thesis.dataAccess.abstracts.StageTeamDao;
 import com.turnuvamvar.thesis.dataAccess.abstracts.TeamDao;
-import com.turnuvamvar.thesis.dto.GameToPlayDto;
 import com.turnuvamvar.thesis.dto.Request.StageTeamRequestDto;
-import com.turnuvamvar.thesis.dto.StageTeamDto;
-import com.turnuvamvar.thesis.entities.concretes.GameToPlay;
+import com.turnuvamvar.thesis.dto.Response.StageTeamResponseDto;
 import com.turnuvamvar.thesis.entities.concretes.Stage;
 import com.turnuvamvar.thesis.entities.concretes.StageTeam;
 import com.turnuvamvar.thesis.entities.concretes.Team;
 import com.turnuvamvar.thesis.mapper.Request.StageTeamRequestMapper;
-import com.turnuvamvar.thesis.mapper.StageTeamMapper;
+import com.turnuvamvar.thesis.mapper.Response.StageTeamResponseMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.swing.text.html.Option;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -26,7 +23,7 @@ import java.util.Optional;
 public class StageTeamManager implements StageTeamService {
     @Autowired
     private StageTeamDao stageTeamDao;
-    private StageTeamMapper stageTeamMapper;
+    private StageTeamResponseMapper stageTeamResponseMapper;
     private StageTeamRequestMapper stageTeamRequestMapper;
     private TeamDao teamDao;
     private StageDao stageDao;
@@ -36,8 +33,8 @@ public class StageTeamManager implements StageTeamService {
         this.stageTeamDao = stageTeamDao;
     }
     @Autowired
-    public void setStageTeamMapper(StageTeamMapper stageTeamMapper) {
-        this.stageTeamMapper = stageTeamMapper;
+    public void setStageTeamResponseMapper(StageTeamResponseMapper stageTeamResponseMapper) {
+        this.stageTeamResponseMapper = stageTeamResponseMapper;
     }
     @Autowired
     public void setTeamDao(TeamDao teamDao) {
@@ -53,22 +50,22 @@ public class StageTeamManager implements StageTeamService {
     }
 
     @Override
-    public DataResult<StageTeamDto> createOneStageTeam(StageTeamDto newStageTeamDto) {
+    public DataResult<StageTeamResponseDto> createOneStageTeam(StageTeamResponseDto newStageTeamResponseDto) {
 
-        Optional<Team> team = this.teamDao.findById(newStageTeamDto.getTeamId());
-        Optional<Stage> stage =  this.stageDao.findById(newStageTeamDto.getStageId());
+        Optional<Team> team = this.teamDao.findById(newStageTeamResponseDto.getTeamId());
+        Optional<Stage> stage =  this.stageDao.findById(newStageTeamResponseDto.getStageId());
         if(team.isPresent() && stage.isPresent()){ // check if they exist in db
             // to avoid duplicate records
             if(stageTeamToCheckIfDuplicate(team.get().getId(), stage.get().getId())){
-                return new ErrorDataResult<StageTeamDto>("Verilen takım ve stage zaten eşlenmiş!!");
+                return new ErrorDataResult<StageTeamResponseDto>("Verilen takım ve stage zaten eşlenmiş!!");
             }
             else{
-                StageTeam stageTeam = this.stageTeamMapper.mapStageTeamDtoToStageTeam(newStageTeamDto);
-                StageTeamDto stageTeamDto = this.stageTeamMapper.mapStageTeamToStageTeamDto(this.stageTeamDao.save(stageTeam));
-                return new SuccessDataResult<StageTeamDto>(stageTeamDto);
+                StageTeam stageTeam = this.stageTeamResponseMapper.mapStageTeamResponseDtoToStageTeam(newStageTeamResponseDto);
+                StageTeamResponseDto stageTeamResponseDto = this.stageTeamResponseMapper.mapStageTeamToStageTeamResponseDto(this.stageTeamDao.save(stageTeam));
+                return new SuccessDataResult<StageTeamResponseDto>(stageTeamResponseDto);
             }
         }else{
-            return new ErrorDataResult<StageTeamDto>("Verilen takım ya da stage mevcut değil!!");
+            return new ErrorDataResult<StageTeamResponseDto>("Verilen takım ya da stage mevcut değil!!");
         }
     }
 
@@ -99,24 +96,24 @@ public class StageTeamManager implements StageTeamService {
     }
 
     @Override
-    public DataResult<StageTeamDto> updateOneStageTeam(Long stageTeamId, StageTeamDto stageTeamDto) {
+    public DataResult<StageTeamResponseDto> updateOneStageTeam(Long stageTeamId, StageTeamResponseDto stageTeamResponseDto) {
         Optional<StageTeam> stageTeam = this.stageTeamDao.findById(stageTeamId);
         if(stageTeam.isPresent()){
             StageTeam toSave = stageTeam.get();
-            toSave.getStage().setId(stageTeamDto.getStageId());
-            toSave.getTeam().setId(stageTeamDto.getTeamId());
+            toSave.getStage().setId(stageTeamResponseDto.getStageId());
+            toSave.getTeam().setId(stageTeamResponseDto.getTeamId());
             // to avoid duplicate records
             //StageTeam stageTeamToCheckİfDuplicate = this.stageTeamDao.findByTeamIdAndStageId(toSave.getTeam().getId(),toSave.getStage().getId()).orElse(null);
             if(stageTeamToCheckIfDuplicate(toSave.getTeam().getId(),toSave.getStage().getId())){
-                return new ErrorDataResult<StageTeamDto>("Verilen takım ve stage zaten eşlenmiş!!");
+                return new ErrorDataResult<StageTeamResponseDto>("Verilen takım ve stage zaten eşlenmiş!!");
             }else{
                 toSave = this.stageTeamDao.save(toSave);
-                StageTeamDto newStageTeamDto = stageTeamMapper.mapStageTeamToStageTeamDto(toSave);
-                return new SuccessDataResult<StageTeamDto>(newStageTeamDto);
+                StageTeamResponseDto newStageTeamResponseDto = stageTeamResponseMapper.mapStageTeamToStageTeamResponseDto(toSave);
+                return new SuccessDataResult<StageTeamResponseDto>(newStageTeamResponseDto);
             }
         }
         else{
-            return new ErrorDataResult<StageTeamDto>("güncellenmek istenen aşama_takım bulunamadı..");
+            return new ErrorDataResult<StageTeamResponseDto>("güncellenmek istenen aşama_takım bulunamadı..");
         }
     }
 

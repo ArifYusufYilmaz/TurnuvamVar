@@ -3,10 +3,8 @@ package com.turnuvamvar.thesis.api.controllers;
 import com.turnuvamvar.thesis.business.abstracts.GamePerformedService;
 import com.turnuvamvar.thesis.core.utilities.results.DataResult;
 import com.turnuvamvar.thesis.core.utilities.results.Result;
-import com.turnuvamvar.thesis.dto.GamePerformedDto;
-import com.turnuvamvar.thesis.dto.PlayerDto;
+import com.turnuvamvar.thesis.dto.Response.GamePerformedResponseDto;
 import com.turnuvamvar.thesis.entities.concretes.GamePerformed;
-import com.turnuvamvar.thesis.entities.concretes.Player;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -22,8 +20,8 @@ public class GamePerformedController {
         this.gamePerformedService = gamePerformedService;
     }
     @PostMapping
-    public DataResult<GamePerformedDto> createOneGamePerformed(@RequestBody GamePerformedDto newGamePerformedDto){
-        return this.gamePerformedService.createOneGamePerformed(newGamePerformedDto);
+    public DataResult<GamePerformedResponseDto> createOneGamePerformed(@RequestBody GamePerformedResponseDto newGamePerformedResponseDto){
+        return this.gamePerformedService.createOneGamePerformed(newGamePerformedResponseDto);
     }
 
 
@@ -33,9 +31,9 @@ public class GamePerformedController {
     }
 
     @PutMapping("/update/{gamePerformedId}")
-    public DataResult<GamePerformedDto> updateOneGamePerformed(@PathVariable Long gamePerformedId,
-                                                               @RequestBody GamePerformedDto gamePerformedDto){
-        return this.gamePerformedService.updateOneGamePerformed(gamePerformedId, gamePerformedDto);
+    public DataResult<GamePerformedResponseDto> updateOneGamePerformed(@PathVariable Long gamePerformedId,
+                                                                       @RequestBody GamePerformedResponseDto gamePerformedResponseDto){
+        return this.gamePerformedService.updateOneGamePerformed(gamePerformedId, gamePerformedResponseDto);
     }
     @GetMapping("/get/list")
     public DataResult<List<GamePerformed>> getAllPlayers(){

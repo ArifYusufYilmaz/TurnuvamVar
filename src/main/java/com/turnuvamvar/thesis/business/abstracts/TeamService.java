@@ -3,8 +3,7 @@ package com.turnuvamvar.thesis.business.abstracts;
 import com.turnuvamvar.thesis.core.utilities.results.DataResult;
 import com.turnuvamvar.thesis.core.utilities.results.Result;
 import com.turnuvamvar.thesis.dto.Request.TeamRequestDto;
-import com.turnuvamvar.thesis.dto.TeamDto;
-import com.turnuvamvar.thesis.entities.concretes.Team;
+import com.turnuvamvar.thesis.dto.Response.TeamResponseDto;
 
 import java.util.List;
 
@@ -12,11 +11,11 @@ public interface TeamService {
     DataResult<List<TeamRequestDto>> getAllTeams(Long tournamentId);
     DataResult<List<TeamRequestDto>> getAllTeamsByTournamentId(Long tournamentId);
 
-    DataResult<TeamDto> createOneTeam(Long tournamentId, TeamDto newTeamDto);
+    DataResult<TeamResponseDto> createOneTeam(Long tournamentId, TeamResponseDto newTeamResponseDto);
 
     DataResult<TeamRequestDto> getOneTeamById(Long teamId);
 
-    DataResult<TeamDto> updateOneTeam(Long teamId, TeamDto teamDto);
+    DataResult<TeamResponseDto> updateOneTeam(Long teamId, TeamResponseDto teamResponseDto);
 
     Result deleteOneTeamById(Long teamId);
 }

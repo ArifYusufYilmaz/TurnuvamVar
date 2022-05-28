@@ -9,10 +9,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class TeamRequestDto {
-    private Long id;
     private String teamName;
     private String captainFirstName;
     private String captainLastName;
-    private Long teamCaptainId;
-    private Long tournamentId;
+
 }

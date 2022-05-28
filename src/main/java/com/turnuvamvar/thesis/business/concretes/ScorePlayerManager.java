@@ -3,10 +3,9 @@ package com.turnuvamvar.thesis.business.concretes;
 import com.turnuvamvar.thesis.business.abstracts.ScorePlayerService;
 import com.turnuvamvar.thesis.core.utilities.results.*;
 import com.turnuvamvar.thesis.dataAccess.abstracts.ScorePlayerDao;
-import com.turnuvamvar.thesis.dto.ScorePlayerDto;
+import com.turnuvamvar.thesis.dto.Response.ScorePlayerResponseDto;
 import com.turnuvamvar.thesis.entities.concretes.ScorePlayer;
-import com.turnuvamvar.thesis.entities.concretes.Stage;
-import com.turnuvamvar.thesis.mapper.ScorePlayerMapper;
+import com.turnuvamvar.thesis.mapper.Response.ScorePlayerResponseMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,21 +17,21 @@ import java.util.Optional;
 public class ScorePlayerManager implements ScorePlayerService {
     @Autowired
     private ScorePlayerDao scorePlayerDao;
-    private ScorePlayerMapper scorePlayerMapper;
+    private ScorePlayerResponseMapper scorePlayerResponseMapper;
     @Autowired
     public ScorePlayerManager(ScorePlayerDao scorePlayerDao) {
         this.scorePlayerDao = scorePlayerDao;
     }
     @Autowired
-    public void setScorePlayerMapper(ScorePlayerMapper scorePlayerMapper) {
-        this.scorePlayerMapper = scorePlayerMapper;
+    public void setScorePlayerResponseMapper(ScorePlayerResponseMapper scorePlayerResponseMapper) {
+        this.scorePlayerResponseMapper = scorePlayerResponseMapper;
     }
 
     @Override
-    public DataResult<ScorePlayerDto> createOneScorePlayer(ScorePlayerDto newScorePlayerDto) {
-       ScorePlayer scorePlayer =  this.scorePlayerMapper.mapScorePlayerDtoToScorePlayer(newScorePlayerDto);
-       ScorePlayerDto scorePlayerDto =  this.scorePlayerMapper.mapScorePlayerToScorePlayerDto(this.scorePlayerDao.save(scorePlayer));
-       return new SuccessDataResult<ScorePlayerDto>(scorePlayerDto);
+    public DataResult<ScorePlayerResponseDto> createOneScorePlayer(ScorePlayerResponseDto newScorePlayerResponseDto) {
+       ScorePlayer scorePlayer =  this.scorePlayerResponseMapper.mapScorePlayerResponseDtoToScorePlayer(newScorePlayerResponseDto);
+       ScorePlayerResponseDto scorePlayerResponseDto =  this.scorePlayerResponseMapper.mapScorePlayerToScorePlayerResponseDto(this.scorePlayerDao.save(scorePlayer));
+       return new SuccessDataResult<ScorePlayerResponseDto>(scorePlayerResponseDto);
     }
 
     @Override
@@ -60,7 +59,7 @@ public class ScorePlayerManager implements ScorePlayerService {
     }
 
     @Override
-    public DataResult<ScorePlayerDto> updateOneScorePlayer(Long scorePlayerId, ScorePlayerDto scorePlayerDto) {
+    public DataResult<ScorePlayerResponseDto> updateOneScorePlayer(Long scorePlayerId, ScorePlayerResponseDto scorePlayerResponseDto) {
         return null;
     }
 
