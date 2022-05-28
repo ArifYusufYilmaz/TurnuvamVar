@@ -45,13 +45,14 @@ public class PlayerToAddManager implements PlayerToAddService {
     }
 
     @Override
-    public DataResult<PlayerToAddResponseDto> createOnePlayerToAdd(Long teamId, PlayerToAddResponseDto newPlayerToAddResponseDto) {
+    public DataResult<PlayerToAddResponseDto> createOnePlayerToAdd(Long teamId, PlayerToAddRequestDto newPlayerToAddRequestDto) {
 
         Optional<Team> team = this.teamDao.findById(teamId);
         if(team.isPresent()){
-            PlayerToAdd playerToAdd = playerToAddResponseMapper.mapPlayerToAddResponseDtoToPlayerToAdd(newPlayerToAddResponseDto);
+            PlayerToAdd playerToAdd = this.playerToAddRequestMapper.mapPlayerToAddRequestDtoToPlayerToAdd(newPlayerToAddRequestDto);
             playerToAdd.setTeam(team.get());
-            newPlayerToAddResponseDto = playerToAddResponseMapper.mapPlayerToAddToPlayerToAddResponseDto(this.playerToAddDao.save(playerToAdd));
+            playerToAdd = this.playerToAddDao.save(playerToAdd);
+            PlayerToAddResponseDto newPlayerToAddResponseDto = playerToAddResponseMapper.mapPlayerToAddToPlayerToAddResponseDto(playerToAdd);
             return new SuccessDataResult<PlayerToAddResponseDto>(newPlayerToAddResponseDto);
         }
         else{
@@ -60,17 +61,17 @@ public class PlayerToAddManager implements PlayerToAddService {
     }
 
     @Override
-    public DataResult<PlayerToAddResponseDto> updateOnePlayerToAdd(Long playerToAddId, PlayerToAddResponseDto playerToAddResponseDto) {
+    public DataResult<PlayerToAddResponseDto> updateOnePlayerToAdd(Long playerToAddId, PlayerToAddRequestDto playerToAddRequestDto) {
         Optional<PlayerToAdd> playerToAdd = this.playerToAddDao.findById(playerToAddId);
         if(playerToAdd.isPresent()){
             PlayerToAdd toSave = playerToAdd.get();
-            toSave.setPlayerFirstName(playerToAddResponseDto.getPlayerFirstName());
-            toSave.setPlayerLastName(playerToAddResponseDto.getPlayerLastName());
-            toSave.setPosition(playerToAddResponseDto.getPosition());
-            toSave.setPlayerAddress(playerToAddResponseDto.getPlayerAddress());
-            toSave.setPlayerPhoneNumber(playerToAddResponseDto.getPlayerPhoneNumber());
+            toSave.setPlayerFirstName(playerToAddRequestDto.getPlayerFirstName());
+            toSave.setPlayerLastName(playerToAddRequestDto.getPlayerLastName());
+            toSave.setPosition(playerToAddRequestDto.getPosition());
+            toSave.setPlayerAddress(playerToAddRequestDto.getPlayerAddress());
+            toSave.setPlayerPhoneNumber(playerToAddRequestDto.getPlayerPhoneNumber());
             toSave = this.playerToAddDao.save(toSave);
-            playerToAddResponseDto = playerToAddResponseMapper.mapPlayerToAddToPlayerToAddResponseDto(toSave);
+            PlayerToAddResponseDto playerToAddResponseDto = playerToAddResponseMapper.mapPlayerToAddToPlayerToAddResponseDto(toSave);
             return new SuccessDataResult<PlayerToAddResponseDto>(playerToAddResponseDto);
         }
         else{
@@ -80,32 +81,33 @@ public class PlayerToAddManager implements PlayerToAddService {
     }
 
     @Override
-    public DataResult<PlayerToAddRequestDto> getOnePlayerToAddById(Long playerToAddId) {
+    public DataResult<PlayerToAddResponseDto> getOnePlayerToAddById(Long playerToAddId) {
         Optional<PlayerToAdd> playerToAdd = this.playerToAddDao.findById(playerToAddId);
         if(playerToAdd.isPresent()){
-            PlayerToAddRequestDto playerToAddRequestDto = playerToAddRequestMapper.mapPlayerToAddToPlayerToAddRequestDto(playerToAdd.get());
-            return new SuccessDataResult<PlayerToAddRequestDto>(playerToAddRequestDto);
+            PlayerToAddResponseDto playerToAddResponseDto = this.playerToAddResponseMapper.mapPlayerToAddToPlayerToAddResponseDto(playerToAdd.get());
+            return new SuccessDataResult<PlayerToAddResponseDto>(playerToAddResponseDto);
         }
         else{
-            return new ErrorDataResult<PlayerToAddRequestDto>("istenen 'eklenecek oyuncu' bulunamadı!! ");
+            return new ErrorDataResult<PlayerToAddResponseDto>("istenen 'eklenecek oyuncu' bulunamadı!! ");
         }
 
     }
 
     @Override
-    public DataResult<List<PlayerToAddRequestDto>> getAllPlayersToAdd() {
+    public DataResult<List<PlayerToAddResponseDto>> getAllPlayersToAdd() {
         // hangi takım oldugunu al.
 
         List<PlayerToAdd> playerToAddList = new ArrayList<>();
         Iterable<PlayerToAdd> playerToAddIterable = this.playerToAddDao.findAll();
         playerToAddIterable.iterator().forEachRemaining(playerToAddList :: add);
         //List<PlayerToAddResponseDto> playerToAddDtoList = playerToAddResponseMapper.mapPlayerToAddListToPlayerToAddDtoList(playerToAddList);
-        List<PlayerToAddRequestDto> playerToAddRequestDtoList = playerToAddRequestMapper.mapPlayerToAddListToPlayerToAddDtoList(playerToAddList);
-        if(playerToAddRequestDtoList.isEmpty()){
-            return new ErrorDataResult<PlayerToAddRequestDto>("eklenecek oyuncu listesinde hiç veri bulunamadı!");
+
+        if(playerToAddList.isEmpty()){
+            return new ErrorDataResult<PlayerToAddResponseDto>("eklenecek oyuncu listesinde hiç veri bulunamadı!");
         }
         else {
-            return new SuccessDataResult<List<PlayerToAddRequestDto>>(playerToAddRequestDtoList);
+            List<PlayerToAddResponseDto> playerToAddResponseDtoList = this.playerToAddResponseMapper.mapPlayerToAddListToPlayerToAddResponseDtoList(playerToAddList);
+            return new SuccessDataResult<List<PlayerToAddResponseDto>>(playerToAddResponseDtoList);
         }
     }
 

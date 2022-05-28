@@ -8,15 +8,13 @@ import com.turnuvamvar.thesis.dto.Request.PlayerToAddRequestDto;
 import java.util.List;
 
 public interface PlayerToAddService {
-    DataResult<PlayerToAddResponseDto> createOnePlayerToAdd(Long teamId, PlayerToAddResponseDto newPlayerToAddResponseDto);
+    DataResult<PlayerToAddResponseDto> createOnePlayerToAdd(Long teamId, PlayerToAddRequestDto newPlayerToAddRequestDto);
 
-    
+    DataResult<PlayerToAddResponseDto> updateOnePlayerToAdd(Long playerToAddId, PlayerToAddRequestDto playerToAddRequestDto);
 
-    DataResult<PlayerToAddResponseDto> updateOnePlayerToAdd(Long playerToAddId, PlayerToAddResponseDto playerToAddResponseDto);
+    DataResult<PlayerToAddResponseDto> getOnePlayerToAddById(Long playerToAddId);
 
-    DataResult<PlayerToAddRequestDto> getOnePlayerToAddById(Long playerToAddId);
-
-    DataResult<List<PlayerToAddRequestDto>> getAllPlayersToAdd();
+    DataResult<List<PlayerToAddResponseDto>> getAllPlayersToAdd();
 
     Result deleteOnePlayerToAddById(Long playerToAddId);
 }
