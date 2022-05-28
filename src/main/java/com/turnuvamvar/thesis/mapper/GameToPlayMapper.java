@@ -12,7 +12,7 @@ import java.util.List;
 
 @Mapper(componentModel = "spring")
 public abstract class GameToPlayMapper {
-
+     //commit
     @Mapping(source="stageTeamFirst.id", target="firstTeamId")
     @Mapping(source="stageTeamSecond.id", target="secondTeamId")
     public abstract GameToPlayDto mapGameToPlayToGameToPlayDto(GameToPlay gameToPlay);
