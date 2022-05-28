@@ -19,21 +19,21 @@ public class PlayerToAddController {
         this.playerToAddService = playerToAddService;
     }
     @PostMapping("/save/{teamId}")
-    public DataResult<PlayerToAddResponseDto> createOnePlayerToAdd(@PathVariable Long teamId, @RequestBody PlayerToAddResponseDto newPlayerToAddResponseDto){
-        return this.playerToAddService.createOnePlayerToAdd(teamId, newPlayerToAddResponseDto);
+    public DataResult<PlayerToAddResponseDto> createOnePlayerToAdd(@PathVariable Long teamId, @RequestBody PlayerToAddRequestDto newPlayerToAddRequestDto){
+        return this.playerToAddService.createOnePlayerToAdd(teamId, newPlayerToAddRequestDto);
     }
     @GetMapping("/get/{playerToAddId}")
-    public DataResult<PlayerToAddRequestDto> getOnePlayerToAddById(@PathVariable Long playerToAddId){
+    public DataResult<PlayerToAddResponseDto> getOnePlayerToAddById(@PathVariable Long playerToAddId){
         return this.playerToAddService.getOnePlayerToAddById(playerToAddId);
     }
     @GetMapping("/get/list")
-    public DataResult<List<PlayerToAddRequestDto>> getAllPlayersToAdd(){
+    public DataResult<List<PlayerToAddResponseDto>> getAllPlayersToAdd(){
         return this.playerToAddService.getAllPlayersToAdd();
     }
     @PutMapping("/update/{playerToAddId}")
     public DataResult<PlayerToAddResponseDto> updateOnePlayerToAdd(@PathVariable Long playerToAddId,
-                                                                   @RequestBody PlayerToAddResponseDto playerToAddResponseDto){
-        return this.playerToAddService.updateOnePlayerToAdd(playerToAddId, playerToAddResponseDto);
+                                                                   @RequestBody PlayerToAddRequestDto playerToAddRequestDto){
+        return this.playerToAddService.updateOnePlayerToAdd(playerToAddId, playerToAddRequestDto);
     }
     @DeleteMapping("/delete/{playerToAddId}")
     public Result deleteOnePlayerToAddById(@PathVariable Long playerToAddId)

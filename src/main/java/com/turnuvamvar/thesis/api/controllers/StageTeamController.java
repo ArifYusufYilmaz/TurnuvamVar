@@ -22,22 +22,22 @@ public class StageTeamController {
     }
 
     @PostMapping("/save")
-    public DataResult<StageTeamResponseDto> createOneStageTeam(@RequestBody StageTeamResponseDto newStageTeamResponseDto){
-        return this.stageTeamService.createOneStageTeam(newStageTeamResponseDto);
+    public DataResult<StageTeamResponseDto> createOneStageTeam(@RequestBody StageTeamRequestDto newStageTeamRequestDto){
+        return this.stageTeamService.createOneStageTeam(newStageTeamRequestDto);
     }
     @GetMapping("/get/list")
-    public DataResult<List<StageTeamRequestDto>> getAllStagesTeams(){
+    public DataResult<List<StageTeamResponseDto>> getAllStagesTeams(){
         return this.stageTeamService.getAllStagesTeams();
     }
 
     @GetMapping("/get/{stageTeamId}")
-    public DataResult<StageTeamRequestDto> getOneStageTeamById(@PathVariable Long stageTeamId){
+    public DataResult<StageTeamResponseDto> getOneStageTeamById(@PathVariable Long stageTeamId){
         return this.stageTeamService.getOneStageTeamById(stageTeamId);
     }
 
     @PutMapping("/update/{stageTeamId}")
-    public DataResult<StageTeamResponseDto> updateOneStageTeam(@PathVariable Long stageTeamId, @RequestBody StageTeamResponseDto stageTeamResponseDto){
-        return this.stageTeamService.updateOneStageTeam(stageTeamId, stageTeamResponseDto);
+    public DataResult<StageTeamResponseDto> updateOneStageTeam(@PathVariable Long stageTeamId, @RequestBody StageTeamRequestDto stageTeamRequestDto){
+        return this.stageTeamService.updateOneStageTeam(stageTeamId, stageTeamRequestDto);
     }
 
 

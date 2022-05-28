@@ -8,13 +8,13 @@ import com.turnuvamvar.thesis.dto.Response.StageTeamResponseDto;
 import java.util.List;
 
 public interface StageTeamService {
-    DataResult<StageTeamResponseDto> createOneStageTeam(StageTeamResponseDto newStageTeamResponseDto);
+    DataResult<StageTeamResponseDto> createOneStageTeam(StageTeamRequestDto newStageTeamRequestDto);
 
-    DataResult<List<StageTeamRequestDto>> getAllStagesTeams();
+    DataResult<List<StageTeamResponseDto>> getAllStagesTeams();
 
-    DataResult<StageTeamRequestDto> getOneStageTeamById(Long stageTeamId);
+    DataResult<StageTeamResponseDto> getOneStageTeamById(Long stageTeamId);
 
-    DataResult<StageTeamResponseDto> updateOneStageTeam(Long stageTeamId, StageTeamResponseDto stageTeamResponseDto);
+    DataResult<StageTeamResponseDto> updateOneStageTeam(Long stageTeamId, StageTeamRequestDto stageTeamRequestDto);
 
     Result deleteOneStageTeamById(Long stageTeamId);
 }

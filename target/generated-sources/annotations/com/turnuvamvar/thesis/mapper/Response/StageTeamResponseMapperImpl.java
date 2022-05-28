@@ -12,7 +12,7 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2022-05-29T01:31:15+0300",
+    date = "2022-05-29T02:34:00+0300",
     comments = "version: 1.4.2.Final, compiler: javac, environment: Java 11.0.6 (Oracle Corporation)"
 )
 @Component
@@ -30,6 +30,7 @@ public class StageTeamResponseMapperImpl extends StageTeamResponseMapper {
         stageTeamResponseDto.setStageName( stageTeamStageStageName( stageTeam ) );
         stageTeamResponseDto.setTeamId( stageTeamTeamId( stageTeam ) );
         stageTeamResponseDto.setTeamName( stageTeamTeamTeamName( stageTeam ) );
+        stageTeamResponseDto.setId( stageTeam.getId() );
 
         return stageTeamResponseDto;
     }
@@ -44,6 +45,7 @@ public class StageTeamResponseMapperImpl extends StageTeamResponseMapper {
 
         stageTeam.setStage( stageTeamResponseDtoToStage( stageTeamResponseDto ) );
         stageTeam.setTeam( stageTeamResponseDtoToTeam( stageTeamResponseDto ) );
+        stageTeam.setId( stageTeamResponseDto.getId() );
 
         return stageTeam;
     }

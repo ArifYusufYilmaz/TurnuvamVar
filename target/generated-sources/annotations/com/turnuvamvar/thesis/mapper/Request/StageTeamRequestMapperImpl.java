@@ -12,7 +12,7 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2022-05-29T01:31:15+0300",
+    date = "2022-05-29T02:30:29+0300",
     comments = "version: 1.4.2.Final, compiler: javac, environment: Java 11.0.6 (Oracle Corporation)"
 )
 @Component
@@ -33,7 +33,7 @@ public class StageTeamRequestMapperImpl extends StageTeamRequestMapper {
     }
 
     @Override
-    public StageTeam mapStageTeamRequestDtoToStage(StageTeamRequestDto stageTeamRequestDto) {
+    public StageTeam mapStageTeamRequestDtoToStageTeam(StageTeamRequestDto stageTeamRequestDto) {
         if ( stageTeamRequestDto == null ) {
             return null;
         }
@@ -54,7 +54,7 @@ public class StageTeamRequestMapperImpl extends StageTeamRequestMapper {
 
         List<StageTeam> list = new ArrayList<StageTeam>( stageTeamRequestDtoList.size() );
         for ( StageTeamRequestDto stageTeamRequestDto : stageTeamRequestDtoList ) {
-            list.add( mapStageTeamRequestDtoToStage( stageTeamRequestDto ) );
+            list.add( mapStageTeamRequestDtoToStageTeam( stageTeamRequestDto ) );
         }
 
         return list;

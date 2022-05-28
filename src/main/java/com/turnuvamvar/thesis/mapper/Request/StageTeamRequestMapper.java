@@ -16,7 +16,7 @@ public abstract class StageTeamRequestMapper {
     public abstract StageTeamRequestDto mapStageTeamToStageTeamRequestDto(StageTeam stageTeam);
     @Mapping(source="stageId",target="stage.id")
     @Mapping(source="teamId",target="team.id")
-    public abstract StageTeam mapStageTeamRequestDtoToStage(StageTeamRequestDto stageTeamRequestDto);
+    public abstract StageTeam mapStageTeamRequestDtoToStageTeam(StageTeamRequestDto stageTeamRequestDto);
 
     public abstract List<StageTeam> mapStageTeamRequestDtoListToStageTeamList(Collection<StageTeamRequestDto> stageTeamRequestDtoList);
     public abstract List<StageTeamRequestDto> mapStageTeamListToStageTeamRequestDtoList(Collection<StageTeam> stageTeamList);
