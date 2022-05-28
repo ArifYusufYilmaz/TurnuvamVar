@@ -8,13 +8,13 @@ import com.turnuvamvar.thesis.dto.Response.StageResponseDto;
 import java.util.List;
 
 public interface StageService {
-    DataResult<StageResponseDto> createOneStage(StageResponseDto newStageResponseDto);
+    DataResult<StageResponseDto> createOneStage(StageRequestDto newStageRequestDto);
 
-    DataResult<StageRequestDto> getOneStageById(Long stageId);
+    DataResult<StageResponseDto> getOneStageById(Long stageId);
 
-    DataResult<StageResponseDto> updateOneStage(Long stageId, StageResponseDto stageResponseDto);
+    DataResult<StageResponseDto> updateOneStage(Long stageId, StageRequestDto stageRequestDto);
 
     Result deleteOneStageById(Long stageId);
 
-    DataResult<List<StageRequestDto>> getAllStages();
+    DataResult<List<StageResponseDto>> getAllStages();
 }

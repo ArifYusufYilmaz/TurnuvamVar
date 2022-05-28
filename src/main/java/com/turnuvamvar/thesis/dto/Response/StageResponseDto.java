@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class StageResponseDto {
-
+    private Long id;
     private String stageName;
 
 }

@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2022-05-29T01:31:15+0300",
+    date = "2022-05-29T02:19:09+0300",
     comments = "version: 1.4.2.Final, compiler: javac, environment: Java 11.0.6 (Oracle Corporation)"
 )
 @Component
@@ -24,6 +24,7 @@ public class StageResponseMapperImpl extends StageResponseMapper {
 
         StageResponseDto stageResponseDto = new StageResponseDto();
 
+        stageResponseDto.setId( stage.getId() );
         stageResponseDto.setStageName( stage.getStageName() );
 
         return stageResponseDto;
@@ -37,6 +38,7 @@ public class StageResponseMapperImpl extends StageResponseMapper {
 
         Stage stage = new Stage();
 
+        stage.setId( stageResponseDto.getId() );
         stage.setStageName( stageResponseDto.getStageName() );
 
         return stage;

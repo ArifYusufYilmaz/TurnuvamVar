@@ -20,23 +20,23 @@ public class StageController {
         this.stageService = stageService;
     }
     @GetMapping("/get/list")
-    public DataResult<List<StageRequestDto>> getAllStages(){
+    public DataResult<List<StageResponseDto>> getAllStages(){
         return this.stageService.getAllStages();
     }
 
     @GetMapping("/get/{stageId}")
-    public DataResult<StageRequestDto> getOneStageById(@PathVariable Long stageId){
+    public DataResult<StageResponseDto> getOneStageById(@PathVariable Long stageId){
         return this.stageService.getOneStageById(stageId);
     }
 
     @PutMapping("/update/{stageId}")
-    public DataResult<StageResponseDto> updateOneStage(@PathVariable Long stageId, @RequestBody StageResponseDto stageResponseDto){
-        return this.stageService.updateOneStage(stageId, stageResponseDto);
+    public DataResult<StageResponseDto> updateOneStage(@PathVariable Long stageId, @RequestBody StageRequestDto stageRequestDto){
+        return this.stageService.updateOneStage(stageId, stageRequestDto);
     }
 
     @PostMapping("/save")
-    public DataResult<StageResponseDto> createOneStage(@RequestBody StageResponseDto newStageResponseDto){
-        return this.stageService.createOneStage(newStageResponseDto);
+    public DataResult<StageResponseDto> createOneStage(@RequestBody StageRequestDto newStageRequestDto){
+        return this.stageService.createOneStage(newStageRequestDto);
     }
     @DeleteMapping("/delete/{stageId}")
     public Result deleteOneStage(@PathVariable Long stageId){

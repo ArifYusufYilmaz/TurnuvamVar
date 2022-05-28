@@ -11,8 +11,7 @@ import java.util.List;
 
 @Mapper(componentModel = "spring")
 public abstract class TournamentResponseMapper {
-    @Autowired
-    protected TournamentService tournamentService;
+
 
     public abstract TournamentResponseDto mapTournamentToTournamentResponseDto(Tournament tournament);
 

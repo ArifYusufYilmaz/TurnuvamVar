@@ -35,36 +35,37 @@ public class StageManager implements StageService {
     }
 
     @Override
-    public DataResult<StageResponseDto> createOneStage(StageResponseDto newStageResponseDto) {
+    public DataResult<StageResponseDto> createOneStage(StageRequestDto newStageRequestDto) {
         // null olma durumunu kontrol et.
-        if(checkIfItHasSameStageByName(newStageResponseDto.getStageName())){
+        if(checkIfItHasSameStageByName(newStageRequestDto.getStageName())){
             return new ErrorDataResult<StageResponseDto>("Bu aşama ismi zaten mevcut!!");
         }else{
-            Stage stage =  this.stageResponseMapper.mapStageResponseDtoToStage(newStageResponseDto);
-            StageResponseDto stageResponseDto = this.stageResponseMapper.mapStageToStageResponseDto(this.stageDao.save(stage));
+            Stage stage =  this.stageRequestMapper.mapStageRequestDtoToStage(newStageRequestDto);
+            stage = this.stageDao.save(stage);
+            StageResponseDto stageResponseDto = this.stageResponseMapper.mapStageToStageResponseDto(stage);
             return new SuccessDataResult<StageResponseDto>(stageResponseDto);
         }
     }
 
     @Override
-    public DataResult<StageRequestDto> getOneStageById(Long stageId) {
+    public DataResult<StageResponseDto> getOneStageById(Long stageId) {
         Optional<Stage> stage = this.stageDao.findById(stageId);
         if(stage.isPresent()){
-           StageRequestDto stageRequestDto =  stageRequestMapper.mapStageToStageRequestDto(stage.get());
-             return new SuccessDataResult<StageRequestDto>(stageRequestDto);
+            StageResponseDto stageResponseDto =  this.stageResponseMapper.mapStageToStageResponseDto(stage.get());
+             return new SuccessDataResult<StageResponseDto>(stageResponseDto);
         }
         else{
-            return new ErrorDataResult<StageRequestDto>("Stage bulunamadı");
+            return new ErrorDataResult<StageResponseDto>("Stage bulunamadı");
         }
 
     }
 
     @Override
-    public DataResult<StageResponseDto> updateOneStage(Long stageId, StageResponseDto stageResponseDto) {
+    public DataResult<StageResponseDto> updateOneStage(Long stageId, StageRequestDto stageRequestDto) {
         Optional<Stage> stage = this.stageDao.findById(stageId);
         if(stage.isPresent()){
             Stage toSave = stage.get();
-            toSave.setStageName(stageResponseDto.getStageName());
+            toSave.setStageName(stageRequestDto.getStageName());
             if(checkIfItHasSameStageByName(toSave.getStageName())){
                 return new ErrorDataResult<StageResponseDto>("Aynı stage ismine sahip veri zaten mevcut..");
             }else {
@@ -92,16 +93,16 @@ public class StageManager implements StageService {
     }
 
     @Override
-    public DataResult<List<StageRequestDto>> getAllStages() {
+    public DataResult<List<StageResponseDto>> getAllStages() {
         List<Stage> stageList = new ArrayList<>();
         Iterable<Stage> stageIterable = this.stageDao.findAll();
         stageIterable.iterator().forEachRemaining(stageList :: add);
         if(stageList.isEmpty()){
-            return new ErrorDataResult<StageRequestDto>("stage listesinde hiç stage bulunamadı!");
+            return new ErrorDataResult<StageResponseDto>("stage listesinde hiç stage bulunamadı!");
         }
         else{
-            List<StageRequestDto> stageRequestDtoList = stageRequestMapper.mapStageListToStageRequestDtoList(stageList);
-            return new SuccessDataResult<List<StageRequestDto>>(stageRequestDtoList);
+            List<StageResponseDto> stageResponseDtoList = this.stageResponseMapper.mapStageListToStageResponseDtoList(stageList);
+            return new SuccessDataResult<List<StageResponseDto>>(stageResponseDtoList);
         }
     }
     // if it is an duplicate record as its name returns true
