@@ -10,9 +10,7 @@ import java.util.List;
 
 @Mapper(componentModel = "spring")
 public abstract class PlayerToAddRequestMapper {
-    @Mapping(source="team.id", target = "teamId")
     public abstract PlayerToAddRequestDto mapPlayerToAddToPlayerToAddRequestDto(PlayerToAdd playerToAdd);
-    @Mapping(source="teamId", target = "team.id")
     public abstract PlayerToAdd mapPlayerToAddRequestDtoToPlayerToAdd(PlayerToAddRequestDto playerToAddRequestDto);
 
     public abstract List<PlayerToAddRequestDto> mapPlayerToAddListToPlayerToAddDtoList(Collection<PlayerToAdd> playersToAdd);

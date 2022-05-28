@@ -2,6 +2,7 @@ package com.turnuvamvar.thesis.mapper.Response;
 
 import com.turnuvamvar.thesis.dto.Response.PlayerToAddResponseDto;
 import com.turnuvamvar.thesis.entities.concretes.PlayerToAdd;
+import com.turnuvamvar.thesis.entities.concretes.Team;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -10,7 +11,7 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2022-05-28T21:33:06+0300",
+    date = "2022-05-29T01:31:15+0300",
     comments = "version: 1.4.2.Final, compiler: javac, environment: Java 11.0.6 (Oracle Corporation)"
 )
 @Component
@@ -24,6 +25,9 @@ public class PlayerToAddResponseMapperImpl extends PlayerToAddResponseMapper {
 
         PlayerToAddResponseDto playerToAddResponseDto = new PlayerToAddResponseDto();
 
+        playerToAddResponseDto.setTeamId( playerToAddTeamId( playerToAdd ) );
+        playerToAddResponseDto.setTeamName( playerToAddTeamTeamName( playerToAdd ) );
+        playerToAddResponseDto.setId( playerToAdd.getId() );
         playerToAddResponseDto.setPlayerFirstName( playerToAdd.getPlayerFirstName() );
         playerToAddResponseDto.setPlayerLastName( playerToAdd.getPlayerLastName() );
         playerToAddResponseDto.setPosition( playerToAdd.getPosition() );
@@ -41,6 +45,8 @@ public class PlayerToAddResponseMapperImpl extends PlayerToAddResponseMapper {
 
         PlayerToAdd playerToAdd = new PlayerToAdd();
 
+        playerToAdd.setTeam( playerToAddResponseDtoToTeam( playerToAddResponseDto ) );
+        playerToAdd.setId( playerToAddResponseDto.getId() );
         playerToAdd.setPlayerFirstName( playerToAddResponseDto.getPlayerFirstName() );
         playerToAdd.setPlayerLastName( playerToAddResponseDto.getPlayerLastName() );
         playerToAdd.setPosition( playerToAddResponseDto.getPosition() );
@@ -76,5 +82,48 @@ public class PlayerToAddResponseMapperImpl extends PlayerToAddResponseMapper {
         }
 
         return list;
+    }
+
+    private Long playerToAddTeamId(PlayerToAdd playerToAdd) {
+        if ( playerToAdd == null ) {
+            return null;
+        }
+        Team team = playerToAdd.getTeam();
+        if ( team == null ) {
+            return null;
+        }
+        Long id = team.getId();
+        if ( id == null ) {
+            return null;
+        }
+        return id;
+    }
+
+    private String playerToAddTeamTeamName(PlayerToAdd playerToAdd) {
+        if ( playerToAdd == null ) {
+            return null;
+        }
+        Team team = playerToAdd.getTeam();
+        if ( team == null ) {
+            return null;
+        }
+        String teamName = team.getTeamName();
+        if ( teamName == null ) {
+            return null;
+        }
+        return teamName;
+    }
+
+    protected Team playerToAddResponseDtoToTeam(PlayerToAddResponseDto playerToAddResponseDto) {
+        if ( playerToAddResponseDto == null ) {
+            return null;
+        }
+
+        Team team = new Team();
+
+        team.setId( playerToAddResponseDto.getTeamId() );
+        team.setTeamName( playerToAddResponseDto.getTeamName() );
+
+        return team;
     }
 }

@@ -4,12 +4,14 @@ import com.turnuvamvar.thesis.dto.Response.GamePerformedResponseDto;
 import com.turnuvamvar.thesis.entities.concretes.GamePerformed;
 import com.turnuvamvar.thesis.entities.concretes.GameToPlay;
 import com.turnuvamvar.thesis.entities.concretes.Score;
+import com.turnuvamvar.thesis.entities.concretes.StageTeam;
+import com.turnuvamvar.thesis.entities.concretes.Team;
 import javax.annotation.Generated;
 import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2022-05-28T21:33:06+0300",
+    date = "2022-05-29T01:31:15+0300",
     comments = "version: 1.4.2.Final, compiler: javac, environment: Java 11.0.6 (Oracle Corporation)"
 )
 @Component
@@ -26,6 +28,8 @@ public class GamePerformedResponseMapperImpl extends GamePerformedResponseMapper
         gamePerformedResponseDto.setGameToPlayId( gamePerformedGameToPlayId( gamePerformed ) );
         gamePerformedResponseDto.setScoreOfFirstTeam( gamePerformedScoreOfFirstTeamScore( gamePerformed ) );
         gamePerformedResponseDto.setScoreOfSecondTeam( gamePerformedScoreOfSecondTeamScore( gamePerformed ) );
+        gamePerformedResponseDto.setFirstTeamName( gamePerformedGameToPlayStageTeamFirstTeamTeamName( gamePerformed ) );
+        gamePerformedResponseDto.setSecondTeamName( gamePerformedGameToPlayStageTeamSecondTeamTeamName( gamePerformed ) );
 
         return gamePerformedResponseDto;
     }
@@ -82,6 +86,52 @@ public class GamePerformedResponseMapperImpl extends GamePerformedResponseMapper
         }
         int score = scoreOfSecondTeam.getScore();
         return score;
+    }
+
+    private String gamePerformedGameToPlayStageTeamFirstTeamTeamName(GamePerformed gamePerformed) {
+        if ( gamePerformed == null ) {
+            return null;
+        }
+        GameToPlay gameToPlay = gamePerformed.getGameToPlay();
+        if ( gameToPlay == null ) {
+            return null;
+        }
+        StageTeam stageTeamFirst = gameToPlay.getStageTeamFirst();
+        if ( stageTeamFirst == null ) {
+            return null;
+        }
+        Team team = stageTeamFirst.getTeam();
+        if ( team == null ) {
+            return null;
+        }
+        String teamName = team.getTeamName();
+        if ( teamName == null ) {
+            return null;
+        }
+        return teamName;
+    }
+
+    private String gamePerformedGameToPlayStageTeamSecondTeamTeamName(GamePerformed gamePerformed) {
+        if ( gamePerformed == null ) {
+            return null;
+        }
+        GameToPlay gameToPlay = gamePerformed.getGameToPlay();
+        if ( gameToPlay == null ) {
+            return null;
+        }
+        StageTeam stageTeamSecond = gameToPlay.getStageTeamSecond();
+        if ( stageTeamSecond == null ) {
+            return null;
+        }
+        Team team = stageTeamSecond.getTeam();
+        if ( team == null ) {
+            return null;
+        }
+        String teamName = team.getTeamName();
+        if ( teamName == null ) {
+            return null;
+        }
+        return teamName;
     }
 
     protected GameToPlay gamePerformedResponseDtoToGameToPlay(GamePerformedResponseDto gamePerformedResponseDto) {

@@ -12,5 +12,5 @@ public abstract class PlayerResponseMapper {
     public abstract Player mapPlayerToAddResponseDtoToPlayer(PlayerToAddResponseDto newPlayerToAddResponseDto);
 
 
-    //
+
 }

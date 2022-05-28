@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2022-05-28T19:14:07+0300",
+    date = "2022-05-29T01:31:15+0300",
     comments = "version: 1.4.2.Final, compiler: javac, environment: Java 11.0.6 (Oracle Corporation)"
 )
 @Component
@@ -24,7 +24,6 @@ public class TournamentRequestMapperImpl extends TournamentRequestMapper {
 
         TournamentRequestDto tournamentRequestDto = new TournamentRequestDto();
 
-        tournamentRequestDto.setId( tournament.getId() );
         tournamentRequestDto.setTournamentName( tournament.getTournamentName() );
         tournamentRequestDto.setDescription( tournament.getDescription() );
 
@@ -39,7 +38,6 @@ public class TournamentRequestMapperImpl extends TournamentRequestMapper {
 
         Tournament tournament = new Tournament();
 
-        tournament.setId( tournamentRequestDto.getId() );
         tournament.setTournamentName( tournamentRequestDto.getTournamentName() );
         tournament.setDescription( tournamentRequestDto.getDescription() );
 

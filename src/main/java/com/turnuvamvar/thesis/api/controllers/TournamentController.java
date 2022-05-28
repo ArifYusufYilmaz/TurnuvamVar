@@ -18,7 +18,7 @@ public class TournamentController {
 
     private TournamentService tournamentService;
 
-    @Autowired //daha sonra setter injection yapılabilir.
+    @Autowired
     public TournamentController(TournamentService tournamentService) {
         this.tournamentService = tournamentService;
     }
