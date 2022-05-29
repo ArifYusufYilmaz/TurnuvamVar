@@ -3,6 +3,7 @@ package com.turnuvamvar.thesis.api.controllers;
 import com.turnuvamvar.thesis.business.abstracts.GamePerformedService;
 import com.turnuvamvar.thesis.core.utilities.results.DataResult;
 import com.turnuvamvar.thesis.core.utilities.results.Result;
+import com.turnuvamvar.thesis.dto.Request.GamePerformedRequestDto;
 import com.turnuvamvar.thesis.dto.Response.GamePerformedResponseDto;
 import com.turnuvamvar.thesis.entities.concretes.GamePerformed;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,23 +21,23 @@ public class GamePerformedController {
         this.gamePerformedService = gamePerformedService;
     }
     @PostMapping
-    public DataResult<GamePerformedResponseDto> createOneGamePerformed(@RequestBody GamePerformedResponseDto newGamePerformedResponseDto){
-        return this.gamePerformedService.createOneGamePerformed(newGamePerformedResponseDto);
+    public DataResult<GamePerformedResponseDto> createOneGamePerformed(@RequestBody GamePerformedRequestDto newGamePerformedRequestDto){
+        return this.gamePerformedService.createOneGamePerformed(newGamePerformedRequestDto);
     }
 
 
     @GetMapping("/{gamePerformedId}")
-    public DataResult<GamePerformed> getOneGamePerformedById(@PathVariable Long gamePerformedId){
+    public DataResult<GamePerformedResponseDto> getOneGamePerformedById(@PathVariable Long gamePerformedId){
         return this.gamePerformedService.getOneGamePerformedById(gamePerformedId);
     }
 
     @PutMapping("/update/{gamePerformedId}")
     public DataResult<GamePerformedResponseDto> updateOneGamePerformed(@PathVariable Long gamePerformedId,
-                                                                       @RequestBody GamePerformedResponseDto gamePerformedResponseDto){
-        return this.gamePerformedService.updateOneGamePerformed(gamePerformedId, gamePerformedResponseDto);
+                                                                       @RequestBody GamePerformedRequestDto gamePerformedRequestDto){
+        return this.gamePerformedService.updateOneGamePerformed(gamePerformedId, gamePerformedRequestDto);
     }
     @GetMapping("/get/list")
-    public DataResult<List<GamePerformed>> getAllPlayers(){
+    public DataResult<List<GamePerformedResponseDto>> getAllPlayers(){
         return this.gamePerformedService.getAllGamesPerformed();
     }
 

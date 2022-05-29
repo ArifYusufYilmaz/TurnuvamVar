@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class PlayerResponseDto {
+    private Long id;
     private String playerFirstName;
     private String playerLastName;
     private String position;

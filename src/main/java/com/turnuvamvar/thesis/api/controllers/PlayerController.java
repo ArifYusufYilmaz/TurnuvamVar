@@ -3,6 +3,7 @@ package com.turnuvamvar.thesis.api.controllers;
 import com.turnuvamvar.thesis.business.abstracts.PlayerService;
 import com.turnuvamvar.thesis.core.utilities.results.DataResult;
 import com.turnuvamvar.thesis.core.utilities.results.Result;
+import com.turnuvamvar.thesis.dto.Request.PlayerRequestDto;
 import com.turnuvamvar.thesis.dto.Response.PlayerResponseDto;
 import com.turnuvamvar.thesis.entities.concretes.Player;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,23 +21,23 @@ public class PlayerController {
         this.playerService = playerService;
     }
     @PostMapping("/save")           // burada bir sıkıntı var!!! path variable vs.
-    public DataResult<Player> createOnePlayer(Long playerToAddDtoId){
+    public DataResult<PlayerResponseDto> createOnePlayer(Long playerToAddDtoId){
         return this.playerService.createOnePlayer(playerToAddDtoId);
     }
 
 
     @GetMapping("/get/{playerId}")
-    public DataResult<Player> getOnePlayerById(@PathVariable Long playerId){
+    public DataResult<PlayerResponseDto> getOnePlayerById(@PathVariable Long playerId){
         return this.playerService.getOnePlayerById(playerId);
     }
 
     @PutMapping("/update/{playerId}")
-    public DataResult<PlayerResponseDto> updateOnePlayer(@PathVariable Long playerId, @RequestBody PlayerResponseDto playerResponseDto){
-        return this.playerService.updateOnePlayer(playerId, playerResponseDto);
+    public DataResult<PlayerResponseDto> updateOnePlayer(@PathVariable Long playerId, @RequestBody PlayerRequestDto playerRequestDto){
+        return this.playerService.updateOnePlayer(playerId, playerRequestDto);
     }
     @GetMapping("/get/list")
-    public DataResult<List<Player>> getAllPlayers(){
-        return this.playerService.getAllPlayers();
+    public DataResult<List<PlayerResponseDto>> getAllPlayers(@RequestParam(required = false) Long teamId){
+        return this.playerService.getAllPlayers(teamId);
     }
 
     @DeleteMapping("/delete/{playerId}")

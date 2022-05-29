@@ -5,6 +5,9 @@ import com.turnuvamvar.thesis.entities.concretes.GamePerformed;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
+import java.util.Collection;
+import java.util.List;
+
 @Mapper(componentModel = "spring")
 public abstract class GamePerformedResponseMapper {
     @Mapping(source="gameToPlay.id",target="gameToPlayId")
@@ -18,5 +21,8 @@ public abstract class GamePerformedResponseMapper {
     @Mapping(source="scoreOfFirstTeam",target="scoreOfFirstTeam.score")
     @Mapping(source="scoreOfSecondTeam",target="scoreOfSecondTeam.score")
     public abstract GamePerformed mapGamePerformedResponseDtoToGamePerformed(GamePerformedResponseDto gamePerformedResponseDto);
+
+    public abstract List<GamePerformed> mapGamePerformedResponseDtoListToGamePerformedList(Collection<GamePerformedResponseDto> gamePerformedResponseDtoList);
+    public abstract List<GamePerformedResponseDto> mapGamePerformedListToGamePerformedResponseList(Collection<GamePerformed> gamePerformedList);
 
 }

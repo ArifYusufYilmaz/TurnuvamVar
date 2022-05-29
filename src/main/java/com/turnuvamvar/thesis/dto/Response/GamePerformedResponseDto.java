@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class GamePerformedResponseDto {
+    private Long id;
     private int scoreOfFirstTeam;
     private int scoreOfSecondTeam;
     private Long gameToPlayId;

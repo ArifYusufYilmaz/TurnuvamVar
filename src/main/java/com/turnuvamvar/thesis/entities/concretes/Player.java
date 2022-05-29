@@ -21,6 +21,6 @@ public class Player extends BaseEntity {
     @ManyToOne
     private Team team;
 
-    @OneToMany(mappedBy = "player")
+    @OneToMany(mappedBy = "player", cascade = CascadeType.ALL)  // cascade sonradan yapıldı incele.
     private List<ScorePlayer> scoresPlayers;
 }

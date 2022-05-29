@@ -20,8 +20,8 @@ public class StageController {
         this.stageService = stageService;
     }
     @GetMapping("/get/list")
-    public DataResult<List<StageResponseDto>> getAllStages(){
-        return this.stageService.getAllStages();
+    public DataResult<List<StageResponseDto>> getAllStages(@RequestParam(required = false) Long tournamentId){
+        return this.stageService.getAllStages(tournamentId);
     }
 
     @GetMapping("/get/{stageId}")
@@ -34,9 +34,9 @@ public class StageController {
         return this.stageService.updateOneStage(stageId, stageRequestDto);
     }
 
-    @PostMapping("/save")
-    public DataResult<StageResponseDto> createOneStage(@RequestBody StageRequestDto newStageRequestDto){
-        return this.stageService.createOneStage(newStageRequestDto);
+    @PostMapping("/save/{tournamentId}")
+    public DataResult<StageResponseDto> createOneStage(@PathVariable Long tournamentId, @RequestBody StageRequestDto newStageRequestDto){
+        return this.stageService.createOneStage(tournamentId, newStageRequestDto);
     }
     @DeleteMapping("/delete/{stageId}")
     public Result deleteOneStage(@PathVariable Long stageId){

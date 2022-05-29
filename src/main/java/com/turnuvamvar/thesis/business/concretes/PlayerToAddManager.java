@@ -94,14 +94,17 @@ public class PlayerToAddManager implements PlayerToAddService {
     }
 
     @Override
-    public DataResult<List<PlayerToAddResponseDto>> getAllPlayersToAdd() {
+    public DataResult<List<PlayerToAddResponseDto>> getAllPlayersToAdd(Long teamId) {
         // hangi takım oldugunu al.
-
+        Optional<Team> team = this.teamDao.findById(teamId);
         List<PlayerToAdd> playerToAddList = new ArrayList<>();
-        Iterable<PlayerToAdd> playerToAddIterable = this.playerToAddDao.findAll();
+        Iterable<PlayerToAdd> playerToAddIterable;
+        if(team.isPresent()){
+            playerToAddIterable = this.playerToAddDao.findAllByTeamId(teamId);
+        }else{
+            playerToAddIterable = this.playerToAddDao.findAll();
+        }
         playerToAddIterable.iterator().forEachRemaining(playerToAddList :: add);
-        //List<PlayerToAddResponseDto> playerToAddDtoList = playerToAddResponseMapper.mapPlayerToAddListToPlayerToAddDtoList(playerToAddList);
-
         if(playerToAddList.isEmpty()){
             return new ErrorDataResult<PlayerToAddResponseDto>("eklenecek oyuncu listesinde hiç veri bulunamadı!");
         }

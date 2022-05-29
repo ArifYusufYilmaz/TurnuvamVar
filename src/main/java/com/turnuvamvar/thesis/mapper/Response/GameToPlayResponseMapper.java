@@ -24,7 +24,7 @@ public abstract class GameToPlayResponseMapper {
     @Mapping(source="secondTeamName", target="stageTeamSecond.team.teamName")
     public abstract GameToPlay mapGameToPlayResponseDtoToGameToPlay(GameToPlayResponseDto gameToPlayResponseDto);
 
-    public abstract List<GameToPlayResponseDto> mapGameToPlayToListGameToPlayResponseDtoList(Collection<GameToPlay> gamesToPlay);
+    public abstract List<GameToPlayResponseDto> mapGameToPlayListToGameToPlayResponseDtoList(Collection<GameToPlay> gamesToPlay);
     public abstract List<GameToPlay> mapGameToPlayResponseDtoListToGameToPlayList(Collection<GameToPlayResponseDto> gamesToPlayDto);
 
 

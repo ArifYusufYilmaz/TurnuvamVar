@@ -1,5 +1,6 @@
 package com.turnuvamvar.thesis.entities.concretes;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.turnuvamvar.thesis.entities.abstracts.BaseEntity;
 import lombok.Data;
 
@@ -21,7 +22,11 @@ public class Stage extends BaseEntity {
             inverseJoinColumns={@JoinColumn(name="team_id")})
     private List<Team> teams;*/
 
-    @OneToMany(mappedBy = "stage")
+    @OneToMany(mappedBy = "stage", cascade = CascadeType.ALL) // cascade sonradan yapıldı, sorun var mı incele
     private List<StageTeam> stagesTeams;
+
+    @ManyToOne
+    @JsonBackReference
+    private Tournament tournament;
 }
 

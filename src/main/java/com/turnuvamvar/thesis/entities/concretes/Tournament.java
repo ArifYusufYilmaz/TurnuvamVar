@@ -18,6 +18,10 @@ public class Tournament extends BaseEntity {
     @OneToMany(mappedBy="tournament", cascade = CascadeType.ALL)
     @JsonManagedReference
     private List<Team> team;
+
+    @OneToMany(mappedBy="tournament", cascade = CascadeType.ALL)
+    @JsonManagedReference
+    private List<Stage> stage;
 }
 
 

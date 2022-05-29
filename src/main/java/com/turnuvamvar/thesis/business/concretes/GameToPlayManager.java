@@ -5,9 +5,11 @@ import com.turnuvamvar.thesis.core.utilities.results.*;
 import com.turnuvamvar.thesis.dataAccess.abstracts.GameToPlayDao;
 import com.turnuvamvar.thesis.dataAccess.abstracts.StageTeamDao;
 import com.turnuvamvar.thesis.dataAccess.abstracts.TeamDao;
+import com.turnuvamvar.thesis.dto.Request.GameToPlayRequestDto;
 import com.turnuvamvar.thesis.dto.Response.GameToPlayResponseDto;
 import com.turnuvamvar.thesis.entities.concretes.GameToPlay;
 import com.turnuvamvar.thesis.entities.concretes.StageTeam;
+import com.turnuvamvar.thesis.mapper.Request.GameToPlayRequestMapper;
 import com.turnuvamvar.thesis.mapper.Response.GameToPlayResponseMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -21,6 +23,7 @@ public class GameToPlayManager implements GameToPlayService {
     @Autowired
     private GameToPlayDao gameToPlayDao;
     private GameToPlayResponseMapper gameToPlayResponseMapper;
+    private GameToPlayRequestMapper gameToPlayRequestMapper;
     private TeamDao teamDao;    // gereksizse sil.
     private StageTeamDao stageTeamDao;
     @Autowired
@@ -32,6 +35,11 @@ public class GameToPlayManager implements GameToPlayService {
         this.gameToPlayResponseMapper = gameToPlayResponseMapper;
     }
     @Autowired
+    public void setGameToPlayRequestMapper(GameToPlayRequestMapper gameToPlayRequestMapper) {
+        this.gameToPlayRequestMapper = gameToPlayRequestMapper;
+    }
+
+    @Autowired
     public void setTeamDao(TeamDao teamDao) {
         this.teamDao = teamDao;
     }
@@ -41,17 +49,17 @@ public class GameToPlayManager implements GameToPlayService {
     }
 
     @Override
-    public DataResult<GameToPlayResponseDto> createOneGameToPlay(GameToPlayResponseDto newGameToPlayResponseDto) {
+    public DataResult<GameToPlayResponseDto> createOneGameToPlay(GameToPlayRequestDto newGameToPlayRequestDto) {
         //kontrolleri yapmalısın!!
-        Optional<StageTeam> firstStageTeam = this.stageTeamDao.findById(newGameToPlayResponseDto.getFirstTeamId());
-        Optional<StageTeam> secondStageTeam = this.stageTeamDao.findById(newGameToPlayResponseDto.getSecondTeamId());
+        Optional<StageTeam> firstStageTeam = this.stageTeamDao.findById(newGameToPlayRequestDto.getFirstTeamId());
+        Optional<StageTeam> secondStageTeam = this.stageTeamDao.findById(newGameToPlayRequestDto.getSecondTeamId());
         if(firstStageTeam.isPresent() && secondStageTeam.isPresent()){
             if(gameToPlayToCheckIfDuplicate(firstStageTeam.get().getId(), secondStageTeam.get().getId())){
                 return new ErrorDataResult<GameToPlayResponseDto>("aynı takımlar oynatılmak isteniyorsa takımlar yer değiştirmeli!");
             }else{
-                GameToPlay newGameToPlay = this.gameToPlayResponseMapper.mapGameToPlayResponseDtoToGameToPlay(newGameToPlayResponseDto);
-                this.gameToPlayDao.save(newGameToPlay);
-                newGameToPlayResponseDto = this.gameToPlayResponseMapper.mapGameToPlayToGameToPlayResponseDto(newGameToPlay);
+                GameToPlay newGameToPlay = this.gameToPlayRequestMapper.mapGameToPlayRequestDtoToGameToPlay(newGameToPlayRequestDto);
+                newGameToPlay = this.gameToPlayDao.save(newGameToPlay);
+                GameToPlayResponseDto newGameToPlayResponseDto = this.gameToPlayResponseMapper.mapGameToPlayToGameToPlayResponseDto(newGameToPlay);
                 return new SuccessDataResult<GameToPlayResponseDto>(newGameToPlayResponseDto);
             }
         }
@@ -62,39 +70,41 @@ public class GameToPlayManager implements GameToPlayService {
     }
 
     @Override
-    public DataResult<List<GameToPlay>> getAllGamesToPlay() {
+    public DataResult<List<GameToPlayResponseDto>> getAllGamesToPlay() {
         List<GameToPlay> gameToPlayList = new ArrayList<>();
         Iterable<GameToPlay> gameToPlayIterable = this.gameToPlayDao.findAll();
         gameToPlayIterable.iterator().forEachRemaining(gameToPlayList :: add);
         if(gameToPlayList.isEmpty()){
-            return new ErrorDataResult<List<GameToPlay>>("oynanacak oyun  listesinde hiç stage bulunamadı!");
+            return new ErrorDataResult<List<GameToPlayResponseDto>>("oynanacak oyun  listesinde hiç stage bulunamadı!");
         }
         else{
-            return new SuccessDataResult<List<GameToPlay>>(gameToPlayList);
+            List<GameToPlayResponseDto> gameToPlayResponseDtoList = this.gameToPlayResponseMapper.mapGameToPlayListToGameToPlayResponseDtoList(gameToPlayList);
+            return new SuccessDataResult<List<GameToPlayResponseDto>>(gameToPlayResponseDtoList);
         }
     }
 
     @Override
-    public DataResult<GameToPlay> getOneGameToPlayById(Long gameToPlayId) {
+    public DataResult<GameToPlayResponseDto> getOneGameToPlayById(Long gameToPlayId) {
         Optional<GameToPlay> gameToPlay = this.gameToPlayDao.findById(gameToPlayId);
         if(gameToPlay.isPresent()){
-            return new SuccessDataResult<GameToPlay>(gameToPlay.get());
+            GameToPlayResponseDto gameToPlayResponseDto = this.gameToPlayResponseMapper.mapGameToPlayToGameToPlayResponseDto(gameToPlay.get());
+            return new SuccessDataResult<GameToPlayResponseDto>(gameToPlayResponseDto);
         }
         else{
-            return new ErrorDataResult<GameToPlay>("oynanacak maç bulunamadı");
+            return new ErrorDataResult<GameToPlayResponseDto>("oynanacak maç bulunamadı");
         }
     }
 
     @Override
-    public DataResult<GameToPlayResponseDto> updateOneGameToPlay(Long gameToPlayId, GameToPlayResponseDto gameToPlayResponseDto) {
+    public DataResult<GameToPlayResponseDto> updateOneGameToPlay(Long gameToPlayId, GameToPlayRequestDto gameToPlayRequestDto) {
         Optional<GameToPlay> gameToPlay = this.gameToPlayDao.findById(gameToPlayId);
         if(gameToPlay.isPresent()){
             GameToPlay toSave = gameToPlay.get();
-            toSave.getStageTeamFirst().setId(gameToPlayResponseDto.getFirstTeamId());
-            toSave.getStageTeamSecond().setId(gameToPlayResponseDto.getSecondTeamId());
-            toSave.setTarih(gameToPlayResponseDto.getTarih());
+            toSave.getStageTeamFirst().setId(gameToPlayRequestDto.getFirstTeamId());
+            toSave.getStageTeamSecond().setId(gameToPlayRequestDto.getSecondTeamId());
+            toSave.setTarih(gameToPlayRequestDto.getTarih());
             toSave = this.gameToPlayDao.save(toSave);
-            GameToPlayResponseDto newGameToPlayResponseDto = gameToPlayResponseMapper.mapGameToPlayToGameToPlayResponseDto(toSave);
+            GameToPlayResponseDto newGameToPlayResponseDto = this.gameToPlayResponseMapper.mapGameToPlayToGameToPlayResponseDto(toSave);
             return new SuccessDataResult<GameToPlayResponseDto>(newGameToPlayResponseDto);
         }
         else{

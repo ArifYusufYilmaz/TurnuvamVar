@@ -27,8 +27,8 @@ public class PlayerToAddController {
         return this.playerToAddService.getOnePlayerToAddById(playerToAddId);
     }
     @GetMapping("/get/list")
-    public DataResult<List<PlayerToAddResponseDto>> getAllPlayersToAdd(){
-        return this.playerToAddService.getAllPlayersToAdd();
+    public DataResult<List<PlayerToAddResponseDto>> getAllPlayersToAdd(@RequestParam(required = false) Long teamId){
+        return this.playerToAddService.getAllPlayersToAdd(teamId);
     }
     @PutMapping("/update/{playerToAddId}")
     public DataResult<PlayerToAddResponseDto> updateOnePlayerToAdd(@PathVariable Long playerToAddId,

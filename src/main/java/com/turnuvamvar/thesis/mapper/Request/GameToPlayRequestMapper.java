@@ -19,7 +19,7 @@ public abstract class GameToPlayRequestMapper {
     @Mapping(source="secondTeamId", target="stageTeamSecond.id")
     public abstract GameToPlay mapGameToPlayRequestDtoToGameToPlay(GameToPlayRequestDto gameToPlayRequestDto);
 
-    public abstract List<GameToPlayRequestDto> mapGameToPlayToListGameToPlayRequestDtoList(Collection<GameToPlay> gamesToPlay);
+    public abstract List<GameToPlayRequestDto> mapGameToPlayListToGameToPlayRequestDtoList(Collection<GameToPlay> gamesToPlay);
     public abstract List<GameToPlay> mapGameToPlayRequestDtoListToGameToPlayList(Collection<GameToPlayRequestDto> gamesToPlayDto);
 
 }

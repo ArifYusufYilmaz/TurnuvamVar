@@ -14,7 +14,7 @@ public interface PlayerToAddService {
 
     DataResult<PlayerToAddResponseDto> getOnePlayerToAddById(Long playerToAddId);
 
-    DataResult<List<PlayerToAddResponseDto>> getAllPlayersToAdd();
+    DataResult<List<PlayerToAddResponseDto>> getAllPlayersToAdd(Long teamId);
 
     Result deleteOnePlayerToAddById(Long playerToAddId);
 }

@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ScorePlayerResponseDto {
+    private Long id;
     private Long playerId;
     private Long scoreId;
 }

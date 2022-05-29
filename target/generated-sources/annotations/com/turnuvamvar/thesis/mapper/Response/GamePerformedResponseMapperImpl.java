@@ -6,12 +6,15 @@ import com.turnuvamvar.thesis.entities.concretes.GameToPlay;
 import com.turnuvamvar.thesis.entities.concretes.Score;
 import com.turnuvamvar.thesis.entities.concretes.StageTeam;
 import com.turnuvamvar.thesis.entities.concretes.Team;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 import javax.annotation.Generated;
 import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2022-05-29T01:31:15+0300",
+    date = "2022-05-29T12:02:55+0300",
     comments = "version: 1.4.2.Final, compiler: javac, environment: Java 11.0.6 (Oracle Corporation)"
 )
 @Component
@@ -30,6 +33,7 @@ public class GamePerformedResponseMapperImpl extends GamePerformedResponseMapper
         gamePerformedResponseDto.setScoreOfSecondTeam( gamePerformedScoreOfSecondTeamScore( gamePerformed ) );
         gamePerformedResponseDto.setFirstTeamName( gamePerformedGameToPlayStageTeamFirstTeamTeamName( gamePerformed ) );
         gamePerformedResponseDto.setSecondTeamName( gamePerformedGameToPlayStageTeamSecondTeamTeamName( gamePerformed ) );
+        gamePerformedResponseDto.setId( gamePerformed.getId() );
 
         return gamePerformedResponseDto;
     }
@@ -45,8 +49,37 @@ public class GamePerformedResponseMapperImpl extends GamePerformedResponseMapper
         gamePerformed.setGameToPlay( gamePerformedResponseDtoToGameToPlay( gamePerformedResponseDto ) );
         gamePerformed.setScoreOfFirstTeam( gamePerformedResponseDtoToScore( gamePerformedResponseDto ) );
         gamePerformed.setScoreOfSecondTeam( gamePerformedResponseDtoToScore1( gamePerformedResponseDto ) );
+        gamePerformed.setId( gamePerformedResponseDto.getId() );
 
         return gamePerformed;
+    }
+
+    @Override
+    public List<GamePerformed> mapGamePerformedResponseDtoListToGamePerformedList(Collection<GamePerformedResponseDto> gamePerformedResponseDtoList) {
+        if ( gamePerformedResponseDtoList == null ) {
+            return null;
+        }
+
+        List<GamePerformed> list = new ArrayList<GamePerformed>( gamePerformedResponseDtoList.size() );
+        for ( GamePerformedResponseDto gamePerformedResponseDto : gamePerformedResponseDtoList ) {
+            list.add( mapGamePerformedResponseDtoToGamePerformed( gamePerformedResponseDto ) );
+        }
+
+        return list;
+    }
+
+    @Override
+    public List<GamePerformedResponseDto> mapGamePerformedListToGamePerformedResponseList(Collection<GamePerformed> gamePerformedList) {
+        if ( gamePerformedList == null ) {
+            return null;
+        }
+
+        List<GamePerformedResponseDto> list = new ArrayList<GamePerformedResponseDto>( gamePerformedList.size() );
+        for ( GamePerformed gamePerformed : gamePerformedList ) {
+            list.add( mapGamePerformedToGamePerformedResponseDto( gamePerformed ) );
+        }
+
+        return list;
     }
 
     private Long gamePerformedGameToPlayId(GamePerformed gamePerformed) {

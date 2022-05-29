@@ -12,7 +12,7 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2022-05-29T01:31:15+0300",
+    date = "2022-05-29T11:15:15+0300",
     comments = "version: 1.4.2.Final, compiler: javac, environment: Java 11.0.6 (Oracle Corporation)"
 )
 @Component
@@ -30,6 +30,7 @@ public class GameToPlayResponseMapperImpl extends GameToPlayResponseMapper {
         gameToPlayResponseDto.setFirstTeamName( gameToPlayStageTeamFirstTeamTeamName( gameToPlay ) );
         gameToPlayResponseDto.setSecondTeamId( gameToPlayStageTeamSecondId( gameToPlay ) );
         gameToPlayResponseDto.setSecondTeamName( gameToPlayStageTeamSecondTeamTeamName( gameToPlay ) );
+        gameToPlayResponseDto.setId( gameToPlay.getId() );
         gameToPlayResponseDto.setTarih( gameToPlay.getTarih() );
 
         return gameToPlayResponseDto;
@@ -45,13 +46,14 @@ public class GameToPlayResponseMapperImpl extends GameToPlayResponseMapper {
 
         gameToPlay.setStageTeamFirst( gameToPlayResponseDtoToStageTeam( gameToPlayResponseDto ) );
         gameToPlay.setStageTeamSecond( gameToPlayResponseDtoToStageTeam1( gameToPlayResponseDto ) );
+        gameToPlay.setId( gameToPlayResponseDto.getId() );
         gameToPlay.setTarih( gameToPlayResponseDto.getTarih() );
 
         return gameToPlay;
     }
 
     @Override
-    public List<GameToPlayResponseDto> mapGameToPlayToListGameToPlayResponseDtoList(Collection<GameToPlay> gamesToPlay) {
+    public List<GameToPlayResponseDto> mapGameToPlayListToGameToPlayResponseDtoList(Collection<GameToPlay> gamesToPlay) {
         if ( gamesToPlay == null ) {
             return null;
         }

@@ -4,9 +4,11 @@ import com.turnuvamvar.thesis.business.abstracts.GamePerformedService;
 import com.turnuvamvar.thesis.core.utilities.results.*;
 import com.turnuvamvar.thesis.dataAccess.abstracts.GamePerformedDao;
 import com.turnuvamvar.thesis.dataAccess.abstracts.GameToPlayDao;
+import com.turnuvamvar.thesis.dto.Request.GamePerformedRequestDto;
 import com.turnuvamvar.thesis.dto.Response.GamePerformedResponseDto;
 import com.turnuvamvar.thesis.entities.concretes.GamePerformed;
 import com.turnuvamvar.thesis.entities.concretes.GameToPlay;
+import com.turnuvamvar.thesis.mapper.Request.GamePerformedRequestMapper;
 import com.turnuvamvar.thesis.mapper.Response.GamePerformedResponseMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,6 +22,7 @@ public class GamePerformedManager implements GamePerformedService {
     @Autowired
     private GamePerformedDao gamePerformedDao;
     private GamePerformedResponseMapper gamePerformedResponseMapper;
+    private GamePerformedRequestMapper gamePerformedRequestMapper;
     private GameToPlayDao gameToPlayDao;
     @Autowired
     public GamePerformedManager(GamePerformedDao gamePerformedDao) {
@@ -30,18 +33,23 @@ public class GamePerformedManager implements GamePerformedService {
         this.gamePerformedResponseMapper = gamePerformedResponseMapper;
     }
     @Autowired
+    public void setGamePerformedRequestMapper(GamePerformedRequestMapper gamePerformedRequestMapper) {
+        this.gamePerformedRequestMapper = gamePerformedRequestMapper;
+    }
+
+    @Autowired
     public void setGameToPlayDao(GameToPlayDao gameToPlayDao) {
         this.gameToPlayDao = gameToPlayDao;
     }
 
     @Override
-    public DataResult<GamePerformedResponseDto> createOneGamePerformed(GamePerformedResponseDto newGamePerformedResponseDto) {
+    public DataResult<GamePerformedResponseDto> createOneGamePerformed(GamePerformedRequestDto newGamePerformedRequestDto) {
         //hiç bir kontrol-işlem yapılmadı!!!
-        Optional<GameToPlay> gameToPlay = this.gameToPlayDao.findById(newGamePerformedResponseDto.getGameToPlayId());
+        Optional<GameToPlay> gameToPlay = this.gameToPlayDao.findById(newGamePerformedRequestDto.getGameToPlayId());
         if(gameToPlay.isPresent()){
-            GamePerformed gamePerformed = this.gamePerformedResponseMapper.mapGamePerformedResponseDtoToGamePerformed(newGamePerformedResponseDto);
-            this.gamePerformedDao.save(gamePerformed);
-            newGamePerformedResponseDto = this.gamePerformedResponseMapper.mapGamePerformedToGamePerformedResponseDto(gamePerformed);
+            GamePerformed gamePerformed = this.gamePerformedRequestMapper.mapGamePerformedRequestDtoToGamePerformed(newGamePerformedRequestDto);
+            gamePerformed = this.gamePerformedDao.save(gamePerformed);
+            GamePerformedResponseDto newGamePerformedResponseDto = this.gamePerformedResponseMapper.mapGamePerformedToGamePerformedResponseDto(gamePerformed);
             return new SuccessDataResult<GamePerformedResponseDto>(newGamePerformedResponseDto);
         }else{
             return new ErrorDataResult<GamePerformedResponseDto>("oynanacak maç bulunamadı..");
@@ -50,31 +58,33 @@ public class GamePerformedManager implements GamePerformedService {
     }
 
     @Override
-    public DataResult<GamePerformed> getOneGamePerformedById(Long gamePerformedId) {
+    public DataResult<GamePerformedResponseDto> getOneGamePerformedById(Long gamePerformedId) {
         Optional<GamePerformed> gamePerformed = this.gamePerformedDao.findById(gamePerformedId);
         if(gamePerformed.isPresent()){
-            return new SuccessDataResult<GamePerformed>(gamePerformed.get());
+            GamePerformedResponseDto gamePerformedResponseDto = this.gamePerformedResponseMapper.mapGamePerformedToGamePerformedResponseDto(gamePerformed.get());
+            return new SuccessDataResult<GamePerformedResponseDto>(gamePerformedResponseDto);
         }
         else{
-            return new ErrorDataResult<GamePerformed>("oynanan oyun bulunamadı");
+            return new ErrorDataResult<GamePerformedResponseDto>("oynanan oyun bulunamadı");
         }
     }
 
     @Override
-    public DataResult<GamePerformedResponseDto> updateOneGamePerformed(Long gamePerformedId, GamePerformedResponseDto gamePerformedResponseDto) {
+    public DataResult<GamePerformedResponseDto> updateOneGamePerformed(Long gamePerformedId, GamePerformedRequestDto gamePerformedRequestDto) {
         return null;
     }
 
     @Override
-    public DataResult<List<GamePerformed>> getAllGamesPerformed() {
+    public DataResult<List<GamePerformedResponseDto>> getAllGamesPerformed() {
         List<GamePerformed> gamePerformedList = new ArrayList<>();
         Iterable<GamePerformed> gamePerformedIterable = this.gamePerformedDao.findAll();
         gamePerformedIterable.iterator().forEachRemaining(gamePerformedList :: add);
         if(gamePerformedList.isEmpty()){
-            return new ErrorDataResult<>("stage listesinde hiç stage bulunamadı!");
+            return new ErrorDataResult<GamePerformedResponseDto>("stage listesinde hiç stage bulunamadı!");
         }
         else{
-            return new SuccessDataResult<List<GamePerformed>>(gamePerformedList);
+            List<GamePerformedResponseDto> gamePerformedResponseDtoList = this.gamePerformedResponseMapper.mapGamePerformedListToGamePerformedResponseList(gamePerformedList);
+            return new SuccessDataResult<List<GamePerformedResponseDto>>(gamePerformedResponseDtoList);
         }
     }
 

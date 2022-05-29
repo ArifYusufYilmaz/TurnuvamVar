@@ -11,7 +11,7 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2022-05-29T01:31:15+0300",
+    date = "2022-05-29T11:12:40+0300",
     comments = "version: 1.4.2.Final, compiler: javac, environment: Java 11.0.6 (Oracle Corporation)"
 )
 @Component
@@ -48,7 +48,7 @@ public class GameToPlayRequestMapperImpl extends GameToPlayRequestMapper {
     }
 
     @Override
-    public List<GameToPlayRequestDto> mapGameToPlayToListGameToPlayRequestDtoList(Collection<GameToPlay> gamesToPlay) {
+    public List<GameToPlayRequestDto> mapGameToPlayListToGameToPlayRequestDtoList(Collection<GameToPlay> gamesToPlay) {
         if ( gamesToPlay == null ) {
             return null;
         }

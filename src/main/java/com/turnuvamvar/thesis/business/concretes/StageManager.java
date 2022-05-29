@@ -3,9 +3,11 @@ package com.turnuvamvar.thesis.business.concretes;
 import com.turnuvamvar.thesis.business.abstracts.StageService;
 import com.turnuvamvar.thesis.core.utilities.results.*;
 import com.turnuvamvar.thesis.dataAccess.abstracts.StageDao;
+import com.turnuvamvar.thesis.dataAccess.abstracts.TournamentDao;
 import com.turnuvamvar.thesis.dto.Request.StageRequestDto;
 import com.turnuvamvar.thesis.dto.Response.StageResponseDto;
 import com.turnuvamvar.thesis.entities.concretes.Stage;
+import com.turnuvamvar.thesis.entities.concretes.Tournament;
 import com.turnuvamvar.thesis.mapper.Request.StageRequestMapper;
 import com.turnuvamvar.thesis.mapper.Response.StageResponseMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,12 +21,18 @@ import java.util.Optional;
 public class StageManager implements StageService {
     @Autowired
     private StageDao stageDao;
+    private TournamentDao tournamentDao;
     private StageResponseMapper stageResponseMapper;
     private StageRequestMapper stageRequestMapper;
     @Autowired
     public StageManager(StageDao stageDao) {
         this.stageDao = stageDao;
     }
+    @Autowired
+    public void setTournamentDao(TournamentDao tournamentDao) {
+        this.tournamentDao = tournamentDao;
+    }
+
     @Autowired  //Lazy ?
     public void setStageResponseMapper(StageResponseMapper stageResponseMapper) {
         this.stageResponseMapper = stageResponseMapper;
@@ -35,16 +43,25 @@ public class StageManager implements StageService {
     }
 
     @Override
-    public DataResult<StageResponseDto> createOneStage(StageRequestDto newStageRequestDto) {
+    public DataResult<StageResponseDto> createOneStage(Long tournamentId, StageRequestDto newStageRequestDto) {
         // null olma durumunu kontrol et.
-        if(checkIfItHasSameStageByName(newStageRequestDto.getStageName())){
-            return new ErrorDataResult<StageResponseDto>("Bu aşama ismi zaten mevcut!!");
-        }else{
-            Stage stage =  this.stageRequestMapper.mapStageRequestDtoToStage(newStageRequestDto);
-            stage = this.stageDao.save(stage);
-            StageResponseDto stageResponseDto = this.stageResponseMapper.mapStageToStageResponseDto(stage);
-            return new SuccessDataResult<StageResponseDto>(stageResponseDto);
+        Optional<Tournament> tournament = this.tournamentDao.findById(tournamentId);
+        if(tournament.isPresent()){
+            if(checkIfItHasSameStageByName(newStageRequestDto.getStageName())){
+                return new ErrorDataResult<StageResponseDto>("Bu aşama ismi zaten mevcut!!");
+            }
+            else{
+                Stage stage =  this.stageRequestMapper.mapStageRequestDtoToStage(newStageRequestDto);
+                stage = this.stageDao.save(stage);
+                StageResponseDto stageResponseDto = this.stageResponseMapper.mapStageToStageResponseDto(stage);
+                return new SuccessDataResult<StageResponseDto>(stageResponseDto);
+            }
         }
+        else{
+            return new ErrorDataResult<StageResponseDto>("verilen id'de turnuva bulunamadı..");
+
+        }
+
     }
 
     @Override
@@ -93,9 +110,14 @@ public class StageManager implements StageService {
     }
 
     @Override
-    public DataResult<List<StageResponseDto>> getAllStages() {
+    public DataResult<List<StageResponseDto>> getAllStages(Long tournamentId) {
         List<Stage> stageList = new ArrayList<>();
-        Iterable<Stage> stageIterable = this.stageDao.findAll();
+        Iterable<Stage> stageIterable;
+        if(tournamentId == null){
+            stageIterable =  this.stageDao.findAll();
+        }else{
+            stageIterable = this.stageDao.findAllByTournamentId(tournamentId);
+        }
         stageIterable.iterator().forEachRemaining(stageList :: add);
         if(stageList.isEmpty()){
             return new ErrorDataResult<StageResponseDto>("stage listesinde hiç stage bulunamadı!");

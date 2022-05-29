@@ -4,10 +4,12 @@ import com.turnuvamvar.thesis.business.abstracts.PlayerService;
 import com.turnuvamvar.thesis.core.utilities.results.*;
 import com.turnuvamvar.thesis.dataAccess.abstracts.PlayerDao;
 import com.turnuvamvar.thesis.dataAccess.abstracts.PlayerToAddDao;
+import com.turnuvamvar.thesis.dto.Request.PlayerRequestDto;
 import com.turnuvamvar.thesis.dto.Response.PlayerResponseDto;
 import com.turnuvamvar.thesis.dto.Response.PlayerToAddResponseDto;
 import com.turnuvamvar.thesis.entities.concretes.Player;
 import com.turnuvamvar.thesis.entities.concretes.PlayerToAdd;
+import com.turnuvamvar.thesis.mapper.Request.PlayerRequestMapper;
 import com.turnuvamvar.thesis.mapper.Response.PlayerResponseMapper;
 import com.turnuvamvar.thesis.mapper.Response.PlayerToAddResponseMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +25,7 @@ public class PlayerManager implements PlayerService {
     private PlayerDao playerDao;
     private PlayerToAddDao playerToAddDao;
     private PlayerResponseMapper playerResponseMapper;
+    private PlayerRequestMapper playerRequestMapper;
     private PlayerToAddResponseMapper playerToAddResponseMapper;
     @Autowired
     public PlayerManager(PlayerDao playerDao) {
@@ -37,12 +40,17 @@ public class PlayerManager implements PlayerService {
         this.playerToAddResponseMapper = playerToAddResponseMapper;
     }
     @Autowired
+    public void setPlayerRequestMapper(PlayerRequestMapper playerRequestMapper) {
+        this.playerRequestMapper = playerRequestMapper;
+    }
+
+    @Autowired
     public void setPlayerToAddDao(PlayerToAddDao playerToAddDao) {
         this.playerToAddDao = playerToAddDao;
     }
 
     @Override
-    public DataResult<Player> createOnePlayer(Long playerToAddDtoId) {   //admin id, playerToAdd id gelmeli.
+    public DataResult<PlayerResponseDto> createOnePlayer(Long playerToAddDtoId) {   //admin id, playerToAdd id gelmeli.
 
         Optional<PlayerToAdd> playerToAdd = this.playerToAddDao.findById(playerToAddDtoId);
         if(playerToAdd.isPresent()){
@@ -51,40 +59,43 @@ public class PlayerManager implements PlayerService {
             player.setTeam(playerToAdd.get().getTeam());
             // oyuncu eklendiği zaman eklenecek oyuncu listesindekinin silinmesi lazım!!!!!!!
             // aynı şekilde reddedilse de ordan silinmesi lazım.
-            return new SuccessDataResult<Player>(this.playerDao.save(player));
+            player = this.playerDao.save(player);
+            PlayerResponseDto playerResponseDto = this.playerResponseMapper.mapPlayerToPlayerResponseDto(player);
+            return new SuccessDataResult<PlayerResponseDto>(playerResponseDto);
         }
         else {
-            return new ErrorDataResult<Player>("bulunamadı");
+            return new ErrorDataResult<PlayerResponseDto>("bulunamadı");
         }
     }
 
 
 
     @Override
-    public DataResult<Player> getOnePlayerById(Long playerId) {
+    public DataResult<PlayerResponseDto> getOnePlayerById(Long playerId) {
         Optional<Player> player = this.playerDao.findById(playerId);
         if(player.isPresent()){
-            return new SuccessDataResult<Player>(player.get());
+            PlayerResponseDto playerResponseDto = this.playerResponseMapper.mapPlayerToPlayerResponseDto(player.get());
+            return new SuccessDataResult<PlayerResponseDto>(playerResponseDto);
         }
         else{
-            return new ErrorDataResult<Player>("Oyuncu bulunamadı");
+            return new ErrorDataResult<PlayerResponseDto>("Oyuncu bulunamadı");
         }
     }
 
     @Override
-    public DataResult<PlayerResponseDto> updateOnePlayer(Long playerId, PlayerResponseDto playerResponseDto) { // fix
+    public DataResult<PlayerResponseDto> updateOnePlayer(Long playerId, PlayerRequestDto playerRequestDto) { // fix
         Optional<Player> player = this.playerDao.findById(playerId);
         if(player.isPresent()){
             Player toSave = player.get();
-            toSave.setPlayerFirstName(playerResponseDto.getPlayerFirstName());
-            toSave.setPlayerLastName(playerResponseDto.getPlayerLastName());
+            toSave.setPlayerFirstName(playerRequestDto.getPlayerFirstName());
+            toSave.setPlayerLastName(playerRequestDto.getPlayerLastName());
             // playerdto da id alıyorum adres veya telefon değil bunu fixle.
             //toSave.getPlayerCommunication().setPlayerPhoneNumber();
-            toSave.setPosition(playerResponseDto.getPosition());
+            toSave.setPosition(playerRequestDto.getPosition());
 
             toSave = this.playerDao.save(toSave);
-          //  PlayerResponseDto newPlayerDto = playerResponseMapper.(toSave);newPlayerDto
-              return new SuccessDataResult<PlayerResponseDto>();
+            PlayerResponseDto playerResponseDto =this.playerResponseMapper.mapPlayerToPlayerResponseDto(toSave);
+              return new SuccessDataResult<PlayerResponseDto>(playerResponseDto);
         }
         else{
             return new ErrorDataResult<PlayerResponseDto>("oyuncu bulunamadı..");
@@ -92,15 +103,16 @@ public class PlayerManager implements PlayerService {
     }
 
     @Override
-    public DataResult<List<Player>> getAllPlayers() {
+    public DataResult<List<PlayerResponseDto>> getAllPlayers(Long teamId) {
         List<Player> playerList = new ArrayList<>();
         Iterable<Player> playerIterable = this.playerDao.findAll();
         playerIterable.iterator().forEachRemaining(playerList :: add);
         if(playerList.isEmpty()){
-            return new ErrorDataResult<>("stage listesinde hiç stage bulunamadı!");
+            return new ErrorDataResult<PlayerResponseDto>("stage listesinde hiç stage bulunamadı!");
         }
         else{
-            return new SuccessDataResult<List<Player>>(playerList);
+            List<PlayerResponseDto> playerResponseDtoList = this.playerResponseMapper.mapPlayerListToPlayerResponseDtoList(playerList);
+            return new SuccessDataResult<List<PlayerResponseDto>>(playerResponseDtoList);
         }
     }
 
