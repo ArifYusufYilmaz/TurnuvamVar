@@ -58,6 +58,8 @@ public class GameToPlayManager implements GameToPlayService {
                 return new ErrorDataResult<GameToPlayResponseDto>("aynı takımlar oynatılmak isteniyorsa takımlar yer değiştirmeli!");
             }else{
                 GameToPlay newGameToPlay = this.gameToPlayRequestMapper.mapGameToPlayRequestDtoToGameToPlay(newGameToPlayRequestDto);
+                newGameToPlay.setStageTeamFirst(firstStageTeam.get());
+                newGameToPlay.setStageTeamSecond(secondStageTeam.get());
                 newGameToPlay = this.gameToPlayDao.save(newGameToPlay);
                 GameToPlayResponseDto newGameToPlayResponseDto = this.gameToPlayResponseMapper.mapGameToPlayToGameToPlayResponseDto(newGameToPlay);
                 return new SuccessDataResult<GameToPlayResponseDto>(newGameToPlayResponseDto);

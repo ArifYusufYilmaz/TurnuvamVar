@@ -85,14 +85,18 @@ public class TeamManager implements TeamService {
         Optional<Tournament> tournament = this.tournamentDao.findById(tournamentId);
 
         if(tournament.isPresent()){
-            Team newTeam = this.teamRequestMapper.mapTeamRequestDtoToTeam(newTeamRequestDto);
-            newTeam.setTournament(tournament.get());
+            if(newTeamRequestDto == null){
+                return new ErrorDataResult<TeamResponseDto>("istek null");
+            }else {
+                Team newTeam = this.teamRequestMapper.mapTeamRequestDtoToTeam(newTeamRequestDto);
+                newTeam.setTournament(tournament.get());
 
-            newTeam.getTeamCaptain().setCaptainFirstName(newTeam.getCaptainFirstName());
-            newTeam.getTeamCaptain().setCaptainLastName(newTeam.getCaptainLastName());
-            newTeam= this.teamDao.save(newTeam);
-            TeamResponseDto teamResponseDto = teamResponseMapper.mapTeamToTeamResponseDto(newTeam);
-            return new SuccessDataResult<TeamResponseDto>(teamResponseDto);
+                newTeam.getTeamCaptain().setCaptainFirstName(newTeam.getCaptainFirstName());
+                newTeam.getTeamCaptain().setCaptainLastName(newTeam.getCaptainLastName());
+                newTeam = this.teamDao.save(newTeam);
+                TeamResponseDto teamResponseDto = teamResponseMapper.mapTeamToTeamResponseDto(newTeam);
+                return new SuccessDataResult<TeamResponseDto>(teamResponseDto);
+            }
         }
         else{
             //error mesajı düzenlenebilir.
