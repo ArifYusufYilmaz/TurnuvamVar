@@ -96,10 +96,9 @@ public class PlayerToAddManager implements PlayerToAddService {
     @Override
     public DataResult<List<PlayerToAddResponseDto>> getAllPlayersToAdd(Long teamId) {
         // hangi takım oldugunu al.
-        Optional<Team> team = this.teamDao.findById(teamId);
         List<PlayerToAdd> playerToAddList = new ArrayList<>();
         Iterable<PlayerToAdd> playerToAddIterable;
-        if(team.isPresent()){
+        if(teamId == null){
             playerToAddIterable = this.playerToAddDao.findAllByTeamId(teamId);
         }else{
             playerToAddIterable = this.playerToAddDao.findAll();
