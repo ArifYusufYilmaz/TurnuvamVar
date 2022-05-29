@@ -12,7 +12,7 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2022-05-29T11:15:15+0300",
+    date = "2022-05-29T19:32:57+0300",
     comments = "version: 1.4.2.Final, compiler: javac, environment: Java 11.0.6 (Oracle Corporation)"
 )
 @Component
@@ -26,9 +26,9 @@ public class GameToPlayResponseMapperImpl extends GameToPlayResponseMapper {
 
         GameToPlayResponseDto gameToPlayResponseDto = new GameToPlayResponseDto();
 
-        gameToPlayResponseDto.setFirstTeamId( gameToPlayStageTeamFirstId( gameToPlay ) );
+        gameToPlayResponseDto.setFirstStageTeamId( gameToPlayStageTeamFirstId( gameToPlay ) );
         gameToPlayResponseDto.setFirstTeamName( gameToPlayStageTeamFirstTeamTeamName( gameToPlay ) );
-        gameToPlayResponseDto.setSecondTeamId( gameToPlayStageTeamSecondId( gameToPlay ) );
+        gameToPlayResponseDto.setSecondStageTeamId( gameToPlayStageTeamSecondId( gameToPlay ) );
         gameToPlayResponseDto.setSecondTeamName( gameToPlayStageTeamSecondTeamTeamName( gameToPlay ) );
         gameToPlayResponseDto.setId( gameToPlay.getId() );
         gameToPlayResponseDto.setTarih( gameToPlay.getTarih() );
@@ -168,7 +168,7 @@ public class GameToPlayResponseMapperImpl extends GameToPlayResponseMapper {
         StageTeam stageTeam = new StageTeam();
 
         stageTeam.setTeam( gameToPlayResponseDtoToTeam( gameToPlayResponseDto ) );
-        stageTeam.setId( gameToPlayResponseDto.getFirstTeamId() );
+        stageTeam.setId( gameToPlayResponseDto.getFirstStageTeamId() );
 
         return stageTeam;
     }
@@ -193,7 +193,7 @@ public class GameToPlayResponseMapperImpl extends GameToPlayResponseMapper {
         StageTeam stageTeam = new StageTeam();
 
         stageTeam.setTeam( gameToPlayResponseDtoToTeam1( gameToPlayResponseDto ) );
-        stageTeam.setId( gameToPlayResponseDto.getSecondTeamId() );
+        stageTeam.setId( gameToPlayResponseDto.getSecondStageTeamId() );
 
         return stageTeam;
     }

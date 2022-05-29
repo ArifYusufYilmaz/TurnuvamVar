@@ -11,7 +11,7 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2022-05-29T11:12:40+0300",
+    date = "2022-05-29T19:32:57+0300",
     comments = "version: 1.4.2.Final, compiler: javac, environment: Java 11.0.6 (Oracle Corporation)"
 )
 @Component
@@ -25,8 +25,8 @@ public class GameToPlayRequestMapperImpl extends GameToPlayRequestMapper {
 
         GameToPlayRequestDto gameToPlayRequestDto = new GameToPlayRequestDto();
 
-        gameToPlayRequestDto.setFirstTeamId( gameToPlayStageTeamFirstId( gameToPlay ) );
-        gameToPlayRequestDto.setSecondTeamId( gameToPlayStageTeamSecondId( gameToPlay ) );
+        gameToPlayRequestDto.setFirstStageTeamId( gameToPlayStageTeamFirstId( gameToPlay ) );
+        gameToPlayRequestDto.setSecondStageTeamId( gameToPlayStageTeamSecondId( gameToPlay ) );
         gameToPlayRequestDto.setTarih( gameToPlay.getTarih() );
 
         return gameToPlayRequestDto;
@@ -112,7 +112,7 @@ public class GameToPlayRequestMapperImpl extends GameToPlayRequestMapper {
 
         StageTeam stageTeam = new StageTeam();
 
-        stageTeam.setId( gameToPlayRequestDto.getFirstTeamId() );
+        stageTeam.setId( gameToPlayRequestDto.getFirstStageTeamId() );
 
         return stageTeam;
     }
@@ -124,7 +124,7 @@ public class GameToPlayRequestMapperImpl extends GameToPlayRequestMapper {
 
         StageTeam stageTeam = new StageTeam();
 
-        stageTeam.setId( gameToPlayRequestDto.getSecondTeamId() );
+        stageTeam.setId( gameToPlayRequestDto.getSecondStageTeamId() );
 
         return stageTeam;
     }

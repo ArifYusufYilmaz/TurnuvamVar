@@ -1,5 +1,6 @@
 package com.turnuvamvar.thesis.entities.concretes;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.turnuvamvar.thesis.entities.abstracts.BaseEntity;
 import lombok.Data;
 

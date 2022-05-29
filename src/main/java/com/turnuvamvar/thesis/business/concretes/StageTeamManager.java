@@ -31,6 +31,7 @@ public class StageTeamManager implements StageTeamService {
     @Autowired
     public StageTeamManager(StageTeamDao stageTeamDao) {
         this.stageTeamDao = stageTeamDao;
+
     }
     @Autowired
     public void setStageTeamResponseMapper(StageTeamResponseMapper stageTeamResponseMapper) {
@@ -61,9 +62,14 @@ public class StageTeamManager implements StageTeamService {
             }
             else{
                 StageTeam stageTeam = this.stageTeamRequestMapper.mapStageTeamRequestDtoToStageTeam(newStageTeamRequestDto);
+                stageTeam.getStage().setStageName(stage.get().getStageName());
+                stageTeam.getTeam().setTeamName(team.get().getTeamName());
+                System.out.println(stageTeam.getTeam().getTeamName());
                 stageTeam = this.stageTeamDao.save(stageTeam);
                 StageTeamResponseDto stageTeamResponseDto = this.stageTeamResponseMapper.mapStageTeamToStageTeamResponseDto(stageTeam);
+                System.out.println(stageTeam.getTeam().getTeamName());
                 return new SuccessDataResult<StageTeamResponseDto>(stageTeamResponseDto);
+
             }
         }else{
             return new ErrorDataResult<StageTeamResponseDto>("Verilen takım ya da stage mevcut değil!!");
@@ -122,6 +128,7 @@ public class StageTeamManager implements StageTeamService {
     public Result deleteOneStageTeamById(Long stageTeamId) {
         Optional<StageTeam> stageTeam = this.stageTeamDao.findById(stageTeamId);
         if(stageTeam.isPresent()){
+
             this.stageTeamDao.deleteById(stageTeam.get().getId());
             return new SuccessResult("aşama_takım silindi..");
         }

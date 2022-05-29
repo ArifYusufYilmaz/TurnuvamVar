@@ -10,5 +10,5 @@ import lombok.NoArgsConstructor;
 public class StageRequestDto {
     //private Long id;
     private String stageName;
-
+    private int requiredTeamCount;
 }

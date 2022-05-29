@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class GameToPlayRequestDto {
-    private Long firstTeamId; // stageteamfirstid;
-    private Long secondTeamId;  //stageteamsecondid
+    private Long firstStageTeamId; // stageteamfirstid;
+    private Long secondStageTeamId;  //stageteamsecondid
     private String Tarih; // tarih,saat  düzgün alınmalı, şimdilik bu şekilde!!
 }

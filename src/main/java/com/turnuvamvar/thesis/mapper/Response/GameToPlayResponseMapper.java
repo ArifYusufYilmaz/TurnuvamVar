@@ -10,16 +10,16 @@ import java.util.List;
 
 @Mapper(componentModel = "spring")
 public abstract class GameToPlayResponseMapper {
-    @Mapping(source="stageTeamFirst.id", target="firstTeamId")
+    @Mapping(source="stageTeamFirst.id", target="firstStageTeamId")
     @Mapping(source="stageTeamFirst.team.teamName", target="firstTeamName")
 
-    @Mapping(source="stageTeamSecond.id", target="secondTeamId")
+    @Mapping(source="stageTeamSecond.id", target="secondStageTeamId")
     @Mapping(source="stageTeamSecond.team.teamName", target="secondTeamName")
 
     public abstract GameToPlayResponseDto mapGameToPlayToGameToPlayResponseDto(GameToPlay gameToPlay);
 
-    @Mapping(source="firstTeamId", target="stageTeamFirst.id")
-    @Mapping(source="secondTeamId", target="stageTeamSecond.id")
+    @Mapping(source="firstStageTeamId", target="stageTeamFirst.id")
+    @Mapping(source="secondStageTeamId", target="stageTeamSecond.id")
     @Mapping(source="firstTeamName", target="stageTeamFirst.team.teamName")
     @Mapping(source="secondTeamName", target="stageTeamSecond.team.teamName")
     public abstract GameToPlay mapGameToPlayResponseDtoToGameToPlay(GameToPlayResponseDto gameToPlayResponseDto);

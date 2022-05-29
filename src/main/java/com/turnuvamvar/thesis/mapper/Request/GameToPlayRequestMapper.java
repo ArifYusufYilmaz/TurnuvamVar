@@ -11,12 +11,12 @@ import java.util.List;
 
 @Mapper(componentModel = "spring")
 public abstract class GameToPlayRequestMapper {
-    @Mapping(source="stageTeamFirst.id", target="firstTeamId")
-    @Mapping(source="stageTeamSecond.id", target="secondTeamId")
+    @Mapping(source="stageTeamFirst.id", target="firstStageTeamId")
+    @Mapping(source="stageTeamSecond.id", target="secondStageTeamId")
     public abstract GameToPlayRequestDto mapGameToPlayToGameToPlayRequestDto(GameToPlay gameToPlay);
 
-    @Mapping(source="firstTeamId", target="stageTeamFirst.id")
-    @Mapping(source="secondTeamId", target="stageTeamSecond.id")
+    @Mapping(source="firstStageTeamId", target="stageTeamFirst.id")
+    @Mapping(source="secondStageTeamId", target="stageTeamSecond.id")
     public abstract GameToPlay mapGameToPlayRequestDtoToGameToPlay(GameToPlayRequestDto gameToPlayRequestDto);
 
     public abstract List<GameToPlayRequestDto> mapGameToPlayListToGameToPlayRequestDtoList(Collection<GameToPlay> gamesToPlay);

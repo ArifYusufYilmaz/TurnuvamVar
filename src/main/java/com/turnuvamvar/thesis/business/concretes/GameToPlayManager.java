@@ -51,8 +51,8 @@ public class GameToPlayManager implements GameToPlayService {
     @Override
     public DataResult<GameToPlayResponseDto> createOneGameToPlay(GameToPlayRequestDto newGameToPlayRequestDto) {
         //kontrolleri yapmalısın!!
-        Optional<StageTeam> firstStageTeam = this.stageTeamDao.findById(newGameToPlayRequestDto.getFirstTeamId());
-        Optional<StageTeam> secondStageTeam = this.stageTeamDao.findById(newGameToPlayRequestDto.getSecondTeamId());
+        Optional<StageTeam> firstStageTeam = this.stageTeamDao.findById(newGameToPlayRequestDto.getFirstStageTeamId());
+        Optional<StageTeam> secondStageTeam = this.stageTeamDao.findById(newGameToPlayRequestDto.getSecondStageTeamId());
         if(firstStageTeam.isPresent() && secondStageTeam.isPresent()){
             if(gameToPlayToCheckIfDuplicate(firstStageTeam.get().getId(), secondStageTeam.get().getId())){
                 return new ErrorDataResult<GameToPlayResponseDto>("aynı takımlar oynatılmak isteniyorsa takımlar yer değiştirmeli!");
@@ -100,8 +100,8 @@ public class GameToPlayManager implements GameToPlayService {
         Optional<GameToPlay> gameToPlay = this.gameToPlayDao.findById(gameToPlayId);
         if(gameToPlay.isPresent()){
             GameToPlay toSave = gameToPlay.get();
-            toSave.getStageTeamFirst().setId(gameToPlayRequestDto.getFirstTeamId());
-            toSave.getStageTeamSecond().setId(gameToPlayRequestDto.getSecondTeamId());
+            toSave.getStageTeamFirst().setId(gameToPlayRequestDto.getFirstStageTeamId());
+            toSave.getStageTeamSecond().setId(gameToPlayRequestDto.getSecondStageTeamId());
             toSave.setTarih(gameToPlayRequestDto.getTarih());
             toSave = this.gameToPlayDao.save(toSave);
             GameToPlayResponseDto newGameToPlayResponseDto = this.gameToPlayResponseMapper.mapGameToPlayToGameToPlayResponseDto(toSave);

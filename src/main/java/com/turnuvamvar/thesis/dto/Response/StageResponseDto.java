@@ -11,6 +11,7 @@ import lombok.NoArgsConstructor;
 public class StageResponseDto {
     private Long id;
     private String stageName;
+    private int requiredTeamCount;
     private Long tournamentId;
     private String tournamentName;
 
