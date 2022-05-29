@@ -99,9 +99,11 @@ public class PlayerToAddManager implements PlayerToAddService {
         List<PlayerToAdd> playerToAddList = new ArrayList<>();
         Iterable<PlayerToAdd> playerToAddIterable;
         if(teamId == null){
-            playerToAddIterable = this.playerToAddDao.findAllByTeamId(teamId);
-        }else{
             playerToAddIterable = this.playerToAddDao.findAll();
+
+        }else{
+            playerToAddIterable = this.playerToAddDao.findAllByTeamId(teamId);
+
         }
         playerToAddIterable.iterator().forEachRemaining(playerToAddList :: add);
         if(playerToAddList.isEmpty()){
