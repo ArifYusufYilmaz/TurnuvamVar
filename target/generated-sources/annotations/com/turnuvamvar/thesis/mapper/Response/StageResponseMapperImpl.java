@@ -2,6 +2,7 @@ package com.turnuvamvar.thesis.mapper.Response;
 
 import com.turnuvamvar.thesis.dto.Response.StageResponseDto;
 import com.turnuvamvar.thesis.entities.concretes.Stage;
+import com.turnuvamvar.thesis.entities.concretes.Tournament;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -10,7 +11,7 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2022-05-29T02:19:09+0300",
+    date = "2022-05-29T17:11:49+0300",
     comments = "version: 1.4.2.Final, compiler: javac, environment: Java 11.0.6 (Oracle Corporation)"
 )
 @Component
@@ -24,6 +25,8 @@ public class StageResponseMapperImpl extends StageResponseMapper {
 
         StageResponseDto stageResponseDto = new StageResponseDto();
 
+        stageResponseDto.setTournamentId( stageTournamentId( stage ) );
+        stageResponseDto.setTournamentName( stageTournamentTournamentName( stage ) );
         stageResponseDto.setId( stage.getId() );
         stageResponseDto.setStageName( stage.getStageName() );
 
@@ -38,6 +41,7 @@ public class StageResponseMapperImpl extends StageResponseMapper {
 
         Stage stage = new Stage();
 
+        stage.setTournament( stageResponseDtoToTournament( stageResponseDto ) );
         stage.setId( stageResponseDto.getId() );
         stage.setStageName( stageResponseDto.getStageName() );
 
@@ -70,5 +74,48 @@ public class StageResponseMapperImpl extends StageResponseMapper {
         }
 
         return list;
+    }
+
+    private Long stageTournamentId(Stage stage) {
+        if ( stage == null ) {
+            return null;
+        }
+        Tournament tournament = stage.getTournament();
+        if ( tournament == null ) {
+            return null;
+        }
+        Long id = tournament.getId();
+        if ( id == null ) {
+            return null;
+        }
+        return id;
+    }
+
+    private String stageTournamentTournamentName(Stage stage) {
+        if ( stage == null ) {
+            return null;
+        }
+        Tournament tournament = stage.getTournament();
+        if ( tournament == null ) {
+            return null;
+        }
+        String tournamentName = tournament.getTournamentName();
+        if ( tournamentName == null ) {
+            return null;
+        }
+        return tournamentName;
+    }
+
+    protected Tournament stageResponseDtoToTournament(StageResponseDto stageResponseDto) {
+        if ( stageResponseDto == null ) {
+            return null;
+        }
+
+        Tournament tournament = new Tournament();
+
+        tournament.setId( stageResponseDto.getTournamentId() );
+        tournament.setTournamentName( stageResponseDto.getTournamentName() );
+
+        return tournament;
     }
 }

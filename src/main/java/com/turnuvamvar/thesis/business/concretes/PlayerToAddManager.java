@@ -123,7 +123,6 @@ public class PlayerToAddManager implements PlayerToAddService {
             return new SuccessResult("'eklenecek oyuncu' silindi!");
         }
         else{
-
             return new ErrorResult("silinmek istenen 'eklenecek oyuncu' bulunamadı");
         }
     }

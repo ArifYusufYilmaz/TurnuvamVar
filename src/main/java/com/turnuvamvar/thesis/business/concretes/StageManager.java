@@ -52,6 +52,7 @@ public class StageManager implements StageService {
             }
             else{
                 Stage stage =  this.stageRequestMapper.mapStageRequestDtoToStage(newStageRequestDto);
+                stage.setTournament(tournament.get());
                 stage = this.stageDao.save(stage);
                 StageResponseDto stageResponseDto = this.stageResponseMapper.mapStageToStageResponseDto(stage);
                 return new SuccessDataResult<StageResponseDto>(stageResponseDto);
