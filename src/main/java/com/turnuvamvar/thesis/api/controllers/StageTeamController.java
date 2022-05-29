@@ -26,8 +26,8 @@ public class StageTeamController {
         return this.stageTeamService.createOneStageTeam(newStageTeamRequestDto);
     }
     @GetMapping("/get/list")
-    public DataResult<List<StageTeamResponseDto>> getAllStagesTeams(){
-        return this.stageTeamService.getAllStagesTeams();
+    public DataResult<List<StageTeamResponseDto>> getAllStagesTeams(@RequestParam(required=false)Long stageId){
+        return this.stageTeamService.getAllStagesTeams(stageId);
     }
 
     @GetMapping("/get/{stageTeamId}")
@@ -45,4 +45,5 @@ public class StageTeamController {
     public Result deleteOneStageTeamById(@PathVariable Long stageTeamId){
         return this.stageTeamService.deleteOneStageTeamById(stageTeamId);
     }
+
 }

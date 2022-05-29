@@ -77,9 +77,14 @@ public class StageTeamManager implements StageTeamService {
     }
 
     @Override
-    public DataResult<List<StageTeamResponseDto>> getAllStagesTeams() {
+    public DataResult<List<StageTeamResponseDto>> getAllStagesTeams(Long stageId) {
         List<StageTeam> stageTeamList = new ArrayList<>();
-        Iterable<StageTeam> stageTeamIterable = this.stageTeamDao.findAll();
+        Iterable<StageTeam> stageTeamIterable;
+        if(stageId == null){
+            stageTeamIterable  = this.stageTeamDao.findAll();
+        }else{
+            stageTeamIterable = this.stageTeamDao.findAllByStageId(stageId);
+        }
         stageTeamIterable.iterator().forEachRemaining(stageTeamList :: add);
         if(stageTeamList.isEmpty()){
             return new ErrorDataResult<List<StageTeamResponseDto>>("aşama_takım   listesinde hiç aşama_takım bulunamadı!");

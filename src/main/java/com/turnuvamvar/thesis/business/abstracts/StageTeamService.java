@@ -10,7 +10,7 @@ import java.util.List;
 public interface StageTeamService {
     DataResult<StageTeamResponseDto> createOneStageTeam(StageTeamRequestDto newStageTeamRequestDto);
 
-    DataResult<List<StageTeamResponseDto>> getAllStagesTeams();
+    DataResult<List<StageTeamResponseDto>> getAllStagesTeams(Long stageId);
 
     DataResult<StageTeamResponseDto> getOneStageTeamById(Long stageTeamId);
 
