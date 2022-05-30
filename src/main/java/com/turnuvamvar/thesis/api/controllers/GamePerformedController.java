@@ -37,7 +37,7 @@ public class GamePerformedController {
         return this.gamePerformedService.updateOneGamePerformed(gamePerformedId, gamePerformedRequestDto);
     }
     @GetMapping("/get/list")
-    public DataResult<List<GamePerformedResponseDto>> getAllPlayers(){
+    public DataResult<List<GamePerformedResponseDto>> getAllGamesPerformed(){
         return this.gamePerformedService.getAllGamesPerformed();
     }
 

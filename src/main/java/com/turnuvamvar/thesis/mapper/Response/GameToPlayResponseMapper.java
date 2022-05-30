@@ -12,10 +12,8 @@ import java.util.List;
 public abstract class GameToPlayResponseMapper {
     @Mapping(source="stageTeamFirst.id", target="firstStageTeamId")
     @Mapping(source="stageTeamFirst.team.teamName", target="firstTeamName")
-
     @Mapping(source="stageTeamSecond.id", target="secondStageTeamId")
     @Mapping(source="stageTeamSecond.team.teamName", target="secondTeamName")
-
     public abstract GameToPlayResponseDto mapGameToPlayToGameToPlayResponseDto(GameToPlay gameToPlay);
 
     @Mapping(source="firstStageTeamId", target="stageTeamFirst.id")

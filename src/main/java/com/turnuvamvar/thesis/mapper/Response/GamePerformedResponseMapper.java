@@ -20,6 +20,8 @@ public abstract class GamePerformedResponseMapper {
     @Mapping(source="gameToPlayId",target="gameToPlay.id")
     @Mapping(source="scoreOfFirstTeam",target="scoreOfFirstTeam.score")
     @Mapping(source="scoreOfSecondTeam",target="scoreOfSecondTeam.score")
+    @Mapping(source="firstTeamName",target="gameToPlay.stageTeamFirst.team.teamName")
+    @Mapping(source="secondTeamName",target="gameToPlay.stageTeamSecond.team.teamName")
     public abstract GamePerformed mapGamePerformedResponseDtoToGamePerformed(GamePerformedResponseDto gamePerformedResponseDto);
 
     public abstract List<GamePerformed> mapGamePerformedResponseDtoListToGamePerformedList(Collection<GamePerformedResponseDto> gamePerformedResponseDtoList);

@@ -48,6 +48,8 @@ public class GamePerformedManager implements GamePerformedService {
         Optional<GameToPlay> gameToPlay = this.gameToPlayDao.findById(newGamePerformedRequestDto.getGameToPlayId());
         if(gameToPlay.isPresent()){
             GamePerformed gamePerformed = this.gamePerformedRequestMapper.mapGamePerformedRequestDtoToGamePerformed(newGamePerformedRequestDto);
+            gamePerformed.getGameToPlay().setStageTeamFirst(gameToPlay.get().getStageTeamFirst());
+            gamePerformed.getGameToPlay().setStageTeamSecond(gameToPlay.get().getStageTeamSecond());
             gamePerformed = this.gamePerformedDao.save(gamePerformed);
             GamePerformedResponseDto newGamePerformedResponseDto = this.gamePerformedResponseMapper.mapGamePerformedToGamePerformedResponseDto(gamePerformed);
             return new SuccessDataResult<GamePerformedResponseDto>(newGamePerformedResponseDto);

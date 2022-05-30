@@ -14,7 +14,7 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2022-05-29T19:32:57+0300",
+    date = "2022-05-30T13:10:27+0300",
     comments = "version: 1.4.2.Final, compiler: javac, environment: Java 11.0.6 (Oracle Corporation)"
 )
 @Component
@@ -167,6 +167,54 @@ public class GamePerformedResponseMapperImpl extends GamePerformedResponseMapper
         return teamName;
     }
 
+    protected Team gamePerformedResponseDtoToTeam(GamePerformedResponseDto gamePerformedResponseDto) {
+        if ( gamePerformedResponseDto == null ) {
+            return null;
+        }
+
+        Team team = new Team();
+
+        team.setTeamName( gamePerformedResponseDto.getFirstTeamName() );
+
+        return team;
+    }
+
+    protected StageTeam gamePerformedResponseDtoToStageTeam(GamePerformedResponseDto gamePerformedResponseDto) {
+        if ( gamePerformedResponseDto == null ) {
+            return null;
+        }
+
+        StageTeam stageTeam = new StageTeam();
+
+        stageTeam.setTeam( gamePerformedResponseDtoToTeam( gamePerformedResponseDto ) );
+
+        return stageTeam;
+    }
+
+    protected Team gamePerformedResponseDtoToTeam1(GamePerformedResponseDto gamePerformedResponseDto) {
+        if ( gamePerformedResponseDto == null ) {
+            return null;
+        }
+
+        Team team = new Team();
+
+        team.setTeamName( gamePerformedResponseDto.getSecondTeamName() );
+
+        return team;
+    }
+
+    protected StageTeam gamePerformedResponseDtoToStageTeam1(GamePerformedResponseDto gamePerformedResponseDto) {
+        if ( gamePerformedResponseDto == null ) {
+            return null;
+        }
+
+        StageTeam stageTeam = new StageTeam();
+
+        stageTeam.setTeam( gamePerformedResponseDtoToTeam1( gamePerformedResponseDto ) );
+
+        return stageTeam;
+    }
+
     protected GameToPlay gamePerformedResponseDtoToGameToPlay(GamePerformedResponseDto gamePerformedResponseDto) {
         if ( gamePerformedResponseDto == null ) {
             return null;
@@ -174,6 +222,8 @@ public class GamePerformedResponseMapperImpl extends GamePerformedResponseMapper
 
         GameToPlay gameToPlay = new GameToPlay();
 
+        gameToPlay.setStageTeamFirst( gamePerformedResponseDtoToStageTeam( gamePerformedResponseDto ) );
+        gameToPlay.setStageTeamSecond( gamePerformedResponseDtoToStageTeam1( gamePerformedResponseDto ) );
         gameToPlay.setId( gamePerformedResponseDto.getGameToPlayId() );
 
         return gameToPlay;

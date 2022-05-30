@@ -64,7 +64,6 @@ public class StageTeamManager implements StageTeamService {
                 StageTeam stageTeam = this.stageTeamRequestMapper.mapStageTeamRequestDtoToStageTeam(newStageTeamRequestDto);
                 stageTeam.getStage().setStageName(stage.get().getStageName());
                 stageTeam.getTeam().setTeamName(team.get().getTeamName());
-                System.out.println(stageTeam.getTeam().getTeamName());
                 stageTeam = this.stageTeamDao.save(stageTeam);
                 StageTeamResponseDto stageTeamResponseDto = this.stageTeamResponseMapper.mapStageTeamToStageTeamResponseDto(stageTeam);
                 System.out.println(stageTeam.getTeam().getTeamName());
