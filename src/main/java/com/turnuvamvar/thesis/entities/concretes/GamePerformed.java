@@ -2,6 +2,8 @@ package com.turnuvamvar.thesis.entities.concretes;
 
 import com.turnuvamvar.thesis.entities.abstracts.BaseEntity;
 import lombok.Data;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
 
@@ -17,7 +19,7 @@ public class GamePerformed extends BaseEntity {
     @JoinColumn(name="score_of_second_team_id", unique = true)
     private Score scoreOfSecondTeam;
 
-    @OneToOne(cascade = CascadeType.MERGE) //
+    @OneToOne //
     @JoinColumn(name="game_to_play_id", unique = true)
     private GameToPlay gameToPlay;
 }

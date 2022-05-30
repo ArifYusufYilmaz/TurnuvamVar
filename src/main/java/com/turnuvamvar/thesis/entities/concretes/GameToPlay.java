@@ -4,6 +4,8 @@ import com.turnuvamvar.thesis.entities.abstracts.BaseEntity;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
 
@@ -27,11 +29,16 @@ public class GameToPlay extends BaseEntity {
 
      @OneToOne
      @JoinColumn(unique = true)
+     @OnDelete(action = OnDeleteAction.CASCADE)
      private StageTeam stageTeamFirst;
 
      @OneToOne
      @JoinColumn(unique = true)
+     @OnDelete(action = OnDeleteAction.CASCADE)
      private StageTeam stageTeamSecond;
+
+     @OneToOne(mappedBy = "gameToPlay", cascade = CascadeType.REMOVE) //
+     private GamePerformed gamePerformed;
 
     /* @OneToOne(cascade = CascadeType.MERGE) //
      @JoinColumn(name="stage_id", unique = true)

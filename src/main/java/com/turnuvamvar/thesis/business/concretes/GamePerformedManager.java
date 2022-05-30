@@ -82,7 +82,7 @@ public class GamePerformedManager implements GamePerformedService {
         Iterable<GamePerformed> gamePerformedIterable = this.gamePerformedDao.findAll();
         gamePerformedIterable.iterator().forEachRemaining(gamePerformedList :: add);
         if(gamePerformedList.isEmpty()){
-            return new ErrorDataResult<GamePerformedResponseDto>("stage listesinde hiç stage bulunamadı!");
+            return new ErrorDataResult<GamePerformedResponseDto>("Oynanan oyun listesinde hiç oyun bulunamadı!");
         }
         else{
             List<GamePerformedResponseDto> gamePerformedResponseDtoList = this.gamePerformedResponseMapper.mapGamePerformedListToGamePerformedResponseList(gamePerformedList);

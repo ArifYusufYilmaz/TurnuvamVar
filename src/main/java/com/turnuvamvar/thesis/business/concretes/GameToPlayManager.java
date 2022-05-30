@@ -14,6 +14,7 @@ import com.turnuvamvar.thesis.mapper.Response.GameToPlayResponseMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.PreRemove;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -56,7 +57,11 @@ public class GameToPlayManager implements GameToPlayService {
         if(firstStageTeam.isPresent() && secondStageTeam.isPresent()){
             if(gameToPlayToCheckIfDuplicate(firstStageTeam.get().getId(), secondStageTeam.get().getId())){
                 return new ErrorDataResult<GameToPlayResponseDto>("aynı takımlar oynatılmak isteniyorsa takımlar yer değiştirmeli!");
-            }else{
+            }else if(toCheckIfAlreadyHasFirstStageTeamOnSameColumn(firstStageTeam.get().getId()) ||
+            toCheckIfAlreadyHasSecondStageTeamOnSameColumn(secondStageTeam.get().getId())){
+                return new ErrorDataResult<GameToPlayResponseDto>("Aynı aşamadaki takım sadece 1 kez oyun oynayabilir!");
+            }
+            else{
                 GameToPlay newGameToPlay = this.gameToPlayRequestMapper.mapGameToPlayRequestDtoToGameToPlay(newGameToPlayRequestDto);
                 newGameToPlay.setStageTeamFirst(firstStageTeam.get());
                 newGameToPlay.setStageTeamSecond(secondStageTeam.get());
@@ -114,10 +119,12 @@ public class GameToPlayManager implements GameToPlayService {
         }
     }
 
+
     @Override
     public Result deleteOneGameToPlayById(Long gameToPlayId) {
         Optional<GameToPlay> gameToPlay = this.gameToPlayDao.findById(gameToPlayId);
         if(gameToPlay.isPresent()){
+
             this.gameToPlayDao.deleteById(gameToPlay.get().getId());
             return new SuccessResult("oynanacak oyun silindi..");
         }
@@ -129,4 +136,13 @@ public class GameToPlayManager implements GameToPlayService {
         GameToPlay gameToPlay = this.gameToPlayDao.findByStageTeamFirstIdAndStageTeamSecondId(firstStageTeamId, secondStageTeamId).orElse(null);
         return gameToPlay != null ? true : false;
     }
+    private boolean toCheckIfAlreadyHasFirstStageTeamOnSameColumn(Long firstStageTeamId){
+        GameToPlay gameToPlay = this.gameToPlayDao.findByStageTeamFirstId(firstStageTeamId);
+        return gameToPlay != null ? true : false;
+    }
+    private boolean toCheckIfAlreadyHasSecondStageTeamOnSameColumn(Long secondStageTeamId){
+        GameToPlay gameToPlay = this.gameToPlayDao.findByStageTeamSecondId(secondStageTeamId);
+        return gameToPlay != null ? true : false;
+    }
+
 }
