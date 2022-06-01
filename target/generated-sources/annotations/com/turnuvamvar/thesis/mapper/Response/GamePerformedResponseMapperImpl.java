@@ -15,7 +15,7 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2022-06-01T19:04:29+0300",
+    date = "2022-06-01T19:55:24+0300",
     comments = "version: 1.4.2.Final, compiler: javac, environment: Java 11.0.6 (Oracle Corporation)"
 )
 @Component
@@ -30,7 +30,9 @@ public class GamePerformedResponseMapperImpl extends GamePerformedResponseMapper
         GamePerformedResponseDto gamePerformedResponseDto = new GamePerformedResponseDto();
 
         gamePerformedResponseDto.setGameToPlayId( gamePerformedGameToPlayId( gamePerformed ) );
+        gamePerformedResponseDto.setScoreOfFirstTeamId( gamePerformedScoreOfFirstTeamId( gamePerformed ) );
         gamePerformedResponseDto.setScoreOfFirstTeam( gamePerformedScoreOfFirstTeamScore( gamePerformed ) );
+        gamePerformedResponseDto.setScoreOfSecondTeamId( gamePerformedScoreOfSecondTeamId( gamePerformed ) );
         gamePerformedResponseDto.setScoreOfSecondTeam( gamePerformedScoreOfSecondTeamScore( gamePerformed ) );
         gamePerformedResponseDto.setFirstTeamId( gamePerformedGameToPlayStageTeamFirstTeamId( gamePerformed ) );
         gamePerformedResponseDto.setFirstTeamName( gamePerformedGameToPlayStageTeamFirstTeamTeamName( gamePerformed ) );
@@ -101,6 +103,21 @@ public class GamePerformedResponseMapperImpl extends GamePerformedResponseMapper
         return id;
     }
 
+    private Long gamePerformedScoreOfFirstTeamId(GamePerformed gamePerformed) {
+        if ( gamePerformed == null ) {
+            return null;
+        }
+        Score scoreOfFirstTeam = gamePerformed.getScoreOfFirstTeam();
+        if ( scoreOfFirstTeam == null ) {
+            return null;
+        }
+        Long id = scoreOfFirstTeam.getId();
+        if ( id == null ) {
+            return null;
+        }
+        return id;
+    }
+
     private int gamePerformedScoreOfFirstTeamScore(GamePerformed gamePerformed) {
         if ( gamePerformed == null ) {
             return 0;
@@ -111,6 +128,21 @@ public class GamePerformedResponseMapperImpl extends GamePerformedResponseMapper
         }
         int score = scoreOfFirstTeam.getScore();
         return score;
+    }
+
+    private Long gamePerformedScoreOfSecondTeamId(GamePerformed gamePerformed) {
+        if ( gamePerformed == null ) {
+            return null;
+        }
+        Score scoreOfSecondTeam = gamePerformed.getScoreOfSecondTeam();
+        if ( scoreOfSecondTeam == null ) {
+            return null;
+        }
+        Long id = scoreOfSecondTeam.getId();
+        if ( id == null ) {
+            return null;
+        }
+        return id;
     }
 
     private int gamePerformedScoreOfSecondTeamScore(GamePerformed gamePerformed) {
@@ -324,6 +356,7 @@ public class GamePerformedResponseMapperImpl extends GamePerformedResponseMapper
 
         Score score = new Score();
 
+        score.setId( gamePerformedResponseDto.getScoreOfFirstTeamId() );
         score.setScore( gamePerformedResponseDto.getScoreOfFirstTeam() );
 
         return score;
@@ -336,6 +369,7 @@ public class GamePerformedResponseMapperImpl extends GamePerformedResponseMapper
 
         Score score = new Score();
 
+        score.setId( gamePerformedResponseDto.getScoreOfSecondTeamId() );
         score.setScore( gamePerformedResponseDto.getScoreOfSecondTeam() );
 
         return score;

@@ -11,7 +11,9 @@ import java.util.List;
 @Mapper(componentModel = "spring")
 public abstract class GamePerformedResponseMapper {
     @Mapping(source="gameToPlay.id",target="gameToPlayId")
+    @Mapping(source="scoreOfFirstTeam.id", target="scoreOfFirstTeamId")
     @Mapping(source="scoreOfFirstTeam.score",target="scoreOfFirstTeam")
+    @Mapping(source = "scoreOfSecondTeam.id", target = "scoreOfSecondTeamId")
     @Mapping(source="scoreOfSecondTeam.score",target="scoreOfSecondTeam")
     @Mapping(source ="gameToPlay.stageTeamFirst.team.id", target="firstTeamId")
     @Mapping(source="gameToPlay.stageTeamFirst.team.teamName",target="firstTeamName")
@@ -20,7 +22,9 @@ public abstract class GamePerformedResponseMapper {
     @Mapping(source="gameToPlay.stageTeamFirst.stage.id", target = "stageId")
     public abstract GamePerformedResponseDto mapGamePerformedToGamePerformedResponseDto(GamePerformed gamePerformed);
     @Mapping(source="gameToPlayId",target="gameToPlay.id")
+    @Mapping(source="scoreOfFirstTeamId", target = "scoreOfFirstTeam.id")
     @Mapping(source="scoreOfFirstTeam",target="scoreOfFirstTeam.score")
+    @Mapping(source="scoreOfSecondTeamId", target="scoreOfSecondTeam.id")
     @Mapping(source="scoreOfSecondTeam",target="scoreOfSecondTeam.score")
     @Mapping(source ="firstTeamId", target="gameToPlay.stageTeamFirst.team.id")
     @Mapping(source="firstTeamName",target="gameToPlay.stageTeamFirst.team.teamName")
