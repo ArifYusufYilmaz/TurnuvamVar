@@ -10,5 +10,10 @@ import lombok.NoArgsConstructor;
 public class ScorePlayerResponseDto {
     private Long id;
     private Long playerId;
+    private String playerFirstName;
+    private String playerLastName;
     private Long scoreId;
+    private int score; //
+
+
 }
