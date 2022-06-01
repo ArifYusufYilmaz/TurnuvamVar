@@ -10,4 +10,6 @@ public interface StageDao extends JpaRepository<Stage, Long> {
     Optional<Stage> findByStageName(String stageName);
 
     List<Stage> findAllByTournamentId(Long tournamentId);
+
+    Stage findByStageNameAndTournamentId(String stageName, Long tournamentId);
 }

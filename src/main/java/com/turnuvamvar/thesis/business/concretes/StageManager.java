@@ -131,15 +131,13 @@ public class StageManager implements StageService {
     // if it is an duplicate record as its name returns true
     private boolean checkIfItHasSameStageByName(String stageName, Long tournamentId){
         // büyük, küçük harf olayından dolayı sorun çıkabilir, Dtodan alırken kontrol etmelisin!
-        Stage stage = this.stageDao.findByStageName(stageName).orElse(null);
+        Stage stage = this.stageDao.findByStageNameAndTournamentId(stageName, tournamentId);
         if(stage != null){
-            if(stage.getTournament().getId() == tournamentId){
-                return true;
-            }else{
-                return false;
-            }
+            return true;
         }
-        else return false;
+        else{
+            return false;
+        }
     }
 }
 
