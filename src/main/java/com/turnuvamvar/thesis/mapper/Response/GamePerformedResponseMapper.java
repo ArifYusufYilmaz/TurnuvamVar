@@ -13,13 +13,17 @@ public abstract class GamePerformedResponseMapper {
     @Mapping(source="gameToPlay.id",target="gameToPlayId")
     @Mapping(source="scoreOfFirstTeam.score",target="scoreOfFirstTeam")
     @Mapping(source="scoreOfSecondTeam.score",target="scoreOfSecondTeam")
+    @Mapping(source ="gameToPlay.stageTeamFirst.team.id", target="firstTeamId")
     @Mapping(source="gameToPlay.stageTeamFirst.team.teamName",target="firstTeamName")
+    @Mapping(source ="gameToPlay.stageTeamSecond.team.id", target="secondTeamId")
     @Mapping(source="gameToPlay.stageTeamSecond.team.teamName",target="secondTeamName")
     public abstract GamePerformedResponseDto mapGamePerformedToGamePerformedResponseDto(GamePerformed gamePerformed);
     @Mapping(source="gameToPlayId",target="gameToPlay.id")
     @Mapping(source="scoreOfFirstTeam",target="scoreOfFirstTeam.score")
     @Mapping(source="scoreOfSecondTeam",target="scoreOfSecondTeam.score")
+    @Mapping(source ="firstTeamId", target="gameToPlay.stageTeamFirst.team.id")
     @Mapping(source="firstTeamName",target="gameToPlay.stageTeamFirst.team.teamName")
+    @Mapping(source ="secondTeamId", target="gameToPlay.stageTeamSecond.team.id")
     @Mapping(source="secondTeamName",target="gameToPlay.stageTeamSecond.team.teamName")
     public abstract GamePerformed mapGamePerformedResponseDtoToGamePerformed(GamePerformedResponseDto gamePerformedResponseDto);
 

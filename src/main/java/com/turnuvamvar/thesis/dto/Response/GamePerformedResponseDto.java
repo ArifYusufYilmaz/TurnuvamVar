@@ -12,6 +12,8 @@ public class GamePerformedResponseDto {
     private int scoreOfFirstTeam;
     private int scoreOfSecondTeam;
     private Long gameToPlayId;
+    private Long firstTeamId;
     private String firstTeamName;
+    private Long secondTeamId;
     private String secondTeamName;
 }
