@@ -47,8 +47,8 @@ public class StageManager implements StageService {
         // null olma durumunu kontrol et.
         Optional<Tournament> tournament = this.tournamentDao.findById(tournamentId);
         if(tournament.isPresent()){
-            if(checkIfItHasSameStageByName(newStageRequestDto.getStageName())){
-                return new ErrorDataResult<StageResponseDto>("Bu aşama ismi zaten mevcut!!");
+            if(checkIfItHasSameStageByName(newStageRequestDto.getStageName(), tournament.get().getId())){
+                return new ErrorDataResult<StageResponseDto>("Bu turnuvada bu aşama ismi zaten mevcut!!");
             }
             else{
                 Stage stage =  this.stageRequestMapper.mapStageRequestDtoToStage(newStageRequestDto);
@@ -84,7 +84,7 @@ public class StageManager implements StageService {
         if(stage.isPresent()){
             Stage toSave = stage.get();
             toSave.setStageName(stageRequestDto.getStageName());
-            if(checkIfItHasSameStageByName(toSave.getStageName())){
+            if(checkIfItHasSameStageByName(toSave.getStageName(), toSave.getTournament().getId())){
                 return new ErrorDataResult<StageResponseDto>("Aynı stage ismine sahip veri zaten mevcut..");
             }else {
                 toSave = this.stageDao.save(toSave);
@@ -129,10 +129,19 @@ public class StageManager implements StageService {
         }
     }
     // if it is an duplicate record as its name returns true
-    private boolean checkIfItHasSameStageByName(String stageName){
+    private boolean checkIfItHasSameStageByName(String stageName, Long tournamentId){
         // büyük, küçük harf olayından dolayı sorun çıkabilir, Dtodan alırken kontrol etmelisin!
         Stage stage = this.stageDao.findByStageName(stageName).orElse(null);
-        return stage != null ? true : false;
+        if(stage != null){
+            if(stage.getTournament().getId() == tournamentId){
+                return true;
+            }else{
+                return false;
+            }
+        }
+        else return false;
+
+        //return stage != null ? true : false;
     }
 }
 
