@@ -15,7 +15,6 @@ public abstract class GamePerformedResponseMapper {
     @Mapping(source="scoreOfSecondTeam.score",target="scoreOfSecondTeam")
     @Mapping(source="gameToPlay.stageTeamFirst.team.teamName",target="firstTeamName")
     @Mapping(source="gameToPlay.stageTeamSecond.team.teamName",target="secondTeamName")
-
     public abstract GamePerformedResponseDto mapGamePerformedToGamePerformedResponseDto(GamePerformed gamePerformed);
     @Mapping(source="gameToPlayId",target="gameToPlay.id")
     @Mapping(source="scoreOfFirstTeam",target="scoreOfFirstTeam.score")

@@ -20,5 +20,5 @@ public class GameToPlayResponseDto {
     private String Tarih; // tarih,saat  düzgün alınmalı, şimdilik bu şekilde!!
     private String firstTeamName;    //
     private String secondTeamName;
-
+    private Long stageId;
 }

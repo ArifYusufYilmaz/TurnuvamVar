@@ -2,6 +2,7 @@ package com.turnuvamvar.thesis.mapper.Response;
 
 import com.turnuvamvar.thesis.dto.Response.GameToPlayResponseDto;
 import com.turnuvamvar.thesis.entities.concretes.GameToPlay;
+import com.turnuvamvar.thesis.entities.concretes.Stage;
 import com.turnuvamvar.thesis.entities.concretes.StageTeam;
 import com.turnuvamvar.thesis.entities.concretes.Team;
 import java.util.ArrayList;
@@ -12,7 +13,7 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2022-05-30T13:10:27+0300",
+    date = "2022-06-01T18:01:50+0300",
     comments = "version: 1.4.2.Final, compiler: javac, environment: Java 11.0.6 (Oracle Corporation)"
 )
 @Component
@@ -30,6 +31,7 @@ public class GameToPlayResponseMapperImpl extends GameToPlayResponseMapper {
         gameToPlayResponseDto.setFirstTeamName( gameToPlayStageTeamFirstTeamTeamName( gameToPlay ) );
         gameToPlayResponseDto.setSecondStageTeamId( gameToPlayStageTeamSecondId( gameToPlay ) );
         gameToPlayResponseDto.setSecondTeamName( gameToPlayStageTeamSecondTeamTeamName( gameToPlay ) );
+        gameToPlayResponseDto.setStageId( gameToPlayStageTeamFirstStageId( gameToPlay ) );
         gameToPlayResponseDto.setId( gameToPlay.getId() );
         gameToPlayResponseDto.setTarih( gameToPlay.getTarih() );
 
@@ -148,6 +150,25 @@ public class GameToPlayResponseMapperImpl extends GameToPlayResponseMapper {
         return teamName;
     }
 
+    private Long gameToPlayStageTeamFirstStageId(GameToPlay gameToPlay) {
+        if ( gameToPlay == null ) {
+            return null;
+        }
+        StageTeam stageTeamFirst = gameToPlay.getStageTeamFirst();
+        if ( stageTeamFirst == null ) {
+            return null;
+        }
+        Stage stage = stageTeamFirst.getStage();
+        if ( stage == null ) {
+            return null;
+        }
+        Long id = stage.getId();
+        if ( id == null ) {
+            return null;
+        }
+        return id;
+    }
+
     protected Team gameToPlayResponseDtoToTeam(GameToPlayResponseDto gameToPlayResponseDto) {
         if ( gameToPlayResponseDto == null ) {
             return null;
@@ -160,6 +181,18 @@ public class GameToPlayResponseMapperImpl extends GameToPlayResponseMapper {
         return team;
     }
 
+    protected Stage gameToPlayResponseDtoToStage(GameToPlayResponseDto gameToPlayResponseDto) {
+        if ( gameToPlayResponseDto == null ) {
+            return null;
+        }
+
+        Stage stage = new Stage();
+
+        stage.setId( gameToPlayResponseDto.getStageId() );
+
+        return stage;
+    }
+
     protected StageTeam gameToPlayResponseDtoToStageTeam(GameToPlayResponseDto gameToPlayResponseDto) {
         if ( gameToPlayResponseDto == null ) {
             return null;
@@ -168,6 +201,7 @@ public class GameToPlayResponseMapperImpl extends GameToPlayResponseMapper {
         StageTeam stageTeam = new StageTeam();
 
         stageTeam.setTeam( gameToPlayResponseDtoToTeam( gameToPlayResponseDto ) );
+        stageTeam.setStage( gameToPlayResponseDtoToStage( gameToPlayResponseDto ) );
         stageTeam.setId( gameToPlayResponseDto.getFirstStageTeamId() );
 
         return stageTeam;

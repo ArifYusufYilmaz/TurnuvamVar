@@ -11,4 +11,5 @@ public class GameToPlayRequestDto {
     private Long firstStageTeamId; // stageteamfirstid;
     private Long secondStageTeamId;  //stageteamsecondid
     private String Tarih; // tarih,saat  düzgün alınmalı, şimdilik bu şekilde!!
+
 }

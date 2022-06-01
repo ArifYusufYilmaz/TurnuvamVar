@@ -140,8 +140,6 @@ public class StageManager implements StageService {
             }
         }
         else return false;
-
-        //return stage != null ? true : false;
     }
 }
 
