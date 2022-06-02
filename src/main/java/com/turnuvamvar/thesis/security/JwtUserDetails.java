@@ -19,14 +19,12 @@ public class JwtUserDetails implements UserDetails {
 
     public Long id;
     private String username;
-    private String email;
     private String password;
     private Collection<? extends GrantedAuthority> authorities;
 
-    private JwtUserDetails(Long id, String username,String email, String password, Collection<? extends GrantedAuthority> authorities) {
+    private JwtUserDetails(Long id, String username, String password, Collection<? extends GrantedAuthority> authorities) {
         this.id = id;
         this.username = username;
-        this.email = email;
         this.password = password;
         this.authorities = authorities;
     }
@@ -34,7 +32,7 @@ public class JwtUserDetails implements UserDetails {
     public static JwtUserDetails create(User user) {
         List<GrantedAuthority> authoritiesList = new ArrayList<>();
         authoritiesList.add(new SimpleGrantedAuthority("user"));
-        return new JwtUserDetails(user.getId(), user.getEmail(), user.getUserName(), user.getPassword(), authoritiesList);
+        return new JwtUserDetails(user.getId(),  user.getUserName(), user.getPassword(), authoritiesList);
     }
 
     @Override

@@ -7,7 +7,7 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2022-06-02T21:42:07+0300",
+    date = "2022-06-02T23:32:00+0300",
     comments = "version: 1.4.2.Final, compiler: javac, environment: Java 11.0.6 (Oracle Corporation)"
 )
 @Component
@@ -22,7 +22,6 @@ public class UserResponseMapperImpl extends UserResponseMapper {
         UserResponseDto userResponseDto = new UserResponseDto();
 
         userResponseDto.setId( user.getId() );
-        userResponseDto.setEmail( user.getEmail() );
         userResponseDto.setUserName( user.getUserName() );
 
         return userResponseDto;
@@ -37,7 +36,6 @@ public class UserResponseMapperImpl extends UserResponseMapper {
         User user = new User();
 
         user.setId( userResponseDto.getId() );
-        user.setEmail( userResponseDto.getEmail() );
         user.setUserName( userResponseDto.getUserName() );
 
         return user;

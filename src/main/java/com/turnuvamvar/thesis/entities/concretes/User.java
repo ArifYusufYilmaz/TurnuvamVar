@@ -11,7 +11,6 @@ import javax.persistence.Table;
 @Table(name="users")
 @Data
 public class User extends BaseEntity {
-    String email;
     String userName;
     String password;
 /*

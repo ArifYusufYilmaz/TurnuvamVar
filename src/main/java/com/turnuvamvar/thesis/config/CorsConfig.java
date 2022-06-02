@@ -15,7 +15,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-/*
+
 @Component
 public class CorsConfig implements Filter {
     private final Logger log = LoggerFactory.getLogger(CorsConfig.class);
@@ -44,7 +44,7 @@ public class CorsConfig implements Filter {
     @Override
     public void destroy() {
     }
-}*/
+}
     /*@Value("http://localhost:3000")
     private String allowedOrigin;
     @Bean
