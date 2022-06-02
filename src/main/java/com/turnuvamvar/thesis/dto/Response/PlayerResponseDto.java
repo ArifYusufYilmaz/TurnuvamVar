@@ -13,6 +13,10 @@ public class PlayerResponseDto {
     private String playerLastName;
     private String position;
     private Long playerCommunicationId;
+    // adres ve telefonu da dön.
+    private String playerAddress;
+    private String playerPhoneNumber;
     private Long teamId;
+    private String teamName;
 }
 

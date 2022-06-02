@@ -86,19 +86,22 @@ public class PlayerManager implements PlayerService {
     public DataResult<PlayerResponseDto> updateOnePlayer(Long playerId, PlayerRequestDto playerRequestDto) { // fix
         Optional<Player> player = this.playerDao.findById(playerId);
         if(player.isPresent()){
+            //this.playerRequestMapper.mapPlayerToAddRequestDtoToPlayer();
             Player toSave = player.get();
             toSave.setPlayerFirstName(playerRequestDto.getPlayerFirstName());
             toSave.setPlayerLastName(playerRequestDto.getPlayerLastName());
+            toSave.setPosition(playerRequestDto.getPosition());
+            toSave.getPlayerCommunication().setPlayerAddress(playerRequestDto.getPlayerAddress());
+            toSave.getPlayerCommunication().setPlayerPhoneNumber(playerRequestDto.getPlayerPhoneNumber());
             // playerdto da id alıyorum adres veya telefon değil bunu fixle.
             //toSave.getPlayerCommunication().setPlayerPhoneNumber();
-            toSave.setPosition(playerRequestDto.getPosition());
 
             toSave = this.playerDao.save(toSave);
             PlayerResponseDto playerResponseDto =this.playerResponseMapper.mapPlayerToPlayerResponseDto(toSave);
               return new SuccessDataResult<PlayerResponseDto>(playerResponseDto);
         }
         else{
-            return new ErrorDataResult<PlayerResponseDto>("oyuncu bulunamadı..");
+            return new ErrorDataResult<PlayerResponseDto>("Güncellenmek istenen oyuncu bulunamadı..");
         }
     }
 

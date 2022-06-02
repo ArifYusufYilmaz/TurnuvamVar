@@ -8,6 +8,7 @@ import com.turnuvamvar.thesis.dto.Request.GamePerformedRequestDto;
 import com.turnuvamvar.thesis.dto.Response.GamePerformedResponseDto;
 import com.turnuvamvar.thesis.entities.concretes.GamePerformed;
 import com.turnuvamvar.thesis.entities.concretes.GameToPlay;
+import com.turnuvamvar.thesis.entities.concretes.Score;
 import com.turnuvamvar.thesis.mapper.Request.GamePerformedRequestMapper;
 import com.turnuvamvar.thesis.mapper.Response.GamePerformedResponseMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -73,7 +74,23 @@ public class GamePerformedManager implements GamePerformedService {
 
     @Override
     public DataResult<GamePerformedResponseDto> updateOneGamePerformed(Long gamePerformedId, GamePerformedRequestDto gamePerformedRequestDto) {
-        return null;
+        Optional<GamePerformed> gamePerformed = this.gamePerformedDao.findById(gamePerformedId);
+        Optional<GameToPlay> gameToPlay = this.gameToPlayDao.findById(gamePerformedRequestDto.getGameToPlayId());
+        if(gamePerformed.isPresent()){
+            if(gameToPlay.isPresent() && (gameToPlay.get().getId() == gamePerformed.get().getId())){
+                GamePerformed toSave = gamePerformed.get();
+                toSave.getScoreOfFirstTeam().setScore(gamePerformedRequestDto.getScoreOfFirstTeam());
+                toSave.getScoreOfSecondTeam().setScore(gamePerformedRequestDto.getScoreOfSecondTeam());
+                toSave = this.gamePerformedDao.save(toSave);
+                GamePerformedResponseDto gamePerformedResponseDto = this.gamePerformedResponseMapper.mapGamePerformedToGamePerformedResponseDto(toSave);
+                return new SuccessDataResult<GamePerformedResponseDto>(gamePerformedResponseDto);
+            }else{
+                return new ErrorDataResult<GamePerformedResponseDto>("Oynanacak oyun mevcut olmalı ve farklı verilmemeli..");
+            }
+        }else{
+            return new ErrorDataResult<GamePerformedResponseDto>("Güncellenmek istenen Oynanan Oyun bulunamadı..");
+        }
+
     }
 
     @Override

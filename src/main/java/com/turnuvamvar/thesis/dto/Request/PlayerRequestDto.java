@@ -13,4 +13,7 @@ public class PlayerRequestDto {
     private String position;
     private Long playerCommunicationId;
     private Long teamId;
+
+    private String playerAddress;
+    private String playerPhoneNumber;
 }
