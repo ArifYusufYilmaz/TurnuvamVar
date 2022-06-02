@@ -20,17 +20,14 @@ public class GamePerformedController {
     public GamePerformedController(GamePerformedService gamePerformedService) {
         this.gamePerformedService = gamePerformedService;
     }
-    @PostMapping
+    @PostMapping("/save")
     public DataResult<GamePerformedResponseDto> createOneGamePerformed(@RequestBody GamePerformedRequestDto newGamePerformedRequestDto){
         return this.gamePerformedService.createOneGamePerformed(newGamePerformedRequestDto);
     }
-
-
-    @GetMapping("/{gamePerformedId}")
+    @GetMapping("get/{gamePerformedId}")
     public DataResult<GamePerformedResponseDto> getOneGamePerformedById(@PathVariable Long gamePerformedId){
         return this.gamePerformedService.getOneGamePerformedById(gamePerformedId);
     }
-
     @PutMapping("/update/{gamePerformedId}")
     public DataResult<GamePerformedResponseDto> updateOneGamePerformed(@PathVariable Long gamePerformedId,
                                                                        @RequestBody GamePerformedRequestDto gamePerformedRequestDto){
@@ -40,7 +37,6 @@ public class GamePerformedController {
     public DataResult<List<GamePerformedResponseDto>> getAllGamesPerformed(){
         return this.gamePerformedService.getAllGamesPerformed();
     }
-
     @DeleteMapping("/delete/{gamePerformedId}")
     public Result deleteOneGamePerformed(@PathVariable Long gamePerformedId){
         return this.gamePerformedService.deleteOneGamePerformedById(gamePerformedId);

@@ -16,21 +16,17 @@ import java.util.List;
 public class PlayerController {
     @Autowired
     private PlayerService playerService;
-
     public PlayerController(PlayerService playerService) {
         this.playerService = playerService;
     }
-    @PostMapping("/save")           // burada bir sıkıntı var!!! path variable vs.
+    @PostMapping("/save")
     public DataResult<PlayerResponseDto> createOnePlayer(Long playerToAddDtoId){
         return this.playerService.createOnePlayer(playerToAddDtoId);
     }
-
-
     @GetMapping("/get/{playerId}")
     public DataResult<PlayerResponseDto> getOnePlayerById(@PathVariable Long playerId){
         return this.playerService.getOnePlayerById(playerId);
     }
-
     @PutMapping("/update/{playerId}")
     public DataResult<PlayerResponseDto> updateOnePlayer(@PathVariable Long playerId, @RequestBody PlayerRequestDto playerRequestDto){
         return this.playerService.updateOnePlayer(playerId, playerRequestDto);
@@ -39,10 +35,8 @@ public class PlayerController {
     public DataResult<List<PlayerResponseDto>> getAllPlayers(@RequestParam(required = false) Long teamId){
         return this.playerService.getAllPlayers(teamId);
     }
-
     @DeleteMapping("/delete/{playerId}")
     public Result deleteOnePlayer(@PathVariable Long playerId){
         return this.playerService.deleteOnePlayerById(playerId);
     }
-
 }

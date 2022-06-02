@@ -24,23 +24,18 @@ public class GameToPlayController {
     public DataResult<GameToPlayResponseDto> createOneGameToPlay(@RequestBody GameToPlayRequestDto newGameToPlayRequestDto){
         return this.gameToPlayService.createOneGameToPlay(newGameToPlayRequestDto);
     }
-
     @GetMapping("/get/list")
     public DataResult<List<GameToPlayResponseDto>> getAllGamesToPlay(){
         return this.gameToPlayService.getAllGamesToPlay();
     }
-
     @GetMapping("/get/{gameToPlayId}")
     public DataResult<GameToPlayResponseDto> getOneGameToPlayById(@PathVariable Long gameToPlayId){
         return this.gameToPlayService.getOneGameToPlayById(gameToPlayId);
     }
-
     @PutMapping("/update/{gameToPlayId}")
     public DataResult<GameToPlayResponseDto> updateOneGameToPlay(@PathVariable Long gameToPlayId, @RequestBody GameToPlayRequestDto gameToPlayRequestDto){
         return this.gameToPlayService.updateOneGameToPlay(gameToPlayId, gameToPlayRequestDto);
     }
-
-
     @DeleteMapping("/delete/{gameToPlayId}")
     public Result deleteOneGameToPlay(@PathVariable Long gameToPlayId){
         return this.gameToPlayService.deleteOneGameToPlayById(gameToPlayId);

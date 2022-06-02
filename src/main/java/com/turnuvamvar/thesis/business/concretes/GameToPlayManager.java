@@ -124,8 +124,8 @@ public class GameToPlayManager implements GameToPlayService {
     public Result deleteOneGameToPlayById(Long gameToPlayId) {
         Optional<GameToPlay> gameToPlay = this.gameToPlayDao.findById(gameToPlayId);
         if(gameToPlay.isPresent()){
+              this.gameToPlayDao.deleteById(gameToPlay.get().getId());
 
-            this.gameToPlayDao.deleteById(gameToPlay.get().getId());
             return new SuccessResult("oynanacak oyun silindi..");
         }
         else{

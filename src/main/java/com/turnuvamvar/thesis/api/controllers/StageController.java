@@ -23,17 +23,14 @@ public class StageController {
     public DataResult<List<StageResponseDto>> getAllStages(@RequestParam(required = false) Long tournamentId){
         return this.stageService.getAllStages(tournamentId);
     }
-
     @GetMapping("/get/{stageId}")
     public DataResult<StageResponseDto> getOneStageById(@PathVariable Long stageId){
         return this.stageService.getOneStageById(stageId);
     }
-
     @PutMapping("/update/{stageId}")
     public DataResult<StageResponseDto> updateOneStage(@PathVariable Long stageId, @RequestBody StageRequestDto stageRequestDto){
         return this.stageService.updateOneStage(stageId, stageRequestDto);
     }
-
     @PostMapping("/save/{tournamentId}")
     public DataResult<StageResponseDto> createOneStage(@PathVariable Long tournamentId, @RequestBody StageRequestDto newStageRequestDto){
         return this.stageService.createOneStage(tournamentId, newStageRequestDto);
@@ -42,5 +39,4 @@ public class StageController {
     public Result deleteOneStage(@PathVariable Long stageId){
         return this.stageService.deleteOneStageById(stageId);
     }
-
 }

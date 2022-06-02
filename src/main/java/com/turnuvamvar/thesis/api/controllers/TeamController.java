@@ -15,7 +15,6 @@ import java.util.List;
 @RequestMapping("/api/teams")
 public class TeamController {
     private TeamService teamService;
-
     public TeamController(TeamService teamService) {
         this.teamService = teamService;
     }

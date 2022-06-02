@@ -20,7 +20,6 @@ public class StageTeamController {
     public StageTeamController(StageTeamService stageTeamService) {
         this.stageTeamService = stageTeamService;
     }
-
     @PostMapping("/save")
     public DataResult<StageTeamResponseDto> createOneStageTeam(@RequestBody StageTeamRequestDto newStageTeamRequestDto){
         return this.stageTeamService.createOneStageTeam(newStageTeamRequestDto);
@@ -29,21 +28,16 @@ public class StageTeamController {
     public DataResult<List<StageTeamResponseDto>> getAllStagesTeams(@RequestParam(required=false)Long stageId){
         return this.stageTeamService.getAllStagesTeams(stageId);
     }
-
     @GetMapping("/get/{stageTeamId}")
     public DataResult<StageTeamResponseDto> getOneStageTeamById(@PathVariable Long stageTeamId){
         return this.stageTeamService.getOneStageTeamById(stageTeamId);
     }
-
     @PutMapping("/update/{stageTeamId}")
     public DataResult<StageTeamResponseDto> updateOneStageTeam(@PathVariable Long stageTeamId, @RequestBody StageTeamRequestDto stageTeamRequestDto){
         return this.stageTeamService.updateOneStageTeam(stageTeamId, stageTeamRequestDto);
     }
-
-
     @DeleteMapping("/delete/{stageTeamId}")
     public Result deleteOneStageTeamById(@PathVariable Long stageTeamId){
         return this.stageTeamService.deleteOneStageTeamById(stageTeamId);
     }
-
 }

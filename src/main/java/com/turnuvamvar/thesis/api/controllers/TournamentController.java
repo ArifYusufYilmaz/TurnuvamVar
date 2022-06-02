@@ -15,36 +15,29 @@ import java.util.List;
 @RequestMapping("/api/tournaments")
 @CrossOrigin(origins = {"*"}, allowCredentials = "false")
 public class TournamentController {
-
     private TournamentService tournamentService;
-
     @Autowired
     public TournamentController(TournamentService tournamentService) {
         this.tournamentService = tournamentService;
     }
-
     @GetMapping("/get/{tournamentId}")
-    public DataResult<TournamentResponseDto> getOneTournementById(@PathVariable Long tournamentId ){
+    public DataResult<TournamentResponseDto> getOneTournamentById(@PathVariable Long tournamentId ){
         return this.tournamentService.getOneTournementById(tournamentId);
     }
     @PutMapping("/update/{tournamentId}")
-    public DataResult<TournamentResponseDto> updateOneTournement(@PathVariable Long tournamentId, @RequestBody TournamentRequestDto tournamentRequestDto){
+    public DataResult<TournamentResponseDto> updateOneTournament(@PathVariable Long tournamentId, @RequestBody TournamentRequestDto tournamentRequestDto){
         return this.tournamentService.updateOneTournement(tournamentId, tournamentRequestDto);
     }
-
     @GetMapping("/get/list")
     public DataResult<List<TournamentResponseDto>> getAllTournaments(){
         return this.tournamentService.getAllTournaments();
     }
-
     @PostMapping("/save")
     public DataResult<TournamentResponseDto> createOneTournament(@RequestBody TournamentRequestDto newTournamentRequestDto){
         return this.tournamentService.createOneTournament(newTournamentRequestDto);
     }
-
     @DeleteMapping("/delete/{tournamentId}")
-    public Result deleteOneTournement(@PathVariable Long tournamentId){
+    public Result deleteOneTournament(@PathVariable Long tournamentId){
         return this.tournamentService.deleteOneTournementById(tournamentId);
     }
-
 }
