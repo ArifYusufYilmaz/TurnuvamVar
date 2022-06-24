@@ -12,7 +12,6 @@ import java.util.List;
 public abstract class PlayerToAddRequestMapper {
     public abstract PlayerToAddRequestDto mapPlayerToAddToPlayerToAddRequestDto(PlayerToAdd playerToAdd);
     public abstract PlayerToAdd mapPlayerToAddRequestDtoToPlayerToAdd(PlayerToAddRequestDto playerToAddRequestDto);
-
     public abstract List<PlayerToAddRequestDto> mapPlayerToAddListToPlayerToAddDtoList(Collection<PlayerToAdd> playersToAdd);
     public abstract List<PlayerToAdd> mapPlayerToAddDtoListToPlayerToAddList(Collection<PlayerToAddRequestDto> playersToAddRequestDto);
 }

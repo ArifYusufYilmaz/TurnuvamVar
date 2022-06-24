@@ -12,10 +12,10 @@ import java.util.List;
 @Table(name= "stages")
 @Data
 public class Stage extends BaseEntity {
-    private String stageName;   // enum yapılabilir!
+    private String stageName;
     private int requiredTeamCount;
 
-    @OneToMany(mappedBy = "stage", cascade = CascadeType.ALL) // cascade sonradan yapıldı, sorun var mı incele
+    @OneToMany(mappedBy = "stage", cascade = CascadeType.ALL)
     private List<StageTeam> stagesTeams;
 
     @ManyToOne

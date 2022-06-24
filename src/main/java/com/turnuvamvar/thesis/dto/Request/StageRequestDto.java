@@ -8,7 +8,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class StageRequestDto {
-    //private Long id;
     private String stageName;
     private int requiredTeamCount;
 }

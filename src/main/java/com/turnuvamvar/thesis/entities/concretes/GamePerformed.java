@@ -8,7 +8,7 @@ import org.hibernate.annotations.OnDeleteAction;
 import javax.persistence.*;
 
 @Entity
-@Table(name="games_performed")  // gametoplayid ile hangi maç olduğu alınacak, 1. ve 2. takım skorları ve diğer olaylar(kim attı vs)
+@Table(name="games_performed")                                           // gametoplayid ile hangi maç olduğu alınacak, 1. ve 2. takım skorları ve diğer olaylar(kim attı vs)
 @Data
 public class GamePerformed extends BaseEntity {
 

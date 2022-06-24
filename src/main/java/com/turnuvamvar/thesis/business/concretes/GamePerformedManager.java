@@ -77,7 +77,7 @@ public class GamePerformedManager implements GamePerformedService {
         Optional<GamePerformed> gamePerformed = this.gamePerformedDao.findById(gamePerformedId);
         Optional<GameToPlay> gameToPlay = this.gameToPlayDao.findById(gamePerformedRequestDto.getGameToPlayId());
         if(gamePerformed.isPresent()){
-            if(gameToPlay.isPresent() && (gameToPlay.get().getId() == gamePerformed.get().getId())){
+            if(gameToPlay.isPresent() && (gameToPlay.get().getId() == gamePerformed.get().getGameToPlay().getId())){
                 GamePerformed toSave = gamePerformed.get();
                 toSave.getScoreOfFirstTeam().setScore(gamePerformedRequestDto.getScoreOfFirstTeam());
                 toSave.getScoreOfSecondTeam().setScore(gamePerformedRequestDto.getScoreOfSecondTeam());

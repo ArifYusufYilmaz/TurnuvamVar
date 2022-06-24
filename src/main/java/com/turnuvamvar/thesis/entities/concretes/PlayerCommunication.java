@@ -13,7 +13,6 @@ import javax.persistence.Table;
 public class PlayerCommunication extends BaseEntity {
     private String playerAddress;
     private String playerPhoneNumber;
-    // gerekli alanlar daha sonra eklenebilir!!
     @OneToOne(mappedBy= "playerCommunication")
     private Player player;
 }

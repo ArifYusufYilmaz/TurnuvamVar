@@ -15,7 +15,6 @@ import com.turnuvamvar.thesis.entities.concretes.RefreshToken;
 
 @Service
 public class RefreshTokenManager {
-
     @Value("${refresh.token.expires.in}")
     Long expireSeconds;
     @Autowired
@@ -24,7 +23,6 @@ public class RefreshTokenManager {
 	public RefreshTokenManager(RefreshTokenDao refreshTokenDao) {
         this.refreshTokenDao = refreshTokenDao;
     }
-
     public String createRefreshToken(User user) {
         RefreshToken token = refreshTokenDao.findByUserId(user.getId());
         if(token == null) {
@@ -36,13 +34,10 @@ public class RefreshTokenManager {
         refreshTokenDao.save(token);
         return token.getToken();
     }
-
     public boolean isRefreshExpired(RefreshToken token) {
         return token.getExpiryDate().before(new Date());
     }
-
     public RefreshToken getByUser(Long userId) {
         return refreshTokenDao.findByUserId(userId);
     }
-
 }

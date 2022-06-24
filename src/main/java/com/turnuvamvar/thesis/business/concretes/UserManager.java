@@ -22,11 +22,6 @@ public class UserManager {
         this.userDao = userDao;
         this.passwordEncoder = passwordEncoder;
     }
-
-
-
-
-
     public List<User> getAllUsers() {
         return userDao.findAll();
     }

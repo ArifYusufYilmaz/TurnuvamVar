@@ -16,5 +16,5 @@ public class PlayerToAddResponseDto {
     private String playerAddress;
     private String playerPhoneNumber;
     private Long teamId;
-    private String teamName; // mapper
+    private String teamName;                 // mapper
 }

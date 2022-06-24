@@ -52,7 +52,6 @@ public class StageTeamManager implements StageTeamService {
 
     @Override
     public DataResult<StageTeamResponseDto> createOneStageTeam(StageTeamRequestDto newStageTeamRequestDto) {
-
         Optional<Team> team = this.teamDao.findById(newStageTeamRequestDto.getTeamId());
         Optional<Stage> stage =  this.stageDao.findById(newStageTeamRequestDto.getStageId());
         if(team.isPresent() && stage.isPresent()){ // check if they exist in db
@@ -68,7 +67,6 @@ public class StageTeamManager implements StageTeamService {
                 StageTeamResponseDto stageTeamResponseDto = this.stageTeamResponseMapper.mapStageTeamToStageTeamResponseDto(stageTeam);
                 System.out.println(stageTeam.getTeam().getTeamName());
                 return new SuccessDataResult<StageTeamResponseDto>(stageTeamResponseDto);
-
             }
         }else{
             return new ErrorDataResult<StageTeamResponseDto>("Verilen takım ya da stage mevcut değil!!");
@@ -114,7 +112,6 @@ public class StageTeamManager implements StageTeamService {
             toSave.getStage().setId(stageTeamRequestDto.getStageId());
             toSave.getTeam().setId(stageTeamRequestDto.getTeamId());
             // to avoid duplicate records
-            //StageTeam stageTeamToCheckİfDuplicate = this.stageTeamDao.findByTeamIdAndStageId(toSave.getTeam().getId(),toSave.getStage().getId()).orElse(null);
             if(stageTeamToCheckIfDuplicate(toSave.getTeam().getId(),toSave.getStage().getId())){
                 return new ErrorDataResult<StageTeamResponseDto>("Verilen takım ve stage zaten eşlenmiş!!");
             }else{

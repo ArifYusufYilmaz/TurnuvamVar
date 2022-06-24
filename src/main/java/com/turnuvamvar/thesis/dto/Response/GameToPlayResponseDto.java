@@ -13,12 +13,11 @@ import javax.persistence.OneToOne;
 @NoArgsConstructor
 @AllArgsConstructor
 public class GameToPlayResponseDto {
-
     private Long id;
-    private Long firstStageTeamId; // stageteamfirstid;
-    private Long secondStageTeamId;  //stageteamsecondid
-    private String Tarih; // tarih,saat  düzgün alınmalı, şimdilik bu şekilde!!
-    private String firstTeamName;    //
+    private Long firstStageTeamId;                  // stageteamfirstid;
+    private Long secondStageTeamId;                     //stageteamsecondid
+    private String Tarih;                       // tarih,saat  düzgün alınmalı, şimdilik bu şekilde!!
+    private String firstTeamName;                  //
     private String secondTeamName;
     private Long stageId;
 }

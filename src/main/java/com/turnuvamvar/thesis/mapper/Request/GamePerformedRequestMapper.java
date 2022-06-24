@@ -16,5 +16,4 @@ public abstract class GamePerformedRequestMapper {
     @Mapping(source="scoreOfFirstTeam",target="scoreOfFirstTeam.score")
     @Mapping(source="scoreOfSecondTeam",target="scoreOfSecondTeam.score")
     public abstract GamePerformed mapGamePerformedRequestDtoToGamePerformed(GamePerformedRequestDto gamePerformedRequestDto);
-
 }

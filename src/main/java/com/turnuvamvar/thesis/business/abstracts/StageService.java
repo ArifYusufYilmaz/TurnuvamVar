@@ -9,12 +9,8 @@ import java.util.List;
 
 public interface StageService {
     DataResult<StageResponseDto> createOneStage(Long tournamentId, StageRequestDto newStageRequestDto);
-
     DataResult<StageResponseDto> getOneStageById(Long stageId);
-
     DataResult<StageResponseDto> updateOneStage(Long stageId, StageRequestDto stageRequestDto);
-
     Result deleteOneStageById(Long stageId);
-
     DataResult<List<StageResponseDto>> getAllStages(Long tournamentId);
 }

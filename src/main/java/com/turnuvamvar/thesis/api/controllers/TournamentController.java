@@ -13,7 +13,6 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/tournaments")
-@CrossOrigin(origins = {"*"}, allowCredentials = "false")
 public class TournamentController {
     private TournamentService tournamentService;
     @Autowired

@@ -22,18 +22,7 @@ public class TeamCode extends BaseEntity {
     @OneToOne(mappedBy="teamCode", cascade = CascadeType.ALL)
     private TeamCaptain teamCaptain;
 
-    public TeamCode(){
-         setTeamCode();
-         setTeamPassword();
-    }
-
-    /*public TeamCode(String teamCode, String teamPassword) {     // Gerekmeyebilir.
-        this.teamCode = teamCode;
-        this.teamPassword = teamPassword;
-        setTeamCode();
-        setTeamPassword();
-    }*/
-
+    public TeamCode(){  setTeamCode(); setTeamPassword(); }
     private void setTeamCode(){
         AutoGenerateTeamCodeInfo autoGeneratorCode = new Code();
         this.teamCode = autoGeneratorCode.getInfo();
@@ -42,6 +31,4 @@ public class TeamCode extends BaseEntity {
         AutoGenerateTeamCodeInfo autoGeneratorPassword = new Password();
         this.teamPassword = autoGeneratorPassword.getInfo();
     }
-
-
 }

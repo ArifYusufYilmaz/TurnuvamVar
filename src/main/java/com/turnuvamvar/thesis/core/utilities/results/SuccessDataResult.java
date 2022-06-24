@@ -13,5 +13,4 @@ public class SuccessDataResult<T> extends DataResult {
     public SuccessDataResult(){
     super(null, true);
     }
-
 }

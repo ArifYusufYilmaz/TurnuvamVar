@@ -19,5 +19,4 @@ public class GamePerformedResponseDto {
     private Long secondTeamId;
     private String secondTeamName;
     private Long stageId;
-
 }

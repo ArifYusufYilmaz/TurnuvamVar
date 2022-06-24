@@ -84,13 +84,15 @@ public class PlayerToAddManager implements PlayerToAddService {
     public DataResult<PlayerToAddResponseDto> getOnePlayerToAddById(Long playerToAddId) {
         Optional<PlayerToAdd> playerToAdd = this.playerToAddDao.findById(playerToAddId);
         if(playerToAdd.isPresent()){
-            PlayerToAddResponseDto playerToAddResponseDto = this.playerToAddResponseMapper.mapPlayerToAddToPlayerToAddResponseDto(playerToAdd.get());
+            PlayerToAddResponseDto playerToAddResponseDto =
+                            this
+                            .playerToAddResponseMapper
+                            .mapPlayerToAddToPlayerToAddResponseDto(playerToAdd.get());
             return new SuccessDataResult<PlayerToAddResponseDto>(playerToAddResponseDto);
         }
         else{
             return new ErrorDataResult<PlayerToAddResponseDto>("istenen 'eklenecek oyuncu' bulunamadı!! ");
         }
-
     }
 
     @Override

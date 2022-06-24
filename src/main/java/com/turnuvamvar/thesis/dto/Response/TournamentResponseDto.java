@@ -9,9 +9,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class TournamentResponseDto {
-
     private Long id;
     private String tournamentName;
     private String description;
-
 }

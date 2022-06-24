@@ -13,7 +13,7 @@ public class Player extends BaseEntity {
     private String playerFirstName;
     private String playerLastName;
     private String position;
-    // gerekli alanlar daha sonra eklenebilir!!
+
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "player_communication_id", unique = true)
     private PlayerCommunication playerCommunication;
@@ -21,6 +21,6 @@ public class Player extends BaseEntity {
     @ManyToOne
     private Team team;
 
-    @OneToMany(mappedBy = "player", cascade = CascadeType.ALL)  // cascade sonradan yapıldı incele.
+    @OneToMany(mappedBy = "player", cascade = CascadeType.ALL)
     private List<ScorePlayer> scoresPlayers;
 }

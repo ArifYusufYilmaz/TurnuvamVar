@@ -7,8 +7,6 @@ import java.util.List;
 import java.util.Optional;
 
 public interface StageTeamDao extends JpaRepository<StageTeam, Long> {
-
     Optional<StageTeam> findByTeamIdAndStageId(Long id, Long id1);
-
     List<StageTeam> findAllByStageId(Long stageId);
 }

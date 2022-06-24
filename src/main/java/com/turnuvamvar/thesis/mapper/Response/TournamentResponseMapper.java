@@ -11,12 +11,8 @@ import java.util.List;
 
 @Mapper(componentModel = "spring")
 public abstract class TournamentResponseMapper {
-
-
     public abstract TournamentResponseDto mapTournamentToTournamentResponseDto(Tournament tournament);
-
     public abstract Tournament mapTournamentResponseDtoToTournament(TournamentResponseDto tournamentResponseDto);
-
     public abstract List<TournamentResponseDto> mapTournamentListToTournamentResponseDtoList(Collection<Tournament> tournaments);
     public abstract List<Tournament> mapTournamentResponseDtoListToTournamentList(Collection<TournamentResponseDto> tournamentResponseDtos);
 }

@@ -12,7 +12,6 @@ import java.util.List;
 public abstract class TeamRequestMapper {
     public abstract TeamRequestDto mapTeamToTeamRequestDto(Team team);
     public abstract Team mapTeamRequestDtoToTeam(TeamRequestDto teamDto);
-
     public abstract List<TeamRequestDto> mapTeamListToTeamRequestDtoList(Collection<Team> teams);
     public abstract List<Team> mapTeamRequestDtoListToTeamList(Collection<TeamRequestDto> teamRequestDtos);
 }

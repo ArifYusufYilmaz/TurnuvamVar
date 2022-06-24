@@ -51,7 +51,6 @@ public class GameToPlayManager implements GameToPlayService {
 
     @Override
     public DataResult<GameToPlayResponseDto> createOneGameToPlay(GameToPlayRequestDto newGameToPlayRequestDto) {
-        //kontrolleri yapmalısın!!
         Optional<StageTeam> firstStageTeam = this.stageTeamDao.findById(newGameToPlayRequestDto.getFirstStageTeamId());
         Optional<StageTeam> secondStageTeam = this.stageTeamDao.findById(newGameToPlayRequestDto.getSecondStageTeamId());
         if(firstStageTeam.isPresent() && secondStageTeam.isPresent()){
@@ -73,7 +72,6 @@ public class GameToPlayManager implements GameToPlayService {
         else{
             return new ErrorDataResult<GameToPlayResponseDto>("Takımlar bulunamadı");
         }
-
     }
 
     @Override

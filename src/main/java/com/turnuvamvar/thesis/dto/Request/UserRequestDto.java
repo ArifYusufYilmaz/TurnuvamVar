@@ -13,12 +13,10 @@ import javax.validation.constraints.NotNull;
 @AllArgsConstructor
 @NoArgsConstructor
 public class UserRequestDto {
-
     @NotNull(message = "User Name may not be null")
     @NotBlank(message = "User name may not be blank")
-    @NotEmpty(message = "User name may not be blank")
+    @NotEmpty(message = "User name may not be empty")
     String userName;
-
     @NotNull(message = "Password may not be null")
     String password;
 }

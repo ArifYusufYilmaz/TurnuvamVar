@@ -12,14 +12,12 @@ import java.util.List;
 
 @Mapper(componentModel = "spring")
 public abstract class PlayerToAddResponseMapper {
-
     @Mapping(source="team.id", target = "teamId")
     @Mapping(source="team.teamName",target="teamName")
     public abstract PlayerToAddResponseDto mapPlayerToAddToPlayerToAddResponseDto(PlayerToAdd playerToAdd);
     @Mapping(source="teamId", target = "team.id")
     @Mapping(source="teamName",target="team.teamName")
     public abstract PlayerToAdd mapPlayerToAddResponseDtoToPlayerToAdd(PlayerToAddResponseDto playerToAddResponseDto);
-
     public abstract List<PlayerToAddResponseDto> mapPlayerToAddListToPlayerToAddResponseDtoList(Collection<PlayerToAdd> playersToAdd);
     public abstract List<PlayerToAdd> mapPlayerToAddResponseDtoListToPlayerToAddList(Collection<PlayerToAddResponseDto> playersToAddDto);
 }

@@ -14,5 +14,4 @@ public class StageResponseDto {
     private int requiredTeamCount;
     private Long tournamentId;
     private String tournamentName;
-
 }

@@ -45,20 +45,7 @@ public class CorsConfig implements Filter {
     public void destroy() {
     }
 }
-    /*@Value("http://localhost:3000")
-    private String allowedOrigin;
-    @Bean
-    public WebMvcConfigurer getCorsConfiguration(){
-        return new WebMvcConfigurer(){
-            @Override
-            public void addCorsMappings(CorsRegistry registry){
-                registry.addMapping("**")
-                        .allowedOrigins(allowedOrigin)
-                        .allowedMethods("GET", "POST", "PUT", "DELETE")
-                        .allowedHeaders("*");
-            }
-        };
-    }*/
+
 
 
 

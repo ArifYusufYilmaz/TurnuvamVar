@@ -7,8 +7,6 @@ import java.util.Optional;
 
 public interface GameToPlayDao extends JpaRepository<GameToPlay, Long> {
     Optional<GameToPlay> findByStageTeamFirstIdAndStageTeamSecondId(Long firstStageTeamId, Long secondStageTeamId);
-
     GameToPlay findByStageTeamFirstId(Long firstStageTeamId);
-
     GameToPlay findByStageTeamSecondId(Long secondStageTeamId);
 }

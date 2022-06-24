@@ -41,12 +41,14 @@ public class TournamentManager implements TournamentService {
         List<Tournament> tournamentList = new ArrayList<>();
         Iterable<Tournament> tournamentIterable = this.tournamentDao.findAll();
         tournamentIterable.iterator().forEachRemaining(tournamentList :: add);
-
         if(tournamentList.isEmpty()){
             return new ErrorDataResult<TournamentResponseDto>("tournament Request dto bos..  bu mesaj degistirilebilir");
         }
         else{
-            List<TournamentResponseDto> tournamentResponseDtoList = this.tournamentResponseMapper.mapTournamentListToTournamentResponseDtoList(tournamentList);
+            List<TournamentResponseDto> tournamentResponseDtoList =
+                            this
+                            .tournamentResponseMapper
+                            .mapTournamentListToTournamentResponseDtoList(tournamentList);
             return new SuccessDataResult<List<TournamentResponseDto>>(tournamentResponseDtoList);
         }
     }

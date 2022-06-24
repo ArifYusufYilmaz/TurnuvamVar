@@ -12,6 +12,5 @@ public class StageTeamResponseDto {
    private Long stageId;
    private Long teamId;
    private String teamName;
-   private String stageName; // mapperda stage.stageName yapacaksın
-
+   private String stageName;                                // mapperda stage.stageName yapacaksın
 }

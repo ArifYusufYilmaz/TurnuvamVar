@@ -19,16 +19,13 @@ public class UserDetailsManager implements UserDetailsService {
     public UserDetailsManager(UserDao userDao) {
         this.userDao = userDao;
     }
-
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         Optional<User> user = userDao.findByUserName(username);
         return JwtUserDetails.create(user.get());
     }
-
     public UserDetails loadUserById(Long id) {
         User user = userDao.findById(id).get();
         return JwtUserDetails.create(user);
     }
-
 }

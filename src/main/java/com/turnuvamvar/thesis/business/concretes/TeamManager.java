@@ -135,8 +135,6 @@ public class TeamManager implements TeamService {
 
     @Override
     public Result deleteOneTeamById(Long teamId) {
-        // takımla bağlantılı olan diğer şeyler silinmeli mi ???
-
         Optional<Team> team = this.teamDao.findById(teamId);
         if(team.isPresent()){
             this.teamDao.deleteById(team.get().getId());

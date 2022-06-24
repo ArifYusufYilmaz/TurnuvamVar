@@ -8,8 +8,7 @@ import javax.persistence.ManyToOne;
 
 @Entity
 @Data
-public class ScorePlayer extends BaseEntity { // Join table with Score and Player
-
+public class ScorePlayer extends BaseEntity {       // Join table with Score and Player
     @ManyToOne
     private Score score;
     @ManyToOne

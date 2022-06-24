@@ -10,8 +10,6 @@ import java.util.List;
 
 @Mapper(componentModel = "spring")
 public abstract class TeamResponseMapper {
-
-
     @Mapping(source = "teamCaptain.id", target = "teamCaptainId")
     @Mapping(source = "tournament.tournamentName",target = "tournamentName")
     @Mapping(source = "tournament.id", target = "tournamentId")
@@ -20,8 +18,6 @@ public abstract class TeamResponseMapper {
     @Mapping(source = "tournamentName",target = "tournament.tournamentName")
     @Mapping(source = "tournamentId", target = "tournament.id")
     public abstract Team mapTeamResponseDtoToTeam(TeamResponseDto teamResponseDto);
-
     public abstract List<TeamResponseDto> mapTeamListToTeamResponseDtoList(Collection<Team> teams);
     public abstract List<Team> mapTeamResponseDtoListToTeamList(Collection<TeamResponseDto> teamResponseDtos);
-
 }

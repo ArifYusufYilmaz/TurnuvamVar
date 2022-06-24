@@ -22,7 +22,6 @@ public abstract class ScorePlayerResponseMapper {
     @Mapping(source="player.playerFirstName",target="playerFirstName")
     @Mapping(source="player.playerLastName",target="playerLastName")
     public abstract ScorePlayerResponseDto mapScorePlayerToScorePlayerResponseDto(ScorePlayer scorePlayer);
-
     public abstract List<ScorePlayerResponseDto> mapScorePlayerListToScorePlayerResponseDtoList(Collection<ScorePlayer> scorePlayerList);
     public abstract List<ScorePlayer> mapScorePlayerResponseDtoListToScorePlayerList(Collection<ScorePlayerResponseDto> scorePlayerResponseDtoList);
 }

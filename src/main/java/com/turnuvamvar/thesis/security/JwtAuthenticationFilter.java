@@ -17,15 +17,13 @@ import org.springframework.util.StringUtils;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 public class JwtAuthenticationFilter  extends OncePerRequestFilter {
-
     @Autowired
     JwtTokenProvider jwtTokenProvider;
-
     @Autowired
     UserDetailsManager userDetailsManager;
-
     @Override
-    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
+    protected void doFilterInternal(HttpServletRequest request,
+                                    HttpServletResponse response, FilterChain filterChain)
             throws ServletException, IOException {
         try {
             String jwtToken = extractJwtFromRequest(request);
@@ -43,12 +41,10 @@ public class JwtAuthenticationFilter  extends OncePerRequestFilter {
         }
         filterChain.doFilter(request, response);
     }
-
     private String extractJwtFromRequest(HttpServletRequest request) {
         String bearer = request.getHeader("Authorization");
         if(StringUtils.hasText(bearer) && bearer.startsWith("Bearer "))
             return bearer.substring("Bearer".length() + 1);
         return null;
     }
-
 }

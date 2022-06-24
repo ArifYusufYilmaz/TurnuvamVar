@@ -13,7 +13,5 @@ public class ScorePlayerResponseDto {
     private String playerFirstName;
     private String playerLastName;
     private Long scoreId;
-    private int score; //
-
-
+    private int score;
 }

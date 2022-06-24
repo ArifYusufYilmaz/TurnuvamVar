@@ -13,7 +13,9 @@ import javax.persistence.Table;
 public class User extends BaseEntity {
     String userName;
     String password;
+}
+
+
 /*
     @OneToMany(mappedBy = "user")
     RefreshToken refreshToken;*/
-}
